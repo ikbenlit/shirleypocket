@@ -35,15 +35,15 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 ### Fase 1: Proof of Concept (POC) - Easyleader-bot Kernfunctionaliteit
 
 *   **Taak:** Ontwikkelen basis chatbot structuur (GPT-4 integratie).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren van kennisbasis (scripts, voorbeeldvragen Easyleadership-programma).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren van Yvette's tone of voice en coachingstijl (incl. ABC-model).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Garanderen van privacy (geen dataopslag).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Basis testen van de bot (reactiesnelheid <2s, casusherkenning, reflectieve vragen).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 
 ---
 
@@ -80,30 +80,30 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 ### Fase 3.1: Ontwikkeling Loginpagina UI
 
 *   **Taak:** Ontwikkelen structuur en content Loginpagina (twee-kolommen layout).
-    *   *Status:* 🟡 In uitvoering
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren visueel ontwerp Loginpagina (conform beschrijving & layout).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren interactie-ontwerp Loginpagina (basis: focus, hover; excl. auth feedback).
-    *   *Status:* 🟡 In uitvoering
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Zorgen voor responsiveness Loginpagina.
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 *   **Taak:** Implementeren basis toegankelijkheid Loginpagina.
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 
 ---
 
 ### Fase 3.2: Implementatie Authenticatie (Firebase)
 
 *   **Taak:** Firebase project setup & Auth configuratie (activeren e-mail/wachtwoord, evt. magic link).
-    *   *Status:* 🟡 In uitvoering
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Installeren Firebase SDK (frontend).
-    *   *Status:* 🟡 In uitvoering
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren Login UI interactie met Firebase Auth (incl. feedback/validatie).
     *   *Status:* 🟡 In uitvoering
 *   **Taak:** Opzetten Backend/Edge Function voor Firebase token validatie & API calls.
     *   *Status:* 🟡 In uitvoering
 *   **Taak:** Implementeren Protected Routing (frontend).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 
 ---
 
@@ -114,7 +114,7 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 *   **Taak:** Review Aanbodpagina met Yvette (inhoud, toon, aanbod).
     *   *Status:* ⚫️ Nog te starten
 *   **Taak:** Functioneel testen Landingspagina (links, login flow, weergave).
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 *   **Taak:** Testen laadtijd (<1s) en performance (beide pagina's).
     *   *Status:* ⚫️ Nog te starten
 *   **Taak:** Testen responsiveness op verschillende apparaten (beide pagina's).
@@ -152,3 +152,19 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
     *   *Status:* 🔮 Toekomst
 
 ---
+
+### Samenvatting huidige status:
+*Laatste update: [huidige datum]*
+
+✅ **Fase 1: POC Easyleader-bot** - Vrijwel voltooid! Functionele chatbot met OpenAI-integratie en ABC-model implementatie.
+
+✅ **Fase 3: Landingspagina** - Grotendeels voltooid, toegankelijkheid nog in uitvoering.
+
+🟡 **Fase 3.1/3.2: Login & Authenticatie** - Basis aanwezig, verdere integratie in uitvoering.
+
+⚫️ **Fase 2: Aanbodpagina** - Nog te starten na voltooiing van huidige taken.
+
+**Volgende prioriteiten:**
+1. Voltooien van het testen van de chatbot
+2. Afronden login/authenticatie flow
+3. Starten met de ontwikkeling van de Aanbodpagina
