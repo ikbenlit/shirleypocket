@@ -77,9 +77,12 @@
 	title="Yvette's digitale coach voor jouw leiderschap"
 	description="Start je warming-up met de Easyleader-bot. Reflecteer op je speelveld en zet concrete stappen vooruit, 24/7."
 	primaryCta={{ text: "Log in en start", href: "/login" }}
+	secondaryCta={{ text: "Start de Coach", href: "/chat" }}
 	mockupImage={{
 		src: heroImage,
-		alt: "Visuele weergave van de Easyleader-bot chatinterface"
+		alt: "Visuele weergave van de Easyleader-bot chatinterface",
+		width: 1200,
+		height: 750
 	}}
 />
 

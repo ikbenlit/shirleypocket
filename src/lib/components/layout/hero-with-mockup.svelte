@@ -3,6 +3,7 @@
   export let title: string;
   export let description: string;
   export let primaryCta: { text: string; href: string };
+  export let secondaryCta: { text: string; href: string } | undefined = undefined;
   export let mockupImage: { src: string; alt: string; width?: number; height?: number };
   export let className: string = "";
 
@@ -49,8 +50,7 @@
 
       <!-- CTAs -->
       <div
-        class="relative z-10 flex flex-wrap justify-center gap-4
-        animate-appear opacity-0 [animation-delay:300ms]"
+        class="relative z-10 flex flex-wrap justify-center gap-4"
       >
         <Button
           href={primaryCta.href}
@@ -59,6 +59,17 @@
           {primaryCta.text}
           <img src="/icons/arrow-right-bold.svg" alt="" class="ml-2 h-[18px] w-[18px] inline-block" aria-hidden="true" />
         </Button>
+        {#if secondaryCta}
+          <Button
+            href={secondaryCta.href}
+            size="default"
+            variant="primary"
+            class="bg-cta-orange text-white hover:bg-cta-orange-hover rounded-xl flex items-center justify-center"
+          >
+            <span>{secondaryCta.text}</span>
+            <img src="/icons/chat-circle-dots.svg" alt="" class="ml-2 h-[18px] w-[18px] flex-shrink-0" aria-hidden="true" />
+          </Button>
+        {/if}
       </div>
 
       <!-- Mockup -->

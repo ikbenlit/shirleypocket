@@ -101,7 +101,7 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 *   **Taak:** Implementeren Login UI interactie met Firebase Auth (incl. feedback/validatie).
     *   *Status:* 🟡 In uitvoering
 *   **Taak:** Opzetten Backend/Edge Function voor Firebase token validatie & API calls.
-    *   *Status:* ⚫️ Nog te starten
+    *   *Status:* 🟡 In uitvoering
 *   **Taak:** Implementeren Protected Routing (frontend).
     *   *Status:* ⚫️ Nog te starten
 
