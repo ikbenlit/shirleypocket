@@ -1,0 +1,120 @@
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300; /* Light */
+  font-display: swap;
+  src: url('/fonts/Poppins-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  font-display: swap;
+  src: url('/fonts/Poppins-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  font-display: swap;
+  src: url('/fonts/Poppins-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url('/fonts/Poppins-Bold.woff2') format('woff2');
+}
+
+/* Lora Font Definitions */
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 400; /* Regular */
+  font-display: swap;
+  src: url('/fonts/Lora-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: italic;
+  font-weight: 400; /* Italic */
+  font-display: swap;
+  src: url('/fonts/Lora-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url('/fonts/Lora-Bold.woff2') format('woff2');
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Default: Lora Regular voor body, Poppins als sans fallback */
+    @apply bg-white text-neutral-dark-gray font-lora font-normal;
+  }
+  
+  h1 {
+    /* Poppins Bold, 32-4xl (styleguide: 24-32px) */
+    @apply font-sans font-bold text-3xl md:text-4xl text-primary-dark-blue;
+  }
+  
+  h2 {
+    /* Lora Bold, 2xl-3xl (styleguide: 20-24px) */
+    @apply font-lora font-bold text-2xl md:text-3xl text-primary-dark-blue;
+  }
+  
+  h3 {
+    /* Poppins Medium, xl-2xl (styleguide: 18-20px) */
+    @apply font-sans font-medium text-xl md:text-2xl text-primary-dark-blue;
+  }
+  
+  p {
+    /* Inherits font-lora from html, standard size */
+    @apply text-base;
+  }
+
+  /* Apply Poppins Light for functional text where needed (e.g., specific paragraphs) */
+  .text-functional {
+     @apply font-sans font-light; 
+  }
+}
+
+@layer components {
+  /* Primaire knop: Oranje achtergrond, witte tekst */
+  .btn-primary {
+    @apply inline-block bg-cta-orange text-white font-sans font-medium text-lg px-8 py-3 rounded-card shadow-md hover:bg-cta-orange-hover hover:shadow-lg transition-all duration-300;
+  }
+
+  /* Secundaire knop: Wit met donkerblauwe rand */
+  .btn-secondary {
+    @apply inline-block bg-white text-primary-dark-blue border border-primary-dark-blue font-sans font-medium text-lg px-8 py-3 rounded-card shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-300;
+  }
+  
+  .card {
+    /* Standaard card styling */
+    @apply bg-white p-6 rounded-card shadow-sm;
+  }
+  
+  .quote {
+    /* Lora Italic voor quotes */
+    @apply font-lora italic text-lg text-primary-dark-blue; /* Assuming quotes are slightly larger and blue */
+  }
+
+  /* Verwijder de .bg-primary overrides, pas kleuren direct toe in componenten */
+  /* 
+  .bg-primary h1, 
+  ... 
+  */
+}
