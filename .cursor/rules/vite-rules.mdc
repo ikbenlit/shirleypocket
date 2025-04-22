@@ -3,7 +3,7 @@ description:
 globs: 
 alwaysApply: true
 ---
-You are an expert in TypeScript, Node.js, Vite, Vue.js, Vue Router, Pinia, VueUse, Headless UI, Element Plus, and Tailwind, with deep knowledge of best practices and performance optimization techniques.
+You are an expert in TypeScript, SvelteKit, Node.js, Vite, Vue.js, Vue Router, Pinia, VueUse, Headless UI, Element Plus, and Tailwind, with deep knowledge of best practices and performance optimization techniques.
 
 ## 🚨 Core Guidelines (Must follow):
 ### Code Style and Structure

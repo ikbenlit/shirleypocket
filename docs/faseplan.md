@@ -6,6 +6,21 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 
 ---
 
+### Fase -1: Planning & Documentatie
+
+*   **Taak:** Analyseren basisdocumentatie (`easyleadership-landings-aanbodpagina.md`, styleguide, eisen).
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Definiëren hoofd-ontwikkelingsfasen (POC, Pagina's, Testen, Lancering, Doorontwikkeling).
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Uitsplitsen van fasen in concrete, uitvoerbare taken.
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Toewijzen initiële status aan elke taak.
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Opstellen en structureren van `faseplan.md`.
+    *   *Status:* ✅ Voltooid
+
+---
+
 ### Fase 0: Voorbereiding & Setup
 
 *   **Taak:** Project setup (SvelteKit, Vercel).
@@ -49,17 +64,45 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 
 ### Fase 3: Ontwikkeling Landingspagina (voor Leidinggevenden)
 
-*   **Taak:** Ontwikkelen structuur en content per sectie (Hero, Functies, Voordelen, CTA, Footer).
+*   **Taak:** Ontwikkelen structuur en content per sectie Landingspagina (Hero, Functies, Voordelen, CTA, Footer).
     *   *Status:* ✅ Voltooid
-*   **Taak:** Implementeren visueel ontwerp (layout, kleuren, typografie, animaties, illustratie) conform styleguide.
+*   **Taak:** Implementeren visueel ontwerp Landingspagina (layout, kleuren, typografie, animaties, illustratie) conform styleguide.
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Implementeren interactie-ontwerp Landingspagina (hovers, animaties, link naar login).
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Zorgen voor responsiveness Landingspagina (mobile-first).
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Implementeren toegankelijkheid Landingspagina (WCAG AA, focus states, aria-labels).
+    *   *Status:* 🟡 In uitvoering
+
+---
+
+### Fase 3.1: Ontwikkeling Loginpagina UI
+
+*   **Taak:** Ontwikkelen structuur en content Loginpagina (twee-kolommen layout).
+    *   *Status:* 🟡 In uitvoering
+*   **Taak:** Implementeren visueel ontwerp Loginpagina (conform beschrijving & layout).
     *   *Status:* ⚫️ Nog te starten
-*   **Taak:** Implementeren interactie-ontwerp (hovers, animaties, link naar login).
+*   **Taak:** Implementeren interactie-ontwerp Loginpagina (basis: focus, hover; excl. auth feedback).
+    *   *Status:* 🟡 In uitvoering
+*   **Taak:** Zorgen voor responsiveness Loginpagina.
     *   *Status:* ⚫️ Nog te starten
-*   **Taak:** Zorgen voor responsiveness (mobile-first).
+*   **Taak:** Implementeren basis toegankelijkheid Loginpagina.
     *   *Status:* ⚫️ Nog te starten
-*   **Taak:** Implementeren toegankelijkheid (WCAG AA, focus states, aria-labels).
+
+---
+
+### Fase 3.2: Implementatie Authenticatie (Firebase)
+
+*   **Taak:** Firebase project setup & Auth configuratie (activeren e-mail/wachtwoord, evt. magic link).
+    *   *Status:* 🟡 In uitvoering
+*   **Taak:** Installeren Firebase SDK (frontend).
+    *   *Status:* 🟡 In uitvoering
+*   **Taak:** Implementeren Login UI interactie met Firebase Auth (incl. feedback/validatie).
+    *   *Status:* 🟡 In uitvoering
+*   **Taak:** Opzetten Backend/Edge Function voor Firebase token validatie & API calls.
     *   *Status:* ⚫️ Nog te starten
-*   **Taak:** Integreren authenticatie (bv. Clerk/Auth0) voor de login.
+*   **Taak:** Implementeren Protected Routing (frontend).
     *   *Status:* ⚫️ Nog te starten
 
 ---
