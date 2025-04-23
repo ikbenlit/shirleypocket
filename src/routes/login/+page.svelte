@@ -1,7 +1,8 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { auth } from '$lib/firebase/client'; // Import Firebase auth instance
-  import { signInWithEmailAndPassword } from 'firebase/auth'; // Import login function
+  // Verwijder Firebase imports:
+  // import { auth } from '$lib/firebase/client'; 
+  // import { signInWithEmailAndPassword } from 'firebase/auth'; 
   // Logica voor authenticatie komt later
   import logoBlue from '$lib/images/EasyLeadership_button_white_edited.avif'; // Placeholder - check path
   import Button from '$lib/components/Button.svelte'; // Assuming Button component exists
@@ -15,20 +16,28 @@
   async function handleLogin() {
     isLoading = true;
     errorMessage = ''; // Reset error message
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log('Succesvol ingelogd!');
-      // Redirect naar de chatbot pagina na succesvolle login
-      // Vervang '/dashboard' door de daadwerkelijke route
-      goto('/dashboard'); 
-    } catch (error: any) {
-      console.error('Fout bij inloggen:', error);
-      // Geef een gebruikersvriendelijke foutmelding
-      // Dit kan specifieker op basis van de Firebase error code (error.code)
+
+    // Simuleer een kleine vertraging voor UX
+    await new Promise(resolve => setTimeout(resolve, 500)); 
+
+    const validUsers = {
+      'yvette@easyleadership.nl': 'easy123',
+      'colin@easyleadership.nl': 'easy123'
+    };
+
+    // Check hardcoded credentials
+    if (email in validUsers && validUsers[email as keyof typeof validUsers] === password) {
+      console.log('Succesvol ingelogd (hardcoded)!');
+      // Redirect naar de chatbot pagina voor POC
+      goto('/chat'); 
+    } else {
+      console.error('Fout bij inloggen: Ongeldige gegevens');
       errorMessage = 'Inloggen mislukt. Controleer je e-mailadres en wachtwoord.';
-    } finally {
-      isLoading = false;
+      isLoading = false; // Stop loading state bij fout
     }
+
+    // isLoading wordt nu alleen false gezet bij een fout, 
+    // omdat bij succes de pagina navigeert.
   }
 </script>
 
@@ -63,7 +72,7 @@
               autofocus
               bind:value={email}
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-neutral-dark-gray focus:outline-none focus:ring-primary-dark-blue focus:border-primary-dark-blue focus:z-10 sm:text-sm" 
-              placeholder="jouw.email@voorbeeld.com">
+              placeholder="yvette@easyleadership.nl or colin@easyleadership.nl">
           </div>
 
           <div>
@@ -76,7 +85,7 @@
               required 
               bind:value={password}
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-neutral-dark-gray focus:outline-none focus:ring-primary-dark-blue focus:border-primary-dark-blue focus:z-10 sm:text-sm" 
-              placeholder="Wachtwoord">
+              placeholder="Wachtwoord (easy123)">
           </div>
         
           <div class="flex items-center justify-end">

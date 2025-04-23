@@ -40,6 +40,10 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
     *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren van Yvette's tone of voice en coachingstijl (incl. ABC-model).
     *   *Status:* ✅ Voltooid
+*   **Taak:** Implementeer streaming responses voor de OpenAI API (backend).
+    *   *Status:* ✅ Voltooid
+*   **Taak:** Pas frontend aan om streaming responses te verwerken.
+    *   *Status:* ✅ Voltooid
 *   **Taak:** Garanderen van privacy (geen dataopslag).
     *   *Status:* ✅ Voltooid
 *   **Taak:** Basis testen van de bot (reactiesnelheid <2s, casusherkenning, reflectieve vragen).
@@ -100,6 +104,7 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
     *   *Status:* ✅ Voltooid
 *   **Taak:** Implementeren Login UI interactie met Firebase Auth (incl. feedback/validatie).
     *   *Status:* 🟡 In uitvoering
+    *   *Notitie:* Tijdelijke hardcoded login geïmplementeerd voor POC (gebruikers: yvette/colin, ww: easy123). Moet vervangen worden door Firebase voor productie.
 *   **Taak:** Opzetten Backend/Edge Function voor Firebase token validatie & API calls.
     *   *Status:* 🟡 In uitvoering
 *   **Taak:** Implementeren Protected Routing (frontend).
@@ -132,6 +137,8 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
     *   *Status:* ⚫️ Nog te starten
 *   **Taak:** Deployment Landingspagina (incl. authenticatie) naar Vercel.
     *   *Status:* ⚫️ Nog te starten
+*   **Taak:** Vervangen hardcoded POC login door Firebase authenticatie.
+    *   *Status:* ⚫️ Nog te starten
 *   **Taak:** Finale controle live omgeving.
     *   *Status:* ⚫️ Nog te starten
 *   **Taak:** Overdracht/presentatie POC & Aanbodpagina aan Yvette.
@@ -156,7 +163,7 @@ Dit plan is gebaseerd op `docs/easyleadership-landings-aanbodpagina.md`.
 ### Samenvatting huidige status:
 *Laatste update: [huidige datum]*
 
-✅ **Fase 1: POC Easyleader-bot** - Vrijwel voltooid! Functionele chatbot met OpenAI-integratie en ABC-model implementatie.
+✅ **Fase 1: POC Easyleader-bot** - Voltooid! Functionele chatbot met OpenAI-integratie, ABC-model en streaming responses.
 
 ✅ **Fase 3: Landingspagina** - Grotendeels voltooid, toegankelijkheid nog in uitvoering.
 

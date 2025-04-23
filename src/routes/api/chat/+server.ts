@@ -1,6 +1,7 @@
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from './$types';
+import { json, type RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './$types.js';
 import OpenAI from 'openai';
+import { ReadableStream, TransformStream } from 'node:stream/web';
 
 // Initialiseer OpenAI client
 const openai = new OpenAI({
@@ -28,7 +29,7 @@ Je bent specifiek getraind in:
 Je antwoorden zijn kort en krachtig, en je moedigt zelfreflectie aan.
 `;
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }: RequestEvent) => {
     try {
         const { messages } = await request.json();
         
@@ -38,18 +39,46 @@ export const POST: RequestHandler = async ({ request }) => {
             ...messages
         ];
         
-        // Roep de OpenAI API aan
-        const completion = await openai.chat.completions.create({
+        // Roep de OpenAI API aan met streaming ingeschakeld
+        const response = await openai.chat.completions.create({
             model: "gpt-4-turbo",
             messages: fullMessages,
-            temperature: 0.7, // Iets creatief maar grotendeels consistent
-            max_tokens: 500,  // Beperk lengte voor snellere reacties
+            temperature: 0.7,
+            max_tokens: 500,
+            stream: true,
         });
 
-        // Stuur het antwoord terug
-        return json({
-            message: completion.choices[0].message,
-            usage: completion.usage
+        // Creëer een ReadableStream om chunks door te geven
+        const stream = new ReadableStream({
+            async start(controller) {
+                const encoder = new TextEncoder();
+                try {
+                    for await (const chunk of response) {
+                        const text = chunk.choices[0]?.delta?.content || '';
+                        if (text) {
+                            // Stuur de tekst chunk direct door
+                            controller.enqueue(encoder.encode(text));
+                        }
+                    }
+                } catch (error) {
+                    console.error('Stream error:', error);
+                    controller.error(error); // Geef de fout door aan de stream
+                } finally {
+                    controller.close(); // Sluit de stream als de OpenAI stream klaar is
+                }
+            },
+            cancel() {
+                 console.log("Stream cancelled by client.");
+            }
+        });
+
+        // Stuur de stream terug als response, cast naar any om type conflict op te lossen
+        return new Response(stream as any, {
+            headers: {
+                'Content-Type': 'text/plain; charset=utf-8',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+            },
         });
     } catch (error) {
         console.error('Error bij het aanroepen van de OpenAI API:', error);

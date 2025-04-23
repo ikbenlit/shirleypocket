@@ -1,85 +1,88 @@
-# SvelteKit Boilerplate
+# Easyleader-bot
 
-This is a basic boilerplate project for SvelteKit applications, including:
+Easyleader-bot is een digitale coach applicatie, ontwikkeld voor Easyleadership, die leidinggevenden ondersteunt bij hun ontwikkeling. De bot maakt gebruik van het ABC-model (Activating event, Belief, Consequence) om reflectie te stimuleren en biedt een veilige omgeving om te oefenen met leiderschapssituaties zoals moeilijke gesprekken.
 
-*   SvelteKit (with `@sveltejs/adapter-auto` for flexible deployment)
-*   TypeScript
-*   Tailwind CSS (with PostCSS and Autoprefixer)
-*   ESLint
-*   Prettier
-*   Vitest for unit testing
+## Belangrijkste Features
 
-## Using This Boilerplate to Start a New Project
+*   **Chat Interface:** Interactieve chat met de AI-coach.
+*   **ABC-Model Coaching:** Gestructureerde gesprekken volgens het ABC-model.
+*   **Reflectieve Vragen:** Stimuleert zelfinzicht en ontwikkeling.
+*   **Praktische Tips:** Biedt concrete handvatten voor leiderschapssituaties.
+*   **Authenticatie:** Veilige login voor gebruikers (via Firebase).
 
-1.  **Copy the Boilerplate:**
-    Copy all files and folders from this boilerplate directory to a new directory for your project.
+## Technologie Stack
 
-2.  **Initialize Git:**
-    Navigate to your new project directory in the terminal and run:
+*   **Frontend:** SvelteKit, TypeScript
+*   **Styling:** Tailwind CSS
+*   **AI:** OpenAI API (GPT-4 Turbo)
+*   **Authenticatie:** Firebase Authentication
+*   **Deployment:** Vercel (geconfigureerd met `@sveltejs/adapter-vercel`)
+*   **Linting/Formatting:** ESLint, Prettier
+*   **Testing:** Vitest
+
+## Getting Started
+
+### Vereisten
+
+*   Node.js (versie aanbevolen in `.nvmrc` of nieuwste LTS)
+*   npm, yarn, of pnpm
+
+### Installatie
+
+1.  **Clone de repository:**
     ```bash
-    git init
-    git add .
-    git commit -m "Initial commit from boilerplate"
+    git clone <repository-url>
+    cd <project-directory>
     ```
-    *(The original `.git` folder should not be present in the boilerplate copy)*
 
-3.  **Install Dependencies:**
+2.  **Installeer dependencies:**
     ```bash
     npm install
-    # or yarn install or pnpm install
+    # of yarn install / pnpm install
     ```
 
-4.  **Update `package.json`:**
-    Open `package.json` and update the `"name"`, `"version"`, and other relevant fields for your new project.
+### Omgevingsvariabelen (Environment Variables)
 
-5.  **Configure Environment Variables:**
-    Copy the empty `.env` file to `.env.local` (or edit `.env` directly) and add your project-specific environment variables.
+Maak een `.env` bestand aan in de root van het project door `.env.example` (indien aanwezig) te kopiëren of door het handmatig aan te maken. Voeg de volgende variabelen toe:
 
-6.  **Start the Development Server:**
-    ```bash
-    npm run dev
-    # or yarn dev or pnpm dev
-    ```
-    Open [http://localhost:5173](http://localhost:5173) (or the specified port) in your browser.
+```env
+# Firebase Configuratie (verkrijg deze uit je Firebase project console)
+# Let op: Gebruik VITE_ prefix voor client-side variabelen
+VITE_FIREBASE_API_KEY="your_firebase_api_key"
+VITE_FIREBASE_AUTH_DOMAIN="your_firebase_auth_domain"
+VITE_FIREBASE_PROJECT_ID="your_firebase_project_id"
+VITE_FIREBASE_STORAGE_BUCKET="your_firebase_storage_bucket"
+VITE_FIREBASE_MESSAGING_SENDER_ID="your_firebase_messaging_sender_id"
+VITE_FIREBASE_APP_ID="your_firebase_app_id"
 
----
+# OpenAI API Key (server-side only, geen VITE_ prefix)
+OPENAI_API_KEY="your_openai_api_key"
+```
 
-## Available Scripts
+**Belangrijk:** Voeg nooit je `.env` bestand toe aan Git.
 
-*   `npm run dev`: Starts the development server.
-*   `npm run build`: Builds the application for production.
-*   `npm run preview`: Runs a local preview of the production build.
-*   `npm run check`: Runs Svelte Check to validate types.
-*   `npm run lint`: Lints the code using ESLint and Prettier.
-*   `npm run format`: Formats the code using Prettier.
-*   `npm run test:unit`: Runs unit tests using Vitest.
-*   `npm run test`: Runs all tests (currently only unit tests).
+## Applicatie Draaien
 
-## Project Structure
+Start de development server:
 
-*   `src/`
-    *   `lib/`: Contains reusable components, utilities, stores, etc.
-        *   `components/`: Svelte components.
-        *   `stores/`: Svelte stores.
-        *   `utils/`: Utility functions.
-        *   `index.ts`: Exports from the lib directory.
-    *   `routes/`: Contains the application's routes.
-    *   `app.html`: The main HTML template.
-    *   `app.css`: Global CSS styles (Tailwind base/components/utilities are imported here).
-    *   `app.d.ts`: Ambient type definitions for SvelteKit.
-*   `static/`: Static assets (favicon, etc.).
-*   `tests/`: Contains test files (though Vitest can find tests alongside code).
-*   `svelte.config.js`: SvelteKit configuration.
-*   `vite.config.ts`: Vite configuration.
-*   `tailwind.config.js`: Tailwind CSS configuration.
-*   `postcss.config.js`: PostCSS configuration.
-*   `tsconfig.json`: TypeScript configuration.
-*   `.eslintrc.cjs`: ESLint configuration.
-*   `.prettierrc`: Prettier configuration.
+```bash
+npm run dev
+# of yarn dev / pnpm dev
+```
 
-## Customization
+Open [http://localhost:5173](http://localhost:5173) (of de getoonde poort) in je browser.
 
-*   **Styling:** Modify `tailwind.config.js` and add custom styles to `src/app.css`.
-*   **Components:** Add your reusable components to `src/lib/components/`.
-*   **Routing:** Add new pages and layouts in the `src/routes/` directory.
-*   **Deployment:** The `@sveltejs/adapter-auto` will attempt to detect the deployment environment (Vercel, Netlify, Cloudflare Pages, Node). You can install a specific adapter (e.g., `@sveltejs/adapter-node`) if needed.
+## Beschikbare Scripts
+
+*   `npm run dev`: Start de development server.
+*   `npm run build`: Bouwt de applicatie voor productie.
+*   `npm run preview`: Draait een lokale preview van de productie build.
+*   `npm run check`: Voert Svelte Check uit om types te valideren.
+*   `npm run lint`: Lint de code met ESLint en Prettier.
+*   `npm run format`: Formatteert de code met Prettier.
+*   `npm run test:unit`: Voert unit tests uit met Vitest.
+*   `npm run test`: Voert alle tests uit.
+
+## Deployment
+
+De applicatie is geconfigureerd om te deployen naar Vercel met behulp van `@sveltejs/adapter-vercel`.
