@@ -20,7 +20,8 @@ Dit implementatieplan beschrijft de stappen om een MVP (Minimum Viable Product) 
 ### 1.1 Toevoegen van Mode Toggle UI
 - **Locatie**: `src/routes/chat/+page.svelte`
 - **Taken**:
-  - Ontwerp een eenvoudige toggle-knop of dropdown (passend bij de bestaande UI-componenten zoals in `ThemeToggle.svelte`)
+  - Ontwerp een eenvoudige, **toegankelijke (a11y)** toggle-knop of dropdown (passend bij de bestaande UI-componenten zoals in `ThemeToggle.svelte`)
+  - Stijl de nieuwe elementen met **Tailwind CSS**, conform de bestaande styling
   - Plaats deze naast de huidige UI-elementen in de chatinterface, mogelijk in de buurt van het inputveld of in de header
   - Voeg tekstuele toelichting toe die elke modus kort uitlegt:
     - "Coaching modus: Reflecteer op je leiderschap en krijg coaching vragen"
@@ -81,8 +82,10 @@ Dit implementatieplan beschrijft de stappen om een MVP (Minimum Viable Product) 
 - **Taken**:
   - Test het wisselen tussen modi
   - Verifieer dat de modus correct wordt doorgegeven aan de backend
+  - Test backend validatie: wat gebeurt er bij een ongeldige/ontbrekende `mode` parameter in de API-request?
   - Controleer of de bot anders reageert in de verschillende modi
   - Test de persistentie van de modus tijdens de chatsessie
+  - Test de context consistentie: blijft de bot consistent binnen zijn rol tijdens een langer rollenspelgesprek met de huidige contextlengte?
 
 ### 3.2 Gebruikerstests
 - **Taken**:
@@ -126,7 +129,7 @@ Dit implementatieplan beschrijft de stappen om een MVP (Minimum Viable Product) 
 - Zorg ervoor dat de chatgeschiedenis compatibel is met beide modi
 - Overweeg hoe je omgaat met het wisselen van modus binnen een lopend gesprek
   - Optie 1: Voeg een bevestiging toe bij moduswissel tijdens een gesprek
-  - Optie 2: Reset de chat automatisch bij moduswissel
+  - Optie 2: Reset de chat automatisch bij moduswissel. **Communiceer deze reset duidelijk aan de gebruiker.**
 - Controleer of er voldoende context wordt meegestuurd naar de bot om consistent te blijven binnen een gekozen rol
 - Voorkom dat de codebase te complex wordt; deze functie moet eenvoudig te onderhouden zijn
 - Zorg voor voldoende foutafhandeling, bijvoorbeeld als de moduswissel niet correct wordt doorgegeven
