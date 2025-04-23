@@ -8,6 +8,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'brand': 'rgb(145 194 207)',
         'primary-dark-blue': 'rgb(0 61 75)',
         'secondary-light-blue-gray': 'rgb(191 207 210)',
         'highlight-light-aqua': 'rgb(145 194 207)',

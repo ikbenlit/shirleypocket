@@ -7,6 +7,8 @@
   import logoBlue from '$lib/images/EasyLeadership_button_white_edited.avif'; // Placeholder - check path
   import Button from '$lib/components/Button.svelte'; // Assuming Button component exists
   import heroImage from '$lib/images/easyleader-bot-chatinterface-mockup.webp'; // Placeholder for onboarding image
+  // import AuroraBackground from '$lib/components/aurorabackground.svelte'; // Verwijder import AuroraBackground
+  import Glow from '$lib/components/ui/glow.svelte'; // Importeer Glow component
 
   let email = '';
   let password = '';
@@ -123,11 +125,14 @@
       </div>
     </div>
 
-    <!-- Kolom 2: Informatie & Onboarding Sectie -->
-    <div class="hidden lg:block lg:col-span-2 relative bg-primary-dark-blue overflow-y-auto h-screen">
+    <!-- Kolom 2: Informatie & Onboarding Sectie - Hersteld -->
+    <div class="hidden lg:block lg:col-span-2 relative bg-primary-dark-blue h-screen overflow-y-auto"> <!-- Herstel overflow-y-auto voor scrollen -->
+      <!-- Spotlight vanaf boven: default variant, override top/translate-y -->
+      <Glow className="h-[60vh] w-[60vw] bg-white/30 opacity-75 blur-3xl top-0 translate-y-0" variant="default" /> 
        <!-- Background image/gradient can be applied here -->
-      <div class="flex flex-col justify-start items-start h-full p-8 lg:p-12 text-white">
-        <h3 class="text-2xl md:text-3xl font-bold mb-4">
+       <!-- Text content container needs higher z-index -->
+      <div class="relative z-10 flex flex-col justify-start items-start h-full p-8 lg:p-12 text-white"> 
+        <h3 class="text-2xl md:text-3xl font-bold mb-4 text-white">
           Welkom Yvette bij de Easyleader-bot
         </h3>
         <p class="text-base md:text-lg font-light mb-4">Beste Yvette,</p>
