@@ -1,6 +1,9 @@
 <script>
 	import '../app.css';
-	let { children } = $props();
 </script>
 
-<slot />
+<div class="min-h-screen flex flex-col">
+	<main class="flex-grow">
+		<slot />
+	</main>
+</div>

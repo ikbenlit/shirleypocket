@@ -62,27 +62,31 @@
 @layer base {
   html {
     /* Default: Lora Regular voor body, Poppins als sans fallback */
-    @apply bg-white text-neutral-dark-gray font-lora font-normal;
+    @apply bg-white text-neutral-dark-gray font-lora font-normal transition-colors duration-300;
+  }
+  
+  .dark {
+    @apply bg-gray-900 text-gray-100;
   }
   
   h1 {
     /* Poppins Bold, 32-4xl (styleguide: 24-32px) */
-    @apply font-sans font-bold text-3xl md:text-4xl text-primary-dark-blue;
+    @apply font-sans font-bold text-3xl md:text-4xl text-primary-dark-blue dark:text-highlight-light-aqua;
   }
   
   h2 {
     /* Lora Bold, 2xl-3xl (styleguide: 20-24px) */
-    @apply font-lora font-bold text-2xl md:text-3xl text-primary-dark-blue;
+    @apply font-lora font-bold text-2xl md:text-3xl text-primary-dark-blue dark:text-highlight-light-aqua;
   }
   
   h3 {
     /* Poppins Medium, xl-2xl (styleguide: 18-20px) */
-    @apply font-sans font-medium text-xl md:text-2xl text-primary-dark-blue;
+    @apply font-sans font-medium text-xl md:text-2xl text-primary-dark-blue dark:text-highlight-light-aqua;
   }
   
   p {
     /* Inherits font-lora from html, standard size */
-    @apply text-base;
+    @apply text-base dark:text-gray-300;
   }
 
   /* Apply Poppins Light for functional text where needed (e.g., specific paragraphs) */
@@ -94,22 +98,22 @@
 @layer components {
   /* Primaire knop: Oranje achtergrond, witte tekst */
   .btn-primary {
-    @apply inline-block bg-cta-orange text-white font-sans font-medium text-lg px-8 py-3 rounded-card shadow-md hover:bg-cta-orange-hover hover:shadow-lg transition-all duration-300;
+    @apply inline-block bg-cta-orange text-white font-sans font-medium text-lg px-8 py-3 rounded-card shadow-md hover:bg-cta-orange-hover hover:shadow-lg transition-all duration-300 dark:bg-cta-orange dark:hover:bg-cta-orange-hover;
   }
 
   /* Secundaire knop: Wit met donkerblauwe rand */
   .btn-secondary {
-    @apply inline-block bg-white text-primary-dark-blue border border-primary-dark-blue font-sans font-medium text-lg px-8 py-3 rounded-card shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-300;
+    @apply inline-block bg-white text-primary-dark-blue border border-primary-dark-blue font-sans font-medium text-lg px-8 py-3 rounded-card shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-300 dark:bg-gray-800 dark:text-gray-100 dark:border-highlight-light-aqua dark:hover:bg-gray-700;
   }
   
   .card {
     /* Standaard card styling */
-    @apply bg-white p-6 rounded-card shadow-sm;
+    @apply bg-white p-6 rounded-card shadow-sm dark:bg-gray-800 dark:shadow-md transition-colors duration-300;
   }
   
   .quote {
     /* Lora Italic voor quotes */
-    @apply font-lora italic text-lg text-primary-dark-blue; /* Assuming quotes are slightly larger and blue */
+    @apply font-lora italic text-lg text-primary-dark-blue dark:text-highlight-light-aqua; /* Assuming quotes are slightly larger and blue */
   }
 
   /* Verwijder de .bg-primary overrides, pas kleuren direct toe in componenten */

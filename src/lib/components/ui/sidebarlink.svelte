@@ -11,6 +11,7 @@
       label: string;
       href: string;
       icon: string;
+      target?: string;
     }
 
     // Props
@@ -34,6 +35,8 @@
   
   <a 
     href={link.href}
+    target={link.target || '_self'}
+    rel={link.target === '_blank' ? 'noopener noreferrer' : undefined}
     class={cn(
       "flex items-center justify-start gap-2 group/sidebar py-2",
       className
@@ -41,10 +44,16 @@
   >
     <span>{@html link.icon}</span>
     
-    {#if !animate || open}
+    {#if animate}
       <span 
-        class="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
-        style={animate ? `opacity: ${open ? 1 : 0}` : 'opacity: 1'}
+        class="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition-all duration-300 ease-in-out whitespace-pre overflow-hidden"
+        style={`max-width: ${open ? '200px' : '0px'}; opacity: ${open ? 1 : 0}; margin-left: ${open ? '8px' : '0px'};`}
+      >
+        {link.label}
+      </span>
+    {:else}
+      <span 
+        class="text-neutral-700 dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre ml-2"
       >
         {link.label}
       </span>

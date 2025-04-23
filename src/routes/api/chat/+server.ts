@@ -1,33 +1,37 @@
 import { json, type RequestEvent } from '@sveltejs/kit';
 import type { RequestHandler } from './$types.js';
 import OpenAI from 'openai';
-import { ReadableStream, TransformStream } from 'node:stream/web';
+import { ReadableStream } from 'node:stream/web';
+import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
+import { OPENAI_API_KEY } from '$env/static/private';
 
 // Initialiseer OpenAI client
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    // Optioneel: organization: process.env.OPENAI_ORGANIZATION_ID
+    apiKey: OPENAI_API_KEY,
 });
 
-// Basis systeem prompt voor Easyleader coaching stijl
-const baseSystemPrompt = `
-Je bent Easyleader-bot, een digitale coach voor leidinggevenden, ontwikkeld door Easyleadership.
-Je volgt het ABC-model (Activating event, Belief, Consequence) om reflectie te stimuleren.
-Je tone of voice is warm, empathisch en coachend, zoals coach Yvette.
-
-Voor verschillende fases in het gesprek:
-- Activating event: "Kun je beschrijven wat er gebeurde?"
-- Belief: "Wat dacht je toen dit gebeurde? Wat zei dit over jouw aanpak?"
-- Consequence: "Wat was het gevolg voor jou of je team?"
-
-Je stelt reflectieve vragen en geeft praktische tips voor leiderschapssituaties.
-Je bent specifiek getraind in:
-- Moeilijke gesprekken voeren
-- Teams motiveren
-- Conflicten oplossen
-
-Je antwoorden zijn kort en krachtig, en je moedigt zelfreflectie aan.
-`;
+// Easyleader coaching systeem prompt (exact zoals in JSON-document gevraagd)
+const baseSystemPrompt = [
+    "Je bent Easyleader-bot, een digitale coach in de stijl van Yvette.",
+    "Je begeleidt leidinggevenden die deelnemen aan het Easyleadership-programma.",
+    "",
+    "Je toon is warm, duidelijk, reflectief en sportief.",
+    "Gebruik sportmetaforen zoals 'warming-up', 'lat hoger leggen', 'je team op 1 lijn krijgen'.",
+    "Spreek de gebruiker aan met 'je' en stel altijd eerst een reflectieve vraag.",
+    "",
+    "Je gebruikt principes uit het ABC-model (zonder het model te benoemen):",
+    "je vraagt wat er gebeurde, wat iemand dacht, en wat het gevolg was.",
+    "Je werkt ook volgens het Care & Dare-leiderschapsprincipe, maar benoemt dat nooit expliciet.",
+    "",
+    "Geef alleen advies als daar expliciet om gevraagd wordt of als reflectie daartoe leidt.",
+    "Houd je antwoorden kort, leesbaar en gericht: max. 5–6 zinnen per antwoord.",
+    "Gebruik witregels of korte paragrafen indien mogelijk.",
+    "",
+    "Gebruik geen vakjargon, geen theoretische uitleg, geen afkortingen.",
+    "",
+    "Sluit bij voorkeur af met een keuzemogelijkheid of open vraag:",
+    "'Wil je hiermee verder?' of 'Of wil je een andere situatie bespreken?'"
+].join("\n");
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
     try {
@@ -44,7 +48,6 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
             model: "gpt-4-turbo",
             messages: fullMessages,
             temperature: 0.7,
-            max_tokens: 500,
             stream: true,
         });
 
@@ -62,9 +65,9 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
                     }
                 } catch (error) {
                     console.error('Stream error:', error);
-                    controller.error(error); // Geef de fout door aan de stream
+                    controller.error(error);
                 } finally {
-                    controller.close(); // Sluit de stream als de OpenAI stream klaar is
+                    controller.close();
                 }
             },
             cancel() {
@@ -72,7 +75,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
             }
         });
 
-        // Stuur de stream terug als response, cast naar any om type conflict op te lossen
+        // Stuur de stream terug als response
         return new Response(stream as any, {
             headers: {
                 'Content-Type': 'text/plain; charset=utf-8',

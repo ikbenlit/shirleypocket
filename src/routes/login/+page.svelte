@@ -3,7 +3,7 @@
   // Verwijder Firebase imports:
   // import { auth } from '$lib/firebase/client'; 
   // import { signInWithEmailAndPassword } from 'firebase/auth'; 
-  // Logica voor authenticatie komt later
+  import { setUser } from '$lib/stores/userStore.js'; // Importeer setUser (met .js extensie)
   import logoBlue from '$lib/images/EasyLeadership_button_white_edited.avif'; // Placeholder - check path
   import Button from '$lib/components/Button.svelte'; // Assuming Button component exists
   import heroImage from '$lib/images/easyleader-bot-chatinterface-mockup.webp'; // Placeholder for onboarding image
@@ -28,6 +28,8 @@
     // Check hardcoded credentials
     if (email in validUsers && validUsers[email as keyof typeof validUsers] === password) {
       console.log('Succesvol ingelogd (hardcoded)!');
+      // Update de user store met het e-mailadres
+      setUser(email);
       // Redirect naar de chatbot pagina voor POC
       goto('/chat'); 
     } else {
