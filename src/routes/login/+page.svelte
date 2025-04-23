@@ -113,28 +113,56 @@
               {errorMessage}
             </p>
           {/if}
+
+          <p class="mt-4 text-center">
+            <a href="/" class="text-sm font-light text-primary-dark-blue hover:underline">
+              Terug naar home
+            </a>
+          </p>
         </form>
       </div>
     </div>
 
     <!-- Kolom 2: Informatie & Onboarding Sectie -->
-    <div class="hidden lg:block lg:col-span-2 relative bg-primary-dark-blue">
+    <div class="hidden lg:block lg:col-span-2 relative bg-primary-dark-blue overflow-y-auto h-screen">
        <!-- Background image/gradient can be applied here -->
-      <div class="flex flex-col justify-center items-center h-full p-8 lg:p-12 text-white text-center">
-        <!-- Placeholder image -->
-        <img 
-          src={heroImage} 
-          alt="Easyleader-bot chat interface mockup" 
-          class="w-full max-w-xs md:max-w-sm mx-auto mb-8 rounded-lg shadow-md"
-        />
+      <div class="flex flex-col justify-start items-start h-full p-8 lg:p-12 text-white">
         <h3 class="text-2xl md:text-3xl font-bold mb-4">
-          Jouw Digitale Coach Wacht
+          Welkom Yvette bij de Easyleader-bot
         </h3>
-        <ul class="space-y-2 text-base md:text-lg font-light max-w-lg mx-auto">
-          <li>✓ Krijg direct inzicht met het ABC-model.</li>
-          <li>✓ Oefen met lastige gesprekken in een veilige omgeving.</li>
-          <li>✓ Toegankelijk 24/7, als aanvulling op je programma.</li>
+        <p class="text-base md:text-lg font-light mb-4">Beste Yvette,</p>
+        <p class="text-base md:text-lg font-light mb-4">
+          Ik heb deze eerste versie van de Easyleader-bot opgezet als proof of concept, een werkende demo die je gratis kunt uitproberen. Je krijgt hier een eerste indruk van hoe jouw stijl, aanpak en energie digitaal vertaald kunnen worden.
+        </p>
+        <p class="text-base md:text-lg font-light mb-6">
+          Mijn doel is simpel: je inspireren en laten ervaren wat er mogelijk is. Hoe mooi zou het zijn als deze bot straks jouw klanten kan helpen, ook als jij er even niet bij bent? 😊
+        </p>
+
+        <h4 class="text-xl md:text-2xl font-semibold mb-3">Wat kan de bot nu?</h4>
+        <ul class="list-disc space-y-2 text-base md:text-lg font-light mb-6 ml-6">
+          <li>De bot stelt reflectieve vragen gebaseerd op jouw stijl en aanpak</li>
+          <li>Gesprekken blijven privé en worden niet opgeslagen</li>
+          <li>De toon is warm, sportief en herkenbaar 'Yvette'</li>
+          <li>De interface is eenvoudig en mobielvriendelijk</li>
         </ul>
+
+        <h4 class="text-xl md:text-2xl font-semibold mb-3">Wat zou er nog meer kunnen?</h4>
+        <p class="text-base md:text-lg font-light mb-4">
+          Een van de ideeën die we verder kunnen uitwerken, is een rollenspelmodus waarin gebruikers:
+        </p>
+        <ul class="list-disc space-y-2 text-base md:text-lg font-light mb-4 ml-6">
+            <li>Gesprekken kunnen oefenen (de bot speelt dan bijvoorbeeld een lastige medewerker)</li>
+            <li>Kunnen ervaren hoe hun boodschap overkomt</li>
+        </ul>
+         <p class="text-base md:text-lg font-light mb-6">
+          Sluit goed aan op jouw stijl van leren door te doen, toch? 😉
+        </p>
+
+        <p class="text-base md:text-lg font-light mb-4">
+            Laat vooral weten wat je ervan vindt, of als je andere ideeën hebt. Ik ben benieuwd!
+        </p>
+        <p class="text-base md:text-lg font-light">Colin</p>
+
       </div>
     </div>
 
