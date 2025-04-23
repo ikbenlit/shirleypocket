@@ -39,7 +39,7 @@
       <!-- Description -->
       <p
         class={cn(
-          "max-w-[550px]",
+          "max-w-[800x]",
           "text-xl md:text-2xl",
           "text-white",
           "font-medium"
@@ -73,7 +73,7 @@
       </div>
 
       <!-- Mockup -->
-      <div class="relative w-full pt-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div class="relative w-full pt-12 px-4 sm:px-6 lg:px-8 max-w-lg mx-auto">
         <Mockup
           className={cn(
             "shadow-[0_0_50px_-12px_rgba(255,255,255,0.1)]",

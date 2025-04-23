@@ -74,10 +74,13 @@
 
 <!-- Nieuwe Hero Sectie met Mockup -->
 <HeroWithMockup
-	title="Yvette's digitale coach voor jouw leiderschap"
-	description="Start je warming-up met de Easyleader-bot. Reflecteer op je speelveld en zet concrete stappen vooruit, 24/7."
+	title="Welkom, Yvette 👋"
+	description="Wat begon als een idee in ons gesprek, staat hier nu live: jouw digitale coach in Easyleadership-stijl.
+Deze bot helpt leidinggevenden reflecteren, scherpte aanbrengen en gedrag ombuigen — zonder dat jij aan tafel hoeft te zitten.
+Warm, duidelijk en met de juiste vragen op het juiste moment.
+
+Precies zoals jij het doet. Alleen dan 24/7 beschikbaar. 😉"
 	primaryCta={{ text: "Log in en start", href: "/login" }}
-	secondaryCta={{ text: "Start de Coach", href: "/chat" }}
 	mockupImage={{
 		src: heroImage,
 		alt: "Visuele weergave van de Easyleader-bot chatinterface",
@@ -97,7 +100,7 @@
 			<InfoCard 
 				iconSrc="/icons/user.svg"
 				iconAlt="Reflectieve vragen icoon"
-				iconBgClass="bg-primary-dark-blue/10"
+				iconBgClass="bg-status-positive/10"
 				iconColorClass="text-primary-dark-blue" 
 				title="Reflectieve vragen"
 				text="Krijg inzichten met het ABC-model, zoals: 'Wat dacht je toen dit gebeurde?'"
@@ -107,7 +110,7 @@
 			<InfoCard 
 				iconSrc="/icons/chat-circle-dots.svg"
 				iconAlt="Praktische oefening icoon"
-				iconBgClass="bg-highlight-light-aqua/20"
+				iconBgClass="bg-status-positive/10"
 				iconColorClass="text-highlight-light-aqua"
 				title="Praktische oefening"
 				text="Oefen gesprekken, zoals een moeilijk gesprek met een teamlid."

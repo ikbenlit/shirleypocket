@@ -7,7 +7,7 @@
 	export let text: string;
 </script>
 
-<div class="bg-white p-6 rounded-card shadow-md text-center border border-gray-100 h-full flex flex-col">
+<div class="bg-white p-6 rounded-card shadow-md text-center border border-status-positive h-full flex flex-col">
 	<div class="w-16 h-16 {iconBgClass} rounded-full mx-auto mb-4 flex items-center justify-center flex-shrink-0">
 		<img src={iconSrc} alt={iconAlt} class="h-6 w-6 {iconColorClass}" />
 	</div>
