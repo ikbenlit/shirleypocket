@@ -6,12 +6,18 @@
   import type { User } from '../../stores/userStore.js';
   import { clearUser } from '../../stores/userStore.js';
   import { theme, toggleTheme } from '../../stores/themeStore.js';
+  import { sidebarStore } from '$lib/stores/sidebarStore.js';
   
   export let user: User;
   
   let isMenuOpen = false;
   let menuRef: HTMLDivElement;
   
+  let sidebarOpen: boolean;
+  sidebarStore.subscribe(value => {
+    sidebarOpen = value.open;
+  });
+
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
   }
@@ -36,34 +42,41 @@
 </script>
 
 <div class="relative" bind:this={menuRef}>
-  <!-- Avatar met klikfunctionaliteit -->
+  <!-- Avatar knop: pas padding/justify/space aan als sidebar ingeklapt -->
   <button 
-    class="flex items-center space-x-3 p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-200 w-full"
+    class="flex items-center p-2 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors duration-200 w-full"
+    class:justify-center={!sidebarOpen}
+    class:space-x-3={sidebarOpen}
     on:click={toggleMenu}
   >
     <Avatar {user} />
     
-    <div class="flex-1 text-left overflow-hidden">
-      <div class="font-medium truncate">{user.name ?? user.email}</div>
-      {#if user.name}
-      <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">{user.email}</div>
-      {/if}
-    </div>
+    <!-- Verberg tekst als sidebar ingeklapt -->
+    {#if sidebarOpen}
+      <div class="flex-1 text-left overflow-hidden transition-opacity duration-200 opacity-100">
+        <div class="font-medium truncate">{user.name ?? user.email}</div>
+        {#if user.name}
+        <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">{user.email}</div>
+        {/if}
+      </div>
+    {/if}
     
-    <!-- Pijl-icoon met animatie -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      class="w-5 h-5 transform transition-transform duration-200 text-neutral-500 dark:text-neutral-400"
-      class:rotate-180={isMenuOpen}
-    >
-      <path
-        fill-rule="evenodd"
-        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clip-rule="evenodd"
-      />
-    </svg>
+    <!-- Pijl-icoon: Verberg als sidebar ingeklapt -->
+    {#if sidebarOpen}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        class="w-5 h-5 transform transition-transform duration-200 text-neutral-500 dark:text-neutral-400 transition-opacity opacity-100"
+        class:rotate-180={isMenuOpen}
+      >
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    {/if}
   </button>
   
   <!-- Dropdown menu -->

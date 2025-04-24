@@ -73,7 +73,6 @@
               type="email" 
               autocomplete="email" 
               required 
-              autofocus
               bind:value={email}
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-neutral-dark-gray focus:outline-none focus:ring-primary-dark-blue focus:border-primary-dark-blue focus:z-10 sm:text-sm" 
               placeholder="yvette@easyleadership.nl or colin@easyleadership.nl">
