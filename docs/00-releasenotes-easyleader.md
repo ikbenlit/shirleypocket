@@ -67,6 +67,36 @@
 - CSS-berekeningen te vereenvoudigen waar mogelijk
 - Te testen op langzamere apparaten om prestatieproblemen vroegtijdig te ontdekken
 
+#### Verbeterde Theming en Dark Mode Consistentie in Chatinterface
+**Probleem:** De tekst in het inputveld van de chat was slecht leesbaar op de Vercel-deployment vanwege een onverwachte standaard donkere modus en een gebrek aan specifieke dark mode stijlen. De chatinterface vertoonde verder inconsistenties en slechte leesbaarheid in de donkere modus.
+
+**Oorzaak:**
+1.  De website kon onverwacht in donkere modus starten gebaseerd op de OS-voorkeur van de gebruiker, zelfs als er geen expliciete thema-keuze was opgeslagen in `localStorage`.
+2.  Een significant aantal UI-elementen binnen de chatpagina (`src/routes/chat/+page.svelte`) miste specifieke Tailwind CSS `dark:` varianten. Dit leidde tot problemen met contrast en een inconsistente gebruikerservaring wanneer de donkere modus actief was.
+
+**Oplossing:**
+1.  Het initialisatiescript voor het thema in `src/app.html` is aangepast. De website start nu standaard in de lichte modus. De donkere modus wordt alleen geactiveerd als `'dark'` expliciet is opgeslagen als thema-voorkeur in `localStorage`. De OS-voorkeur wordt niet langer gebruikt voor de initiële thema-instelling.
+2.  Er zijn uitgebreide `dark:` mode Tailwind-klassen toegevoegd aan diverse elementen in `src/routes/chat/+page.svelte` om een consistente en goed leesbare donkere modus te garanderen. Dit omvat:
+    *   Het hoofdinputveld (tekstkleur, placeholder-kleur, achtergrondkleur, border-kleur).
+    *   De achtergrond van de container van het inputveld.
+    *   De algemene achtergrond van de pagina en de achtergrond van de chatberichten-container.
+    *   De "Je gesprekken worden niet opgeslagen" privacy banner.
+    *   De chatbubbels van de gebruiker (achtergrondkleur, tekstkleur, border-kleur).
+
+### Verbeteringen
+- **Optimalisatie `baseSystemPrompt` voor OpenAI API:**
+    - De `baseSystemPrompt` die gebruikt wordt voor de OpenAI API is verplaatst van een hardgecodeerde string in `src/routes/api/chat/+server.ts` naar een extern Markdown-bestand (`src/lib/server/prompts/easyleadership_baseprompt.md`).
+    - Deze wijziging verbetert de leesbaarheid en onderhoudbaarheid van de prompt aanzienlijk.
+    - De prompt wordt nu dynamisch ingeladen in `server.ts` met Vite's `?raw` importfunctionaliteit.
+
+- **Verdere Verfijning Dark Mode in Chatinterface:**
+  - Themakleuren en `dark:` Tailwind CSS-varianten zijn nu consistent toegepast in `src/routes/chat/+page.svelte` voor een verbeterde gebruikerservaring in donkere modus. Specifieke aanpassingen omvatten:
+    - Hoofdachtergrond: Gebruik van `bg-secondary-light-blue-gray` en `dark:bg-gray-900`.
+    - Chatcontainer: `dark:bg-slate-800`.
+    - Privacybanner: Gestyled met `bg-status-positive` en `dark:bg-emerald-600`, inclusief `dark:text-white` voor de tekst.
+    - Gebruikersberichten: Aangepaste borders (`border-highlight-light-aqua`), achtergronden (`dark:bg-sky-600`, `dark:border-sky-400`) en tekstkleuren (`text-neutral-dark-gray`, `dark:text-sky-50`).
+    - Invoerveld: Volledige dark mode styling voor het veld zelf (o.a. `dark:bg-gray-800`, `dark:text-gray-200`), placeholdertekst (`dark:placeholder-gray-400`), borders (`dark:border-gray-600`) en focusstijlen (`dark:focus:border-highlight-light-aqua`).
+
 ---
 
 ## Versie 1.0.0 - [Release datum]

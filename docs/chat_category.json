@@ -1,0 +1,99 @@
+[
+    {
+      "id": "verantwoordelijkheid",
+      "title": "Eigen verantwoordelijkheid, pro-activiteit en delegeren",
+      "questions": [
+        {
+          "text": "Als ik een verbetering voor elkaar wil krijgen, krijg ik weinig input van mijn team. Ik zou graag wat meer pro-activiteit zien in het aandragen van ideeën. Hoe krijg ik dat voor elkaar?",
+          "categories": ["verantwoordelijkheid","continueVerbetering"]
+        },
+        {
+          "text": "Ik ben erg druk en het lukt me niet goed om te delegeren. Hoe doe ik dat?",
+          "categories": ["verantwoordelijkheid"]
+        },
+        {
+          "text": "Ik wil dat mijn medewerker pro-actiever zelf zaken oppakt, hoe pak ik zo’n gesprek aan?",
+          "categories": ["verantwoordelijkheid"]
+        }
+      ]
+    },
+    {
+      "id": "teammeetings",
+      "title": "Team meetings leiden",
+      "questions": [
+        {
+          "text": "Tijdens mijn teammeetings ben ik voornamelijk aan het woord en is het dus snel eenrichtingsverkeer. Hoe kan ik ervoor zorgen dat mijn team meedoet?"
+        },
+        {
+          "text": "In teammeetings zie ik dat maar een deel meedoet. Sommigen kijken op hun telefoon en anderen zitten een beetje naar elkaar te seinen. Hoe maak ik dit bespreekbaar?"
+        },
+        {
+          "text": "Ik wil graag commitment hebben van het hele team op besluiten die we nemen. Hoe pak ik dat aan?"
+        }
+      ]
+    },
+    {
+      "id": "weerstand",
+      "title": "Omgaan met weerstand",
+      "questions": [
+        {
+          "text": "Mijn medewerker blijft weerstand vertonen tegen de nieuwe manier van werken, hoe kan ik dit gesprek voeren zodat hij meegaat in de verandering?"
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "title": "Performance-gesprekken voeren",
+      "questions": [
+        {
+          "text": "Ik begrijp niet dat mijn medewerkers niet gewoon doen wat we hebben afgesproken, wat doe ik verkeerd?"
+        }
+      ]
+    },
+    {
+      "id": "afspraken",
+      "title": "Goede afspraken maken",
+      "questions": [
+        {
+          "text": "Hoe zorg ik dat afspraken concreet genoeg zijn, zodat er later geen verwarring ontstaat?"
+        },
+        {
+          "text": "Wat is een effectieve manier om wederzijdse verwachtingen vast te leggen in een team?"
+        }
+      ]
+    },
+    {
+      "id": "strategie",
+      "title": "Bijdragen aan doelen en strategie van de organisatie",
+      "questions": [
+        {
+          "text": "Het lijkt wel of mijn team zich niet bewust is van het effect van dingen die ze laten liggen op de rest van de organisatie, ook al heb ik dit al vaak benadrukt. Wat moet ik doen zodat ze eigenaarschap gaan pakken?"
+        }
+      ]
+    },
+    {
+      "id": "tijd",
+      "title": "Eigen tijd managen",
+      "questions": [
+        {
+          "text": "Welke technieken kan ik gebruiken om minder gestoord te worden en mijn focus vast te houden?"
+        },
+        {
+          "text": "Hoe combineer ik delegeren met het bewaken van mijn eigen deadlines?"
+        }
+      ]
+    },
+    {
+      "id": "continueVerbetering",
+      "title": "Zorgen voor continue verbetering",
+      "questions": [
+        {
+          "text": "Ik heb allerlei verbeteringen bedacht en gecommuniceerd naar mijn team en toch wordt het maar heel minimaal opgepakt. Ik moet er steeds achteraan jagen en herhalen dat het belangrijk is om op de nieuwe manier te werken, heel vermoeiend."
+        },
+        {
+          "text": "Hoe stimuleer ik mijn team om elke week verbeterideeën aan te dragen, in plaats van alleen in grote retrospectives?"
+        }
+      ]
+    }
+  ]
+  

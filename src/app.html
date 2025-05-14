@@ -15,7 +15,10 @@
 
 		<!-- Initialiseer dark mode om flikkering te voorkomen -->
 		<script>
-			const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+			// Bepaal het thema: 'dark' als het zo in localStorage staat, anders 'light'.
+			// Dit zorgt ervoor dat de site standaard in lichte modus start,
+			// tenzij de gebruiker expliciet voor donker heeft gekozen en dit is opgeslagen.
+			const theme = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
 			document.documentElement.classList.toggle('dark', theme === 'dark');
 		</script>
 

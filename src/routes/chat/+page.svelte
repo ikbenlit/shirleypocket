@@ -268,7 +268,7 @@
 </script>
 
 <!-- Main container with flex layout -->
-<div class="flex h-screen bg-[rgb(191,207,210)]">
+<div class="flex h-screen bg-secondary-light-blue-gray dark:bg-gray-900">
 
   <!-- Mobile Menu Trigger -->
   <MobileMenuTrigger />
@@ -346,14 +346,14 @@
   <!-- Main chat area -->
   <div class="flex-1 flex flex-col overflow-hidden p-2 sm:p-4">
     <!-- Chat Container (met oorspronkelijke achtergrond/schaduw) -->
-    <div class="flex flex-1 mx-auto w-full max-w-full sm:max-w-[600px] flex-col rounded-xl bg-white shadow-lg overflow-hidden"> 
+    <div class="flex flex-1 mx-auto w-full max-w-full sm:max-w-[600px] flex-col rounded-xl bg-white dark:bg-slate-800 shadow-lg overflow-hidden"> 
       <!-- Berichten Area (scrollable) -->
       <div bind:this={scrollContainer} class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
         
         <!-- Privacy melding banner -->
         <div class="flex justify-center mb-2 items-center">
-          <div class="rounded-md bg-[rgb(0,204,156)] px-3 py-1">
-            <p class="font-poppins text-xs sm:text-sm font-medium text-white">Je gesprekken worden niet opgeslagen</p>
+          <div class="rounded-md bg-status-positive dark:bg-emerald-600 px-3 py-1">
+            <p class="font-poppins text-xs sm:text-sm font-medium text-white dark:text-white">Je gesprekken worden niet opgeslagen</p>
           </div>
         </div>
         
@@ -369,8 +369,8 @@
           {:else}
             <!-- Gebruiker Bericht -->
             <div class="flex justify-end">
-              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl border border-[rgb(145,194,207)] bg-white px-3 sm:px-4 py-2">
-                <p class="font-poppins text-xs sm:text-sm font-medium text-[rgb(64,110,120)]">{message.text}</p>
+              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl border border-highlight-light-aqua bg-white dark:bg-sky-600 dark:border-sky-400 px-3 sm:px-4 py-2">
+                <p class="font-poppins text-xs sm:text-sm font-medium text-neutral-dark-gray dark:text-sky-50">{message.text}</p>
               </div>
             </div>
           {/if}
@@ -406,14 +406,20 @@
       </div>
 
       <!-- Input Area (oorspronkelijke stijl) -->
-      <div class="flex items-center border-t border-gray-200 p-2 sm:p-3 bg-white">
+      <div class="flex items-center border-t border-gray-200 p-2 sm:p-3 bg-white dark:bg-gray-800">
         <input
           type="text"
           bind:value={userInput}
           bind:this={inputElement}
           on:keypress={(e) => e.key === 'Enter' && sendMessage()}
           placeholder="Beschrijf je situatie of vraag..."
-          class="min-h-[40px] flex-1 rounded-xl border border-gray-300 p-2 sm:p-3 pr-8 sm:pr-10 text-sm sm:text-base font-poppins focus:border-[rgb(145,194,207)] focus:outline-none focus:ring-2 focus:ring-[rgb(145,194,207)] transition-colors duration-200"
+          class="min-h-[40px] flex-1 rounded-xl 
+                 bg-white text-neutral-dark-gray placeholder-gray-500 border border-gray-300 
+                 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 dark:border-gray-600 
+                 p-2 sm:p-3 pr-8 sm:pr-10 text-sm sm:text-base font-poppins 
+                 focus:border-highlight-light-aqua focus:ring-2 focus:ring-highlight-light-aqua 
+                 dark:focus:border-highlight-light-aqua dark:focus:ring-highlight-light-aqua 
+                 transition-colors duration-200"
           disabled={isTyping}
         />
         <button
