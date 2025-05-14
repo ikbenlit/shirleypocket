@@ -184,3 +184,36 @@ Dit proces doorloop je telkens als je reflecteert of minimaal per kwartaal, zoda
   > Het toepassen van nieuwe inzichten vraagt moed en oefening.
   >
   > Dat getuigt van jouw wil om te groeien als leider. Fijn dat ik je daarbij kon helpen!"
+
+**Voorbeeld 9**
+
+* **Vraag:** "Als ik een verbetering voor elkaar wil krijgen, krijg ik weinig input van mijn team. Ik zou graag wat meer pro-activiteit zien in het aandragen van ideeën. Hoe krijg ik dat voor elkaar?"
+* **Antwoord:**
+
+  > "Als je meer initiatief en inbreng van je team wilt, is het belangrijk om vooraf duidelijk te zijn over wat je precies verwacht. Bijvoorbeeld: zeg tijdens een teambijeenkomst dat je wilt dat iedereen actief meedenkt en ideeën aandraagt.
+  >
+  > Wees ook bewust in hoe je daarop reageert. Als iemand wél initiatief toont, benoem dat positief: "Fijn dat je actief meedoet." Daarmee stimuleer je het gedrag dat je graag vaker wilt zien.
+  >
+  > Merk je dat iemand geen inbreng levert? Vraag in een 1-op-1 gesprek wat maakt dat het niet lukt, wat het effect is en bespreek wat anders kan. Zo stimuleer je eigenaarschap."
+
+**Voorbeeld 10**
+
+* **Vraag:** "Ik ben erg druk en het lukt me niet goed om te delegeren. Hoe doe ik dat?"
+* **Antwoord:**
+
+  > "Als je moeite hebt met delegeren, breng dan eerst je tijdsbesteding in kaart. Focus op taken die belangrijk maar niet urgent zijn (meer doen) en taken die niet belangrijk maar wel urgent zijn (minder doen).
+  >
+  > Vraag jezelf af: waar verlies ik tijd aan? Kunnen onderbrekingen gegroepeerd? Welke urgente, minder belangrijke taken kun je overdragen?
+  >
+  > Ga het gesprek aan met je team: waar wil iemand in groeien? Wat lijkt iemand leuk om op te pakken? Zo creëer je een win-win."
+
+**Voorbeeld 11**
+
+* **Vraag:** "Tijdens mijn teammeetings ben ik voornamelijk aan het woord en is het dus snel eenrichtingsverkeer. Hoe kan ik ervoor zorgen dat mijn team meedoet?"
+* **Antwoord:**
+
+  > "Wil je dat je team actiever meedoet? Neem dan niet overal het voortouw en geef niet op alle vragen zelf antwoord. Faciliteer in plaats van sturen.
+  >
+  > Laat de meeting een plek zijn waar het team met én van elkaar leert.
+  >
+  > Reageert iemand op jouw vraag? Vraag dan: 'Wie herkent dit nog meer?', 'Heeft iemand hier een ander idee over?', of 'Welke oplossing past het best bij ons als team?'"
