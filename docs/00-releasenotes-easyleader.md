@@ -1,5 +1,27 @@
 # Easyleader Releasenotes
 
+## Versie 1.0.2 - [Huidige datum]
+
+### Nieuwe functies
+
+- **Introductie Categoriekeuze en Suggestievragen in Chat:**
+  - Gebruikers kunnen nu bij aanvang van de chat kiezen uit vooraf gedefinieerde leiderschapscategorieën (bijv. "Verantwoordelijkheid/Pro-activiteit/Delegeren", "Teammeetings", "Omgaan met weerstand", etc.).
+  - De categorieën worden weergegeven als klikbare "chips" direct onder het welkomstbericht.
+  - Elke categorie heeft een unieke themakleur voor visuele herkenbaarheid.
+  - Na het selecteren van een categorie verschijnen er relevante suggestievragen als klikbare items onder de categoriechips.
+  - Het selecteren van een suggestievraag vult automatisch het inputveld en verzendt de vraag, waardoor de interactie wordt gestroomlijnd.
+  - Er is een "Meer..." / "Minder..." knop functionaliteit geïmplementeerd voor de categoriechips om de interface overzichtelijk te houden; initieel worden 3 categorieën getoond, de rest na een klik op "Meer...".
+  - De data voor categorieën en vragen wordt geladen uit `src/lib/data/chat_category.json`.
+  - Deze functionaliteit vervangt de eerdere "Casus Knoppen" en biedt een meer gestructureerde en uitgebreide manier om een gespreksonderwerp te kiezen.
+  - De implementatie omvat nieuwe Svelte componenten (`CategoryChipContainer.svelte`, `CategoryChip.svelte`, `QuestionChip.svelte`) en een Svelte store (`chatStore.ts`) voor state management.
+
+### Verbeteringen
+
+- **Optimalisatie System Prompt voor LLM:**
+  - De `easyleadership_baseprompt.md` (system prompt) is geoptimaliseerd voor duidelijkere en meer gestructureerde LLM-antwoorden.
+  - De prompt bevat nu explicietere instructies over de gewenste lengte van alinea's, het gebruik van witregels, en de correcte opmaak van opsommingen (Markdown list-stijl).
+  - Het doel is om de output van de LLM beknopter, beter leesbaar en consistenter te maken.
+
 ## Versie 1.0.1 - [Huidige datum]
 
 ### Opgeloste problemen

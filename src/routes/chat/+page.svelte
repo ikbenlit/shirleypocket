@@ -7,6 +7,8 @@
   import { userStore } from '../../lib/stores/userStore.js';
   import { sidebarStore } from '$lib/stores/sidebarStore.js';
   import { browser } from '$app/environment';
+  import { chatStore, selectedQuestionText } from '$lib/stores/chatStore';
+  import CategoryChipContainer from '$lib/components/chat/CategoryChipContainer.svelte';
   // Verwijder de import van het favicon, we gebruiken het direct vanuit static/icons
   // import favicon from '../../assets/favicon.png';
   
@@ -43,17 +45,37 @@
   let userInput = '';
   let messages: Message[] = [];
   let isTyping = false;
-  let casusGekozen = false;
   let scrollContainer: HTMLDivElement; // Referentie naar de scrollbare div
   let inputElement: HTMLInputElement; // Referentie naar het input element
   let showInfoModal = false; // State voor info modal
   
-  // Casus opties
-  const casusOpties = [
-    { id: 'moeilijk-gesprek', label: 'Moeilijk gesprek' },
-    { id: 'team-motiveren', label: 'Team motiveren' },
-    { id: 'conflict-oplossen', label: 'Conflict oplossen' }
-  ];
+  // State voor categorie chips integratie
+  let showCategoryChipsDisplay: boolean = false; // Zal geset worden door de store
+  let activeCategorySelectedID: string | null = null; // Zal geset worden door de store
+
+  // Definieer de structuur van de store's state voor typering
+  interface PageChatStoreValue {
+    allCategories: unknown[]; // We gebruiken allCategories hier niet direct, dus unknown is ok
+    activeCategoryId: string | null;
+    showCategoryPicker: boolean;
+    isLoading: boolean;
+    error: string | null;
+  }
+
+  chatStore.subscribe((value: PageChatStoreValue) => {
+    showCategoryChipsDisplay = value.showCategoryPicker;
+    activeCategorySelectedID = value.activeCategoryId;
+  });
+
+  // Reageer op selectie van een vraag uit de chip container
+  $: if (browser && $selectedQuestionText) { // browser check voor tick/DOM interacties
+    userInput = $selectedQuestionText;
+    selectedQuestionText.set(null); // Reset store om herhaald vullen te voorkomen
+    tick().then(() => {
+      sendMessage(); // Stuur bericht automatisch
+      // Focus wordt al gehandeld in sendMessage finally block
+    });
+  }
   
   // Functie om naar de bodem van de chat te scrollen
   async function scrollToBottom() {
@@ -66,7 +88,6 @@
   // Initialiseer de chat met welkomstbericht
   function initializeChat() {
     // Reset state
-    casusGekozen = false;
     messages = [];
     
     // Voeg welkomstbericht toe
@@ -190,75 +211,6 @@
     }
   }
   
-  // Functie voor het kiezen van een casus
-  async function kiesCasus(casusLabel: string) {
-    const casus = casusOpties.find(o => o.label === casusLabel)?.id || casusLabel;
-    console.log('kiesCasus aangeroepen met:', casus, 'Label:', casusLabel);
-    
-    // Markeer dat een casus is gekozen
-    casusGekozen = true;
-    
-    // Voeg casusbericht toe (als user message)
-    const casusMessage: Message = {
-      id: Date.now(),
-      sender: 'user',
-      text: `Ik wil het hebben over: ${casusLabel}`,
-      role: 'user'
-    };
-    messages = [...messages, casusMessage];
-    
-    // Scroll na toevoegen casusbericht
-    scrollToBottom();
-    
-    // Bereid initieel bericht voor API voor
-    const initialMessagesForAPI = [{
-      role: 'user',
-      content: `Ik wil het hebben over: ${casusLabel}. Stel me vragen volgens het ABC-model om te reflecteren.`
-    }];
-
-    isTyping = true;
-    // Maak direct een placeholder bot bericht aan
-    const botMessageId = Date.now() + 1; // Zorg voor unieke ID
-    messages = [...messages, {
-      id: botMessageId,
-      sender: 'bot',
-      text: '', // Begin met lege tekst
-      role: 'assistant'
-    }];
-    // Scroll na toevoegen placeholder bot bericht
-    scrollToBottom();
-
-    try {
-      // Roep de backend API aan
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: initialMessagesForAPI })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API aanroep mislukt: ${response.statusText}`);
-      }
-
-      // Verwerk de streaming response (scrollen gebeurt nu binnen processStream)
-      await processStream(response, botMessageId);
-
-    } catch (error) {
-      console.error('Fout bij het streamen van de API:', error);
-      // Update het bot bericht met een foutmelding
-      messages = messages.map(msg =>
-        msg.id === botMessageId ? { ...msg, text: "Sorry, er is iets misgegaan met de casus start. Probeer het opnieuw." } : msg
-      );
-      // Scroll na foutmelding update
-      scrollToBottom();
-    } finally {
-      isTyping = false;
-      // Zet focus terug op input veld na casus kiezen
-      await tick();
-      inputElement?.focus();
-    }
-  }
-  
   // Functie voor het afhandelen van Enter-toets
   function handleKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
@@ -357,6 +309,13 @@
           </div>
         </div>
         
+        <!-- CATEGORY CHIP CONTAINER -->
+        {#if showCategoryChipsDisplay}
+          <div class="mt-1 mb-3">
+            <CategoryChipContainer />
+          </div>
+        {/if}
+        
         <!-- Berichten loop met oorspronkelijke styling -->
         {#each messages as message (message.id)}
           {#if message.sender === 'bot'}
@@ -389,20 +348,6 @@
           </div>
         {/if}
 
-        <!-- Casus Knoppen (oorspronkelijke stijl) -->
-        {#if !casusGekozen && messages.length === 1}
-          <div class="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
-            {#each casusOpties as casus}
-              <button
-                on:click={() => kiesCasus(casus.label)}
-                class="min-h-[40px] rounded-xl bg-cta-orange px-3 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2 w-full sm:w-auto"
-                aria-label="Kies het onderwerp: {casus.label}"
-              >
-                {casus.label}
-              </button>
-            {/each}
-          </div>
-        {/if}
       </div>
 
       <!-- Input Area (oorspronkelijke stijl) -->
@@ -411,7 +356,7 @@
           type="text"
           bind:value={userInput}
           bind:this={inputElement}
-          on:keypress={(e) => e.key === 'Enter' && sendMessage()}
+          on:keypress={handleKeyPress}
           placeholder="Beschrijf je situatie of vraag..."
           class="min-h-[40px] flex-1 rounded-xl 
                  bg-white text-neutral-dark-gray placeholder-gray-500 border border-gray-300 
