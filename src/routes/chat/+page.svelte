@@ -394,8 +394,8 @@
           <div class="mt-4 flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-2">
             {#each casusOpties as casus}
               <button
-                on:click={() => kiesCasus(casus.label)} 
-                class="min-h-[40px] rounded-xl bg-[rgb(255,119,0)] px-3 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-[rgb(255,159,51)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[rgb(255,179,71)] focus:ring-offset-2 w-full sm:w-auto"
+                on:click={() => kiesCasus(casus.label)}
+                class="min-h-[40px] rounded-xl bg-cta-orange px-3 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2 w-full sm:w-auto"
                 aria-label="Kies het onderwerp: {casus.label}"
               >
                 {casus.label}
@@ -418,7 +418,7 @@
         />
         <button
           on:click={sendMessage}
-          class="ml-2 sm:ml-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-[rgb(255,119,0)] text-white shadow-md hover:bg-[rgb(255,159,51)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[rgb(255,179,71)] focus:ring-offset-2"
+          class="ml-2 sm:ml-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-cta-orange text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2"
           aria-label="Verzend bericht"
           disabled={isTyping || userInput.trim() === ''}
         >
@@ -473,9 +473,9 @@
       </div>
       
       <div class="mt-5 sm:mt-6 flex justify-end">
-        <button 
+        <button
           on:click={() => showInfoModal = false}
-          class="rounded-xl bg-[rgb(255,119,0)] px-3 sm:px-4 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-[rgb(255,159,51)] transition-colors"
+          class="rounded-xl bg-cta-orange px-3 sm:px-4 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2"
         >
           Sluiten
         </button>
