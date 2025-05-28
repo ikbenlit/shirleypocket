@@ -1,13 +1,13 @@
-# Easyleader-bot
+# Shirley Chatbot – Afvallen doe je zo
 
-Easyleader-bot is een digitale coach applicatie, ontwikkeld voor Easyleadership, die leidinggevenden ondersteunt bij hun ontwikkeling. De bot maakt gebruik van het ABC-model (Activating event, Belief, Consequence) om reflectie te stimuleren en biedt een veilige omgeving om te oefenen met leiderschapssituaties zoals moeilijke gesprekken.
+De Shirley Chatbot is een digitale coach voor deelnemers aan het programma "Afvallen doe je zo". De bot geeft 24/7 praktische, motiverende en programma-conforme antwoorden op vragen over voeding en mindset, in Shirley's directe stijl. De chatbot verwijst door naar relevante modules, video's en werkboeken binnen de Online Academy.
 
 ## Belangrijkste Features
 
-*   **Chat Interface:** Interactieve chat met de AI-coach.
-*   **ABC-Model Coaching:** Gestructureerde gesprekken volgens het ABC-model.
-*   **Reflectieve Vragen:** Stimuleert zelfinzicht en ontwikkeling.
-*   **Praktische Tips:** Biedt concrete handvatten voor leiderschapssituaties.
+*   **Chat Interface:** Direct chatten met Shirley's AI-coach.
+*   **Voedings- en mindsetadvies:** Antwoorden in Shirley's stem, altijd praktisch en motiverend.
+*   **Doorverwijzingen:** Links naar caloriecalculator, modules, video's en werkboeken.
+*   **Privacy:** Geen opslag van persoonlijke data, alleen sessie-informatie.
 *   **Authenticatie:** Veilige login voor gebruikers (via Firebase).
 
 ## Technologie Stack
@@ -16,7 +16,7 @@ Easyleader-bot is een digitale coach applicatie, ontwikkeld voor Easyleadership,
 *   **Styling:** Tailwind CSS
 *   **AI:** OpenAI API (GPT-4 Turbo)
 *   **Authenticatie:** Firebase Authentication
-*   **Deployment:** Vercel (geconfigureerd met `@sveltejs/adapter-vercel`)
+*   **Deployment:** Vercel (met `@sveltejs/adapter-vercel`)
 *   **Linting/Formatting:** ESLint, Prettier
 *   **Testing:** Vitest
 
@@ -24,53 +24,51 @@ Easyleader-bot is een digitale coach applicatie, ontwikkeld voor Easyleadership,
 
 ### Vereisten
 
-*   Node.js (versie aanbevolen in `.nvmrc` of nieuwste LTS)
-*   npm, yarn, of pnpm
+*   Node.js (laatste LTS aanbevolen)
+*   npm, yarn of pnpm
 
 ### Installatie
 
 1.  **Clone de repository:**
-    ```bash
+    ```powershell
     git clone <repository-url>
     cd <project-directory>
     ```
 
 2.  **Installeer dependencies:**
-    ```bash
+    ```powershell
     npm install
     # of yarn install / pnpm install
     ```
 
 ### Omgevingsvariabelen (Environment Variables)
 
-Maak een `.env` bestand aan in de root van het project door `.env.example` (indien aanwezig) te kopiëren of door het handmatig aan te maken. Voeg de volgende variabelen toe:
+Maak een `.env` bestand aan in de root van het project. Zie `docs/01-pocket-shirley-technische-eisen.md` voor de benodigde variabelen. Voorbeeld:
 
 ```env
-# Firebase Configuratie (verkrijg deze uit je Firebase project console)
-# Let op: Gebruik VITE_ prefix voor client-side variabelen
-VITE_FIREBASE_API_KEY="your_firebase_api_key"
-VITE_FIREBASE_AUTH_DOMAIN="your_firebase_auth_domain"
-VITE_FIREBASE_PROJECT_ID="your_firebase_project_id"
-VITE_FIREBASE_STORAGE_BUCKET="your_firebase_storage_bucket"
-VITE_FIREBASE_MESSAGING_SENDER_ID="your_firebase_messaging_sender_id"
-VITE_FIREBASE_APP_ID="your_firebase_app_id"
+# Firebase Configuratie (gebruik VITE_ prefix voor client-side variabelen)
+VITE_FIREBASE_API_KEY="..."
+VITE_FIREBASE_AUTH_DOMAIN="..."
+VITE_FIREBASE_PROJECT_ID="..."
+VITE_FIREBASE_STORAGE_BUCKET="..."
+VITE_FIREBASE_MESSAGING_SENDER_ID="..."
+VITE_FIREBASE_APP_ID="..."
 
 # OpenAI API Key (server-side only, geen VITE_ prefix)
-OPENAI_API_KEY="your_openai_api_key"
+OPENAI_API_KEY="..."
 ```
 
-**Belangrijk:** Voeg nooit je `.env` bestand toe aan Git.
+**Let op:** Voeg nooit je `.env` bestand toe aan Git.
 
 ## Applicatie Draaien
 
 Start de development server:
 
-```bash
+```powershell
 npm run dev
-# of yarn dev / pnpm dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) (of de getoonde poort) in je browser.
+Open [http://localhost:5173](http://localhost:5173) in je browser.
 
 ## Beschikbare Scripts
 
@@ -83,6 +81,15 @@ Open [http://localhost:5173](http://localhost:5173) (of de getoonde poort) in je
 *   `npm run test:unit`: Voert unit tests uit met Vitest.
 *   `npm run test`: Voert alle tests uit.
 
-## Deployment
+## Documentatie
 
-De applicatie is geconfigureerd om te deployen naar Vercel met behulp van `@sveltejs/adapter-vercel`.
+Zie de map [`docs/`](./docs) voor:
+- Projectbeschrijving en requirements (`00-pocket-schirley-prd.md`)
+- Technische eisen (`01-pocket-shirley-technische-eisen.md`)
+- Functionele eisen (`02-pocket-shirley-functionele-eisen.md`)
+- Stijl en tone-of-voice (`03-shirley-bot-styleguide.md`)
+- Migratieplan (`08-shirley-migratieplan.md`)
+
+## Roadmap
+
+Zie het migratieplan en de PRD voor toekomstige uitbreidingen zoals contextbewustzijn, gebruikersprofielen, notificaties en dashboard.

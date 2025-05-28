@@ -1,6 +1,6 @@
 {
-	"name": "legalboost-poc",
-	"version": "0.0.1",
+	"name": "shirley-chatbot",
+	"version": "0.1.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
@@ -67,7 +67,11 @@
 		"vitest": "^3.0.0"
 	},
 	"keywords": [
-		"svelte"
+		"svelte",
+		"chatbot",
+		"shirley",
+		"health",
+		"coaching"
 	],
 	"dependencies": {
 		"@heroicons/react": "^2.2.0",
