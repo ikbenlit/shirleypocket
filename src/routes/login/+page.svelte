@@ -4,8 +4,8 @@
   // import { auth } from '$lib/firebase/client'; 
   // import { signInWithEmailAndPassword } from 'firebase/auth'; 
   import { setUser } from '$lib/stores/userStore.js'; // Importeer setUser (met .js extensie)
+  import AvatarBubble from '$lib/components/ui/AvatarBubble.svelte';
   // logoBlue en heroImage worden niet meer direct gebruikt in deze layout.
-  // import logoBlue from '$lib/images/EasyLeadership_button_white_edited.avif';
   // import heroImage from '$lib/images/shirley-bot-hero.png'; 
   // Glow component wordt vervangen door inline stijl of custom CSS class
   // import Glow from '$lib/components/ui/glow.svelte'; 
@@ -25,8 +25,6 @@
 
     const validUsers = {
       'demo@shirleybot.nl': 'welkom123', // Gebaseerd op HTML demo credentials
-      'yvette@easyleadership.nl': 'easy123',
-      'colin@easyleadership.nl': 'easy123'
     };
 
     // Check hardcoded credentials
@@ -64,10 +62,16 @@
     <div class="relative z-10 max-w-md w-full bg-white p-8 md:p-10 rounded-3xl shadow-xl shadow-slate-200/70">
       <!-- Logo Placeholder -->
       <div class="flex justify-center mb-8">
-        <img src="/images/avatar_shirley.webp" alt="Shirley Avatar" class="w-16 h-16 rounded-full shadow-md">
+        <AvatarBubble
+          text="Welkom terug, we hebben je gemist!"
+          avatarSrc="/images/avatar_shirley.webp"
+          avatarSize="large"
+          bubbleAlign="center"
+          textAlign="center"
+          textSize="text-3xl"
+          textColor="text-black"
+        />
       </div>
-      
-      <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Welkom terug</h1>
       
       <form on:submit|preventDefault={handleLogin} class="space-y-6">
         <div>
@@ -136,6 +140,11 @@
           <a href="/" class="text-sm text-gray-500 hover:text-gray-800">Terug naar home</a>
         </div>
       </form>
+      <div class="mt-6 bg-pink-100 text-gray-800 p-4 rounded-xl shadow text-sm text-center">
+        <div class="font-semibold mb-1">Test inloggegevens:</div>
+        <div><span class="font-medium">E-mail:</span> demo@shirleybot.nl</div>
+        <div><span class="font-medium">Wachtwoord:</span> welkom123</div>
+      </div>
     </div>
   </div>
   
@@ -272,11 +281,7 @@
         </div>
       </div>
       
-      <div class="bg-pink-100 text-gray-800 p-4 rounded-2xl inline-block shadow-lg shadow-pink-200/50">
-        <p class="text-sm font-medium mb-1">Demo inloggegevens:</p>
-        <p class="text-sm">E-mail: demo@shirleybot.nl</p>
-        <p class="text-sm">Wachtwoord: welkom123</p>
-      </div>
+
     </div>
   </div>
 </div>

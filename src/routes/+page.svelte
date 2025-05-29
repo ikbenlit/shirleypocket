@@ -36,14 +36,15 @@
 </script>
 
 <svelte:head>
-	<title>HealthyLife Coach | Your AI Wellness Companion</title>
-	<meta name="description" content="Get personalized nutrition advice, workout plans, and wellness tips from your AI lifestyle coach. Try HealthyLife Coach free for 7 days!" />
-	<style>
-		body {
-			font-family: 'Poppins', sans-serif; /* Zorg ervoor dat Poppins globaal wordt toegepast */
-			scroll-behavior: smooth;
-		}
-	</style>
+    <title>Shirley in je pocket | Jouw persoonlijke S.H.A.P.E.-coach</title>
+    <meta name="description" content="Stel al je vragen over voeding, mindset en het S.H.A.P.E. programma aan Shirley's digitale zusje, 24/7 beschikbaar in de Online Academy." />
+    <meta name="robots" content="noindex, nofollow" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+    </style>
 </svelte:head>
 
 <div class="bg-beige-light">

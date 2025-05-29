@@ -5,6 +5,8 @@
   export let avatarSize: 'small' | 'medium' | 'large' = 'large';
   export let bubbleAlign: 'center' | 'left' | 'right' = 'center';
   export let textAlign: 'center' | 'left' | 'right' = 'center';
+  export let textSize: string = "text-2xl"; // standaardgrootte, pas aan naar wens
+  export let textColor: string = "text-gray-800";
 
   // Avatar size classes
   const avatarSizeClass = {
@@ -46,7 +48,7 @@
 <div class="flex flex-col items-center justify-center w-fit mx-auto">
   <div class="flex flex-col items-center">
     <div
-      class={`speech-bubble right mb-4 min-w-[200px] max-w-xl ${textAlignClass}`}
+      class={`speech-bubble right mb-4 min-w-[200px] max-w-xl ${textAlignClass} ${textSize} ${textColor}`}
       style="position: relative;"
     >
       {text}
