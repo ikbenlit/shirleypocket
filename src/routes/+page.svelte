@@ -36,15 +36,23 @@
 </script>
 
 <svelte:head>
-    <title>Shirley in je pocket | Jouw persoonlijke S.H.A.P.E.-coach</title>
-    <meta name="description" content="Stel al je vragen over voeding, mindset en het S.H.A.P.E. programma aan Shirley's digitale zusje, 24/7 beschikbaar in de Online Academy." />
-    <meta name="robots" content="noindex, nofollow" />
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            scroll-behavior: smooth;
-        }
-    </style>
+	<title>Shirley in je pocket | Jouw persoonlijke S.H.A.P.E.-coach</title>
+	<meta name="description" content="Stel al je vragen over voeding, mindset en het S.H.A.P.E. programma aan Shirley's digitale zusje, 24/7 beschikbaar in de Online Academy." />
+	
+	<!-- Favicon met avatar -->
+	<link rel="icon" type="image/webp" href="/shirley-avatar.webp" />
+	<link rel="apple-touch-icon" href="/shirley-avatar.webp" />
+	
+	<!-- Voor oudere browsers fallback -->
+	<link rel="icon" type="image/png" href="/shirley-avatar.webp" />
+	
+	<meta name="robots" content="noindex, nofollow" />
+	<style>
+		body {
+			font-family: 'Poppins', sans-serif;
+			scroll-behavior: smooth;
+		}
+	</style>
 </svelte:head>
 
 <div class="bg-beige-light">
