@@ -20,11 +20,12 @@
   export let icon: string | undefined = undefined;
   export let iconPosition: 'left' | 'right' = 'left';
   export let type: $$Props['type'] = 'button'; // Standaard 'button' voor een button element
-  export let elementClass: string = ''; // Hernoemd van 'class'
+  export let className: string = ''; // Hernoemd van elementClass naar className en later effectief 'class'
 
   // Dynamisch classes en icoon styling ophalen
-  $: actualElementClass = $$props.class || elementClass; 
-  $: finalClasses = getButtonClasses({ variant, size, shape, class: actualElementClass });
+  // Gebruik $$props.class om de class van de parent te ontvangen, fallback naar className prop indien nodig.
+  $: actualClass = $$props.class || className; 
+  $: finalClasses = getButtonClasses({ variant, size, shape, class: actualClass });
   $: ({ iconSize, iconMargin } = getIconStyling({ size, iconPosition }));
 
 </script>

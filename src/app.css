@@ -117,9 +117,23 @@
     @apply font-lora italic text-lg text-blue-accent dark:text-blue-light; /* Assuming quotes are slightly larger and blue */
   }
 
-  /* Verwijder de .bg-primary overrides, pas kleuren direct toe in componenten */
-  /* 
-  .bg-primary h1, 
-  ... 
-  */
+  .speech-bubble {
+    @apply bg-white rounded-xl px-4 py-3 shadow-md relative;
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    width: 0; height: 0;
+    border: 8px solid transparent;
+  }
+  .speech-bubble.left::before {
+    left: -8px;
+    top: 20px;
+    border-right-color: white;
+  }
+  .speech-bubble.right::before {
+    right: -8px;
+    top: 20px;
+    border-left-color: white;
+  }
 }

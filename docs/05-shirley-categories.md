@@ -1,5 +1,26 @@
 # Shirley Chatbot - Categorieën & Voorbeeldvragen
 
+---
+
+## 🛠️ Implementatieplan & Statusoverzicht (laatste update: [vul datum in])
+
+**Doel:** De huidige categorieën en voorbeeldvragen in de chat vervangen door Shirley's S.H.A.P.E.-categorieën, kleuren en iconen, zoals hieronder beschreven.
+
+### Plan & Status
+
+| Onderdeel                                 | Status  | Opmerkingen |
+|-------------------------------------------|---------|-------------|
+| 1. Nieuwe categorieën + vragen in JSON    | klaar   | chat_category.json is bijgewerkt naar Shirley's structuur (kleur, icon, vragen) |
+| 2. CategoryChip.svelte haalt kleur/icon uit data | klaar   | Mapping verwijderd, props gebruiken voor kleur en icoon |
+| 3. CategoryChipContainer.svelte ondersteunt nieuwe structuur | klaar   | key aangepast naar question.text, geen verdere aanpassingen nodig |
+| 4. Store/data-loader laadt nieuwe structuur | klaar   | types opgeschoond, store laadt nieuwe structuur direct |
+| 5. UI/UX: chips & modal volgens design    | bezig   | Optioneel: inline-chips pattern, modal/picker |
+| 6. Testen & valideren                     | todo    | Werkt alles zoals bedoeld? |
+
+**Legenda:** todo = nog te doen, bezig = in uitvoering, klaar = afgerond
+
+---
+
 ## Categorie-indeling voor "Shirley in je pocket"
 
 Gebaseerd op Shirley's S.H.A.P.E.-programma en de meest voorkomende vragen in haar community.

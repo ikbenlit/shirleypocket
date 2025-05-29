@@ -72,10 +72,21 @@
 {:else if allCategoriesFromStore.length > 0}
   <div class="mb-2">
     <div class="flex flex-wrap gap-2 p-2 bg-gray-100 rounded-lg shadow" role="toolbar" aria-label="Categorieën">
+      {#if !activeCategoryId}
+        <!-- Fallback chip: Kies een onderwerp -->
+        <button
+          class="px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-colors whitespace-nowrap text-gray-900"
+          style="background-color: #F8BBD9;"
+          on:click={toggleShowAllCategories}
+          aria-label="Kies een onderwerp"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke="#E91E63" stroke-width="2" fill="#F8BBD9" /><path d="M8 12h8M12 8v8" stroke="#E91E63" stroke-width="2" stroke-linecap="round"/></svg>
+          Kies een onderwerp
+        </button>
+      {/if}
       {#each displayedCategories as category (category.id)}
         <CategoryChip {category} on:select={handleCategorySelect} />
       {/each}
-      
       {#if hasMoreButton}
         <button 
           on:click={toggleShowAllCategories}
@@ -95,10 +106,35 @@
     </div>
   </div>
 
+  <!-- MODAL: Categoriekiezer -->
+  {#if showAllCategories}
+    <div class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40" on:click={() => showAllCategories = false}>
+      <div class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full relative" on:click|stopPropagation>
+        <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-600" aria-label="Sluiten" on:click={() => showAllCategories = false}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        <h2 class="text-lg font-bold mb-4 text-gray-800">Waar kan ik je mee helpen?</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {#each allCategoriesFromStore as category (category.id)}
+            <button
+              class="flex flex-col items-center justify-center rounded-lg p-3 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-300"
+              style={`background-color: ${category.color};`}
+              on:click={() => { handleCategorySelect({ detail: { id: category.id, title: category.title } }); showAllCategories = false; }}
+              aria-label={category.title}
+            >
+              <Icon name={category.icon} size={28} className={isDarkColor(category.color) ? 'text-white' : 'text-gray-900'} />
+              <span class={`mt-2 text-xs font-semibold ${isDarkColor(category.color) ? 'text-white' : 'text-gray-900'}`}>{category.title}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+    </div>
+  {/if}
+
   {#if activeCategoryId && activeQuestions.length > 0}
     <div class="mt-3 p-2 bg-gray-50 rounded-lg shadow-inner" transition:slide={{ duration: 250 }}>
       <h3 class="text-sm font-semibold text-gray-600 mb-2 px-1">Suggesties:</h3>
-      {#each activeQuestions as question (question.text + question.displayOrder)} 
+      {#each activeQuestions as question (question.text)} 
         <QuestionChip {question} on:selectQuestion={handleQuestionSelect} />
       {/each}
     </div>

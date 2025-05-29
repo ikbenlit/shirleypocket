@@ -52,13 +52,12 @@
 </script>
 
 <!-- Container die zowel Desktop als Mobiel/Overlay bevat -->
-<div class={$$props.class}> 
+<div class={cn($$props.class, "md:fixed md:inset-y-0 md:left-0 md:z-30 md:w-64")}> 
 
   <!-- Desktop Sidebar (zichtbaar vanaf md, breedte afhankelijk van 'open') -->
   <div 
     class={cn(
-      "h-full bg-neutral-100 dark:bg-neutral-800 px-4 py-4 hidden md:flex md:flex-col flex-shrink-0 transition-width duration-300 ease-in-out", 
-      // Conditionele breedte classes
+      "h-full bg-neutral-100 dark:bg-neutral-800 px-4 py-4 flex flex-col flex-shrink-0 transition-width duration-300 ease-in-out", 
       open ? 'md:w-64' : 'md:w-20' 
     )}
     role="navigation"

@@ -4,13 +4,12 @@
   import SidebarLink from '$lib/components/ui/sidebarlink.svelte';
   import UserMenu from '$lib/components/ui/user-menu.svelte';
   import MobileMenuTrigger from '$lib/components/ui/mobile-menu-trigger.svelte';
-  import { userStore } from '../../lib/stores/userStore.js';
   import { sidebarStore } from '$lib/stores/sidebarStore.js';
+  import { userStore, type User } from '$lib/stores/userStore.js';
   import { browser } from '$app/environment';
-  import { chatStore, selectedQuestionText } from '$lib/stores/chatStore';
+  import { chatStore, selectedQuestionText } from '$lib/stores/chatStore.js';
   import CategoryChipContainer from '$lib/components/chat/CategoryChipContainer.svelte';
-  // Verwijder de import van het favicon, we gebruiken het direct vanuit static/icons
-  // import favicon from '../../assets/favicon.png';
+  import ChatMessage from '$lib/components/chat/ChatMessage.svelte';
   
   // Voeg viewport meta tag toe voor mobiele apparaten
   if (browser) {
@@ -30,8 +29,11 @@
     sidebarOpen = value.open;
   });
   
-  // State voor de user
-  let user = $userStore;
+  // Haal de user state op voor de UserMenu component
+  let currentUser: User | null = null;
+  userStore.subscribe(value => {
+    currentUser = value;
+  });
   
   // Interface voor berichten
   interface Message {
@@ -68,15 +70,14 @@
   });
 
   // Reageer op selectie van een vraag uit de chip container
-  $: if (browser && $selectedQuestionText) { // browser check voor tick/DOM interacties
+  $: if (browser && $selectedQuestionText) { 
     userInput = $selectedQuestionText;
-    selectedQuestionText.set(null); // Reset store om herhaald vullen te voorkomen
+    selectedQuestionText.set(null); 
     tick().then(() => {
-      sendMessage(); // Stuur bericht automatisch
-      // Focus wordt al gehandeld in sendMessage finally block
+      sendMessage(); 
     });
   }
-  
+
   // Functie om naar de bodem van de chat te scrollen
   async function scrollToBottom() {
     await tick(); 
@@ -87,32 +88,26 @@
   
   // Initialiseer de chat met welkomstbericht
   function initializeChat() {
-    // Reset state
     messages = [];
-    
-    // Voeg welkomstbericht toe
     messages = [{ 
-      id: 1, 
+      id: Date.now(), 
       sender: 'bot', 
-      text: 'Hoi! Fijn dat je er bent. Wat wil je vandaag bespreken?',
+      text: 'Hoi! Fijn dat je er bent. Waarmee kan ik je helpen?',
       role: 'assistant'
     }];
-    
-    // Scroll naar beneden
     scrollToBottom();
   }
   
   // Reset de chat naar de initiële toestand
   function resetChat() {
     console.log('Chat wordt gereset');
+    userInput = '';
     initializeChat();
   }
   
   // Vereenvoudigde onMount
   onMount(() => {
     initializeChat();
-    // Focus op input bij laden (optioneel, kan storend zijn op mobiel)
-    // inputElement?.focus();
   });
   
   // Functie om de API stream te verwerken en messages bij te werken
@@ -131,81 +126,68 @@
       const chunk = decoder.decode(value, { stream: true });
       currentBotText += chunk;
 
-      // Update het bestaande bot bericht in de array
       messages = messages.map(msg =>
-        msg.id === botMessageId ? { ...msg, text: currentBotText } : msg
+        msg.id === botMessageId ? { ...msg, text: currentBotText, role: 'assistant' } : msg
       );
-      // Scroll na elke update tijdens het streamen
       scrollToBottom(); 
     }
   }
   
-  // Functie voor het verzenden van een bericht
+  // Aangepaste sendMessage functie
   async function sendMessage() {
-    if (userInput.trim() === '') return;
-    
-    // Voeg gebruikersbericht toe
+    const textToSend = userInput.trim();
+    if (textToSend === '') return;
+
     const newUserMessage: Message = { 
       id: Date.now(), 
       sender: 'user', 
-      text: userInput,
-      role: 'user'
+      text: textToSend,
+      role: 'user' 
     };
-    
     messages = [...messages, newUserMessage];
-    // Scroll na toevoegen gebruikersbericht
-    scrollToBottom(); 
+    scrollToBottom();
     
-    const currentInput = userInput;
     userInput = '';
-    
-    // Bereid de laatste 7 berichten voor voor de API
+
+    showTypingIndicatorUI();
+    const botMessageId = Date.now() + 1; 
+
+    messages = [...messages, {
+      id: botMessageId,
+      sender: 'bot',
+      text: '', 
+      role: 'assistant'
+    }];
+    scrollToBottom();
+
     const messagesForAPI = messages
-      .filter(msg => msg.role) // Filter uit berichten zonder role
-      .slice(-7) // Neem de laatste 7 berichten
+      .filter(msg => msg.role)
+      .slice(-8) 
       .map(msg => ({
         role: msg.role,
         content: msg.text
       }));
-    
-    isTyping = true;
-    // Maak direct een placeholder bot bericht aan
-    const botMessageId = Date.now() + 1;
-    messages = [...messages, {
-      id: botMessageId,
-      sender: 'bot',
-      text: '', // Begin met lege tekst
-      role: 'assistant'
-    }];
-    // Scroll na toevoegen placeholder bot bericht
-    scrollToBottom(); 
-
+      
     try {
-      // Roep de backend API aan
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messagesForAPI })
+        body: JSON.stringify({ messages: messagesForAPI.slice(0, -1) }) 
       });
 
       if (!response.ok) {
         throw new Error(`API aanroep mislukt: ${response.statusText}`);
       }
-
-      // Verwerk de streaming response (scrollen gebeurt nu binnen processStream)
       await processStream(response, botMessageId);
 
     } catch (error) {
       console.error('Fout bij het streamen van de API:', error);
-      // Update het bot bericht met een foutmelding
       messages = messages.map(msg =>
-        msg.id === botMessageId ? { ...msg, text: "Sorry, er is iets misgegaan. Probeer het later nog eens." } : msg
+        msg.id === botMessageId ? { ...msg, text: "Oeps, Shirley is even de kluts kwijt. Probeer het zo opnieuw!" } : msg
       );
-       // Scroll na foutmelding update
       scrollToBottom();
     } finally {
-      isTyping = false;
-      // Zet focus terug op input veld na verzenden
+      removeTypingIndicatorUI();
       await tick();
       inputElement?.focus(); 
     }
@@ -213,177 +195,143 @@
   
   // Functie voor het afhandelen van Enter-toets
   function handleKeyPress(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !isTyping) {
       sendMessage();
     }
   }
+
+  function showTypingIndicatorUI() {
+    isTyping = true;
+    scrollToBottom();
+  }
+
+  function removeTypingIndicatorUI() {
+    isTyping = false;
+  }
 </script>
 
-<!-- Main container with flex layout -->
-<div class="flex h-screen bg-light-gray dark:bg-gray-900">
+<!-- Sidebar direct onder root, zodat overlay altijd aan de viewport zit -->
+<Sidebar on:resetChat={resetChat}>
+  <div class="p-4 flex-1 overflow-y-auto">
+    <!-- Logo container voor centreren -->
+    <div class="h-12 flex items-center" class:justify-center={!sidebarOpen}>
+      <img 
+        src="/icons/favicon.png" 
+        alt="Shirley in je pocket Logo" 
+        class:h-10={sidebarOpen}
+        class:w-auto={sidebarOpen}
+        class:h-8={!sidebarOpen}
+        class:w-8={!sidebarOpen}
+        class:mx-auto={sidebarOpen}
+        class="object-contain transition-all duration-300 ease-in-out"
+      /> 
+    </div>
+    <!-- Nieuwe Chat Link (bovenaan?) -->
+    <SidebarLink 
+      link={{
+        label: "Nieuwe Chat", 
+        href: "/chat", 
+        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"2\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 4v16m8-8H4\" /></svg>`
+      }}
+      className="mb-2"
+    />
+    <!-- Originele Links Hersteld -->
+    <SidebarLink 
+      link={{
+        label: "Shirley site",
+        href: "https://www.afvallenindeovergang.nl/",
+        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\" /></svg>`,
+        target: "_blank"
+      }}
+    />
+    <SidebarLink 
+      link={{
+        label: "Methode",
+        href: "https://www.afvallenindeovergang.nl/shape-methode",
+        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\" /></svg>`,
+        target: "_blank"
+      }}
+    />
+    <SidebarLink 
+      link={{
+        label: "Contact",
+        href: "https://www.afvallenindeovergang.nl/contact",
+        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z\" /></svg>`,
+        target: "_blank"
+      }}
+    />
+    <!-- Einde Originele Links -->
+  </div>
+  <svelte:fragment slot="user">
+    {#if currentUser}
+      <UserMenu user={currentUser} />
+    {/if}
+  </svelte:fragment>
+</Sidebar>
 
-  <!-- Mobile Menu Trigger -->
+<!-- Hoofdcontainer: geen min-h-screen meer, alleen flex -->
+<div class="flex flex-col sm:flex-row justify-center items-start bg-brand-light-gray text-brand-black">
+
+  <!-- Mobile Menu Trigger (blijft ongewijzigd voor nu) -->
   <MobileMenuTrigger />
 
-  <!-- Sidebar -->
-  <Sidebar on:resetChat={resetChat} class="flex-shrink-0">
-    <div class="p-4 flex-1 overflow-y-auto">
-      <!-- Logo container voor centreren -->
-      <div 
-         class="h-12 flex items-center"
-         class:justify-center={!sidebarOpen} 
-      >
-        <img 
-          src="/icons/favicon.png" 
-          alt="Easyleadership Logo" 
-          class:h-10={sidebarOpen}
-          class:w-auto={sidebarOpen}
-          class:h-8={!sidebarOpen}
-          class:w-8={!sidebarOpen}
-          class:mx-auto={sidebarOpen}
-          class="object-contain transition-all duration-300 ease-in-out"
-        /> 
+  <!-- Main chat area wordt de chat-container -->
+  <div class="chat-container w-full max-w-3xl h-screen md:ml-64 bg-brand-white rounded-none sm:rounded-brand-chat shadow-brand-default flex flex-col overflow-hidden m-0">
+    <!-- NIEUWE HEADER TOEGEVOEGD - Aangepast aan Shirley stijl -->
+    <div class="chat-header bg-brand-pink-strong p-4 flex items-center gap-3">
+      <div class="logo w-8 h-8 bg-brand-white rounded-full flex items-center justify-center font-bold text-brand-pink-strong text-lg">
+        S
       </div>
-      
-      <!-- Nieuwe Chat Link (bovenaan?) -->
-      <SidebarLink 
-        link={{
-          label: "Nieuwe Chat", 
-          href: "/chat", 
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>`
-        }}
-        className="mb-2"
-      />
-
-      <!-- Originele Links Hersteld -->
-      <SidebarLink 
-        link={{
-          label: "Landingspagina",
-          href: "/",
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`
-        }}
-      />
-      <SidebarLink 
-        link={{
-          label: "Easyleadership site",
-          href: "https://www.easyleadership.nl/",
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>`,
-          target: "_blank"
-        }}
-      />
-      <SidebarLink 
-        link={{
-          label: "Methode",
-          href: "https://www.easyleadership.nl/onze-methode",
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>`,
-          target: "_blank"
-        }}
-      />
-      <SidebarLink 
-        link={{
-          label: "Contact",
-          href: "https://www.easyleadership.nl/contact",
-          icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
-          target: "_blank"
-        }}
-      />
-      <!-- Einde Originele Links -->
-
-    </div>
-    <svelte:fragment slot="user">
-      <UserMenu {user} />
-    </svelte:fragment>
-  </Sidebar>
-
-  <!-- Main chat area -->
-  <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- NIEUWE HEADER TOEGEVOEGD -->
-    <div class="bg-brand-pink-strong text-white p-4 text-center shadow-md">
-      <h1 class="text-xl font-semibold">ShirleyBot</h1>
+      <h1 class="font-source-sans-pro font-bold text-xl text-brand-white">Shirley in je pocket</h1>
     </div>
 
-    <!-- Chat Container (met oorspronkelijke achtergrond/schaduw) -->
-    <div class="flex flex-1 mx-auto w-full max-w-full sm:max-w-[600px] flex-col rounded-b-xl bg-white dark:bg-slate-800 shadow-lg overflow-hidden"> 
-      <!-- Berichten Area (scrollable) -->
-      <div bind:this={scrollContainer} class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
-        
-        <!-- Privacy melding banner -->
-        <div class="flex justify-center mb-2 items-center">
-          <div class="rounded-md bg-status-success dark:bg-emerald-600 px-3 py-1">
-            <p class="font-poppins text-xs sm:text-sm font-medium text-white dark:text-white">Je gesprekken worden niet opgeslagen</p>
-          </div>
+    <!-- Chat Berichten Area (scrollable) -->
+    <div bind:this={scrollContainer} class="chat-messages flex-1 overflow-y-auto p-6 sm:p-4 space-y-3">
+      <!-- HERSTELD: CategoryChipContainer -->
+      {#if showCategoryChipsDisplay}
+        <div class="mt-1 mb-3">
+          <CategoryChipContainer />
         </div>
-        
-        <!-- CATEGORY CHIP CONTAINER -->
-        {#if showCategoryChipsDisplay}
-          <div class="mt-1 mb-3">
-            <CategoryChipContainer />
-          </div>
-        {/if}
-        
-        <!-- Berichten loop met oorspronkelijke styling -->
-        {#each messages as message (message.id)}
-          {#if message.sender === 'bot'}
-            <!-- Bot Bericht -->
-            <div class="flex justify-start">
-              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl bg-[rgb(0,61,75)] px-3 sm:px-4 py-2">
-                <p class="font-poppins text-sm sm:text-base font-medium text-white">{message.text}</p>
-              </div>
-            </div>
-          {:else}
-            <!-- Gebruiker Bericht -->
-            <div class="flex justify-end">
-              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl border border-blue-light bg-white dark:bg-sky-600 dark:border-sky-400 px-3 sm:px-4 py-2">
-                <p class="font-poppins text-xs sm:text-sm font-medium text-gray-text dark:text-sky-50">{message.text}</p>
-              </div>
-            </div>
-          {/if}
-        {/each}
-
-        <!-- Typing indicator (oorspronkelijke stijl) -->
-        {#if isTyping}
-          <div class="flex justify-start">
-            <div class="max-w-[85%] sm:max-w-[80%] rounded-xl bg-[rgb(0,61,75)] px-3 sm:px-4 py-2">
-              <p class="font-poppins text-sm sm:text-base font-medium text-white">
-                <span class="inline-block w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full mr-1 animate-bounce"></span>
-                <span class="inline-block w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full mr-1 animate-bounce" style="animation-delay: 0.2s"></span>
-                <span class="inline-block w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
-              </p>
-            </div>
-          </div>
-        {/if}
-
-      </div>
-
-      <!-- Input Area (oorspronkelijke stijl) -->
-      <div class="flex items-center border-t border-gray-200 p-2 sm:p-3 bg-white dark:bg-gray-800">
-        <input
-          type="text"
-          bind:value={userInput}
-          bind:this={inputElement}
-          on:keypress={handleKeyPress}
-          placeholder="Beschrijf je situatie of vraag..."
-          class="min-h-[40px] flex-1 rounded-xl 
-                 bg-white text-gray-text placeholder-gray-500 border border-gray-300 
-                 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 dark:border-gray-600 
-                 p-2 sm:p-3 pr-8 sm:pr-10 text-sm sm:text-base font-poppins 
-                 focus:border-blue-light focus:ring-2 focus:ring-blue-light 
-                 dark:focus:border-blue-light dark:focus:ring-blue-light 
-                 transition-colors duration-200"
-          disabled={isTyping}
+      {/if}
+      
+      <!-- Berichten loop -->
+      {#each messages as message, i (message.id)}
+        <ChatMessage
+          message={message.text}
+          sender={message.sender}
+          showAvatar={message.sender === 'bot' && (i === 0 || messages[i-1].sender !== 'bot')}
         />
-        <button
-          on:click={sendMessage}
-          class="ml-2 sm:ml-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-brand-pink-strong text-white shadow-md hover:bg-brand-pink-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-pink-strong focus:ring-offset-2"
-          aria-label="Verzend bericht"
-          disabled={isTyping || userInput.trim() === ''}
-        >
-          <!-- Heroicon: paper-airplane (outline) -->
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-          </svg>
-        </button>
-      </div>
+      {/each}
+
+      <!-- Typing indicator -->
+      {#if isTyping}
+        <div class="typing-indicator flex gap-1 p-3 bg-brand-very-light-gray rounded-brand-chat self-start mb-2">
+          <div class="typing-dot w-2 h-2 bg-brand-medium-gray rounded-full animate-bounce"></div>
+          <div class="typing-dot w-2 h-2 bg-brand-medium-gray rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+          <div class="typing-dot w-2 h-2 bg-brand-medium-gray rounded-full animate-bounce" style="animation-delay: 0.4s"></div>
+        </div>
+      {/if}
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-container p-4 border-t border-brand-light-gray flex gap-3 items-center">
+      <input
+        type="text"
+        bind:value={userInput}
+        bind:this={inputElement}
+        on:keypress={handleKeyPress}
+        placeholder="Typ je vraag hier..."
+        class="chat-input flex-1 p-4 border border-gray-300 rounded-lg text-base min-h-[48px] font-roboto focus:outline-none focus:border-brand-pink-strong focus:ring-2 focus:ring-brand-pink-strong/20 transition-colors duration-200"
+        disabled={isTyping}
+      />
+      <button
+        on:click={() => sendMessage()}
+        class="send-button bg-brand-pink-strong text-brand-white rounded-lg w-12 h-12 flex items-center justify-center cursor-pointer transition-colors duration-200 hover:bg-brand-pink-hover disabled:opacity-50"
+        aria-label="Verzend bericht"
+        disabled={isTyping || userInput.trim() === ''}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
     </div>
   </div>
 </div>
@@ -393,7 +341,7 @@
   <div class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black bg-opacity-50">
     <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6 max-w-md w-full max-h-[80vh] overflow-y-auto">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-base sm:text-lg font-bold text-[rgb(0,61,75)]">Over de Easyleader Coachbot</h2>
+        <h2 class="text-base sm:text-lg font-bold text-[rgb(0,61,75)]">Over Shirley in je pocket</h2>
         <button 
           on:click={() => showInfoModal = false}
           class="text-gray-400 hover:text-gray-600"
@@ -406,7 +354,7 @@
       </div>
       
       <div class="space-y-3 sm:space-y-4 text-[rgb(64,110,120)] text-sm sm:text-base">
-        <p>De Easyleader Coachbot helpt je om te reflecteren op leiderschapssituaties in je werk.</p>
+        <p>Shirley in je pocket helpt je met praktische, no-nonsense coaching rondom voeding, mindset en motivatie tijdens de overgang. Geen gedoe, gewoon doen!</p>
         
         <h3 class="font-bold mt-2">Hoe werkt het?</h3>
         <p>De bot volgt het ABC-model (Activating event, Belief, Consequence) om je te helpen reflecteren:</p>
@@ -449,5 +397,79 @@
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
+  }
+
+  /* Stijlen voor de nieuwe elementen, indien nodig naast Tailwind */
+  .chat-header h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .welcome-banner {
+    font-family: 'Source Sans Pro', sans-serif;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .message {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .suggestion-button {
+    background-color: var(--pink-light, #F8BBD9); /* Gebruik var met fallback */
+    color: var(--dark-gray, #333333);
+    border: none;
+    border-radius: 16px; /* Tailwind: rounded-brand-button */
+    padding: 10px 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Tailwind: shadow-brand-suggestion */
+    transition: all 0.2s ease;
+    min-height: 44px;
+  }
+
+  .suggestion-button:hover {
+    background-color: var(--pink-strong, #E91E63);
+    color: var(--white, #FFFFFF);
+    transform: scale(1.02);
+  }
+
+  .intro-text {
+    color: var(--dark-gray, #333333);
+  }
+
+  /* Typing indicator animaties */
+  .typing-dot {
+    animation: typingAnimation 1.4s infinite ease-in-out;
+  }
+
+  .typing-dot:nth-child(1) { animation-delay: 0s; }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes typingAnimation {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-4px); }
+  }
+
+  /* Verberg de standaard sidebar op mobiel en pas de chat container aan */
+  @media (max-width: 640px) { /* sm breakpoint */
+    .chat-container {
+      border-radius: 0;
+      height: 100vh; /* Volledige viewport hoogte */
+      max-width: 100%;
+      margin: 0;
+    }
+    .message {
+      max-width: 90%;
+    }
+    .chat-messages {
+      padding: 16px; /* Consistent met HTML voorbeeld */
+    }
   }
 </style> 

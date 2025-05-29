@@ -4,14 +4,14 @@ import OpenAI from 'openai';
 import { ReadableStream } from 'node:stream/web';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { OPENAI_API_KEY } from '$env/static/private';
-import baseSystemPromptContent from '$lib/server/prompts/easyleadership_baseprompt.md?raw';
+import baseSystemPromptContent from '$lib/server/prompts/chat_baseprompt.md?raw';
 
 // Initialiseer OpenAI client
 const openai = new OpenAI({
     apiKey: OPENAI_API_KEY,
 });
 
-// Easyleader coaching systeem prompt
+// chatbot systeem prompt
 const baseSystemPrompt = baseSystemPromptContent;
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {

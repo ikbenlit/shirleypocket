@@ -1,24 +1,27 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import logo from '$lib/images/EasyLeadership_button_white_edited.avif'; // Importeer het logo
-	import coffeeGif from '$lib/images/coffee.gif'; // Importeer de GIF
+	import AvatarBubble from '$lib/components/ui/AvatarBubble.svelte';
 </script>
 
-<div class="flex min-h-screen flex-col items-center justify-center bg-gray-100 px-4 text-center">
+<div class="min-h-screen flex flex-col items-center justify-center bg-beige-light px-4">
 	{#if $page.status === 404}
-		<img src={logo} alt="EasyLeadership Logo" class="mb-8 h-16 w-auto sm:h-20" />
-		<h1 class="mb-4 text-4xl font-bold text-gray-800 sm:text-5xl">Oeps! Verdwaald?</h1>
-		<p class="mb-8 text-lg text-gray-600 sm:text-xl">
-			Het lijkt erop dat deze pagina even een koffiepauze neemt. Geen zorgen, we brengen je terug naar de start!
-		</p>
-		<img src={coffeeGif} alt="Koffie GIF" class="mx-auto mb-8 h-32 w-auto sm:h-40" />
-		<a
-			href="/"
-			class="rounded-md bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-			>Terug naar de startpagina</a
-		>
+		<div class="flex flex-col items-center justify-center w-full max-w-xl mx-auto">
+			<h1 class="mb-8 text-4xl md:text-5xl font-bold font-sans text-black text-center">Whoops, deze pagina bestaat niet!</h1>
+			<div class="flex justify-center w-full mb-8">
+				<AvatarBubble 
+					text="Geen paniek! Gewoon een foutje. Klik hieronder om terug te gaan naar de startpagina. We got this!"
+					avatarSize="large"
+					avatarSrc="/images/avatar_shirley.webp"
+					bubblePosition="top"
+					bubbleAlign="center"
+				/>
+			</div>
+			<a
+				href="/"
+				class="mt-4 btn-primary inline-block text-center font-semibold rounded-[6px] px-8 py-4 text-xl md:text-2xl text-white bg-brand-pink-strong hover:bg-brand-pink-hover transition-colors duration-300 shadow-md"
+			>Terug naar home</a>
+		</div>
 	{:else}
-		<img src={logo} alt="EasyLeadership Logo" class="mb-8 h-16 w-auto sm:h-20" />
 		<h1 class="mb-4 text-4xl font-bold text-red-600 sm:text-5xl">Er is een fout opgetreden</h1>
 		<p class="mb-8 text-lg text-gray-600 sm:text-xl">
 			Er is iets misgegaan. Foutcode: {$page.status}
@@ -27,7 +30,12 @@
 		<a
 			href="/"
 			class="mt-8 rounded-md bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-			>Terug naar de startpagina</a
-		>
+		>Terug naar de startpagina</a>
 	{/if}
-</div> 
+</div>
+
+<style>
+	:global(body) {
+		background: #F7F3F0;
+	}
+</style> 

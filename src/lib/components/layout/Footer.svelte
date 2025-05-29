@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="mt-12 border-t border-dark-gray-3 pt-8 flex flex-col md:flex-row justify-between items-center">
-			<p class="text-gray-400 text-sm">© 2023 Shirley in je Pocket. Alle rechten voorbehouden.</p>
+			<p class="text-gray-400 text-sm">© 2025 Shirley in je Pocket. Alle rechten voorbehouden.</p>
 			<div class="mt-4 md:mt-0 flex space-x-6">
 				<a href="#" class="text-gray-400 hover:text-pink-strong" aria-label="Facebook">
 					<span class="sr-only">Facebook</span>

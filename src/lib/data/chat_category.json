@@ -4,291 +4,94 @@
     "updatedAt": "2024-07-27T10:00:00Z",
     "categoriesData": [
       {
-        "id": "1",
-        "title": "Verantwoordelijkheid/Pro-activiteit/Delegeren",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "voeding-macros",
+        "title": "Voeding & Macro's",
+        "color": "#E91E63",
+        "icon": "Apple",
         "questions": [
-          {
-            "text": "Als ik een verbetering voor elkaar wil krijgen, krijg ik weinig input van mijn team. Ik zou graag wat meer pro-activiteit zien in het aandragen van ideeën. Hoe krijg ik dat voor elkaar?",
-            "categories": ["1", "8"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik ben erg druk en het lukt me niet goed om te delegeren. Hoe doe ik dat?",
-            "categories": ["1"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik wil dat mijn medewerker pro-actiever zelf zaken oppakt, hoe pak ik zo'n gesprek aan?",
-            "categories": ["1"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Ik kom niet aan mijn eiwitten, wat kan ik doen?" },
+          { "text": "Welke voeding past bij mijn calorie-doel?" },
+          { "text": "Hoe verdeel ik mijn macro's over de dag?" },
+          { "text": "Wat zijn goede eiwitbronnen voor vegetariërs?" },
+          { "text": "Hoeveel water moet ik per dag drinken?" }
         ]
       },
       {
-        "id": "2",
-        "title": "Teammeetings",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "mindset-motivatie",
+        "title": "Mindset & Motivatie",
+        "color": "#337AB7",
+        "icon": "Brain",
         "questions": [
-          {
-            "text": "Tijdens mijn teammeetings ben ik voornamelijk aan het woord en is het dus snel eenrichtingsverkeer. Hoe kan ik ervoor zorgen dat mijn team meedoet?",
-            "categories": ["2"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "In teammeetings zie ik dat maar een deel meedoet. Sommigen kijken op hun telefoon en anderen zitten een beetje naar elkaar te seinen. Hoe maak ik dit bespreekbaar?",
-            "categories": ["2"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik wil graag commitment hebben van het hele team op besluiten die we nemen. Hoe pak ik dat aan?",
-            "categories": ["2"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Ik heb een motivatie-dip, wat nu?" },
+          { "text": "Hoe ga ik om met eetbuien?" },
+          { "text": "Waarom val ik steeds terug in oude gewoontes?" },
+          { "text": "Hoe blijf ik gemotiveerd als de weegschaal stilstaat?" },
+          { "text": "Tips voor mindful eten?" }
         ]
       },
       {
-        "id": "3",
-        "title": "Omgaan met weerstand",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "programma-planning",
+        "title": "Programma & Planning",
+        "color": "#00CC9C",
+        "icon": "Calendar",
         "questions": [
-          {
-            "text": "Mijn medewerker blijft weerstand vertonen tegen de nieuwe manier van werken, hoe kan ik dit gesprek voeren zodat hij meegaat in de verandering?",
-            "categories": ["3"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe ga ik om met teamleden die weerstand bieden omdat ze bang zijn voor verandering of niet geloven dat de nieuwe werkwijze beter is?",
-            "categories": ["3"],
-            "priority": 0,
-            "displayOrder": 1,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik merk dat sommige medewerkers in de onderstroom kritiek uiten op veranderingen. Hoe zorg ik ervoor dat ze dit openlijk bespreken in plaats van alleen in de wandelgangen?",
-            "categories": ["3"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Hoe gebruik ik de caloriecalculator?" },
+          { "text": "In welke module vind ik informatie over X?" },
+          { "text": "Hoe plan ik mijn maaltijden voor de week?" },
+          { "text": "Wat moet ik doen in week 1 van het programma?" },
+          { "text": "Waar vind ik mijn werkboeken?" }
         ]
       },
       {
-        "id": "4",
-        "title": "Performancegesprekken",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "beweging-activiteit",
+        "title": "Beweging & Activiteit",
+        "color": "#FFB347",
+        "icon": "Activity",
         "questions": [
-          {
-            "text": "Ik begrijp niet dat mijn medewerkers niet gewoon doen wat we hebben afgesproken, wat doe ik verkeerd?",
-            "categories": ["4"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe voer ik een effectief performance-gesprek waarbij ik zowel caring als daring ben en medewerkers zelf laat nadenken over hun bijdrage?",
-            "categories": ["4"],
-            "priority": 0,
-            "displayOrder": 1,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Een van mijn medewerkers komt altijd te laat. Ik heb al van alles geprobeerd, wat kan ik nog doen?",
-            "categories": ["4"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Mijn medewerker vindt dat hij heel klantgericht werkt, maar ik denk dat het beter kan. Hoe pak ik dat gesprek aan?",
-            "categories": ["4"],
-            "priority": 0,
-            "displayOrder": 3,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Hoeveel beweging heb ik nodig per dag?" },
+          { "text": "Welke sporten passen bij mijn niveau?" },
+          { "text": "Hoe tel ik mijn stappen?" },
+          { "text": "Tips voor meer beweging in mijn dagelijkse routine?" },
+          { "text": "Hoe combineer ik beweging met mijn voeding?" }
         ]
       },
       {
-        "id": "5",
-        "title": "Afspraken maken",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "weegschaal-voortgang",
+        "title": "Weegschaal & Voortgang",
+        "color": "#FFCB05",
+        "icon": "TrendingUp",
         "questions": [
-          {
-            "text": "Hoe zorg ik dat afspraken concreet genoeg zijn, zodat er later geen verwarring ontstaat?",
-            "categories": ["5"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Wat is een effectieve manier om wederzijdse verwachtingen vast te leggen in een team?",
-            "categories": ["5"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Welke afspraken kan ik met mijn medewerkers maken om ervoor te zorgen dat wat we bespreken ook gedaan wordt?",
-            "categories": ["5"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "We spreken dingen af met het team, een tijdje gaat het goed en dan zakt het weer in. Hoe kan ik ervoor zorgen dat het duurzaam beklijft?",
-            "categories": ["5"],
-            "priority": 0,
-            "displayOrder": 3,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Hoe vaak moet ik mezelf wegen?" },
+          { "text": "Mijn gewicht schommelt, is dat normaal?" },
+          { "text": "Hoe meet ik mijn voortgang behalve wegen?" },
+          { "text": "Wat doe ik als de weegschaal stilstaat?" },
+          { "text": "Hoe interpreteer ik mijn resultaten?" }
         ]
       },
       {
-        "id": "6",
-        "title": "Bijdragen aan doelen en strategie",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "praktische-tips",
+        "title": "Praktische Tips",
+        "color": "#91C2CF",
+        "icon": "Lightbulb",
         "questions": [
-          {
-            "text": "Het lijkt wel of mijn team zich niet bewust is van het effect van dingen die ze laten liggen op de rest van de organisatie, ook al heb ik dit al vaak benadrukt. Wat moet ik doen zodat ze eigenaarschap gaan pakken?",
-            "categories": ["6"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe kan ik ervoor zorgen dat mijn team meegaat in de nieuwe strategie van de organisatie?",
-            "categories": ["6"],
-            "priority": 0,
-            "displayOrder": 1,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe vertaal ik de strategie van de organisatie naar concrete verwachtingen en gedrag voor mijn team?",
-            "categories": ["6"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik wil dat alle afdelingen in mijn organisatie beter samenwerken om een gezamenlijk doel te bereiken. Hoe krijg ik dat voor elkaar?",
-            "categories": ["6"],
-            "priority": 0,
-            "displayOrder": 3,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Snelle recepten voor onder de week?" },
+          { "text": "Hoe ga ik om met uitnodigingen en feestjes?" },
+          { "text": "Tips voor gezond boodschappen doen?" },
+          { "text": "Hoe bereid ik maaltijden voor op zondag?" },
+          { "text": "Gezonde snacks voor onderweg?" }
         ]
       },
       {
-        "id": "7",
-        "title": "Eigen tijd managen",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
+        "id": "overgang-hormonen",
+        "title": "Overgang & Hormonen",
+        "color": "#C2185B",
+        "icon": "Heart",
         "questions": [
-          {
-            "text": "Welke technieken kan ik gebruiken om minder gestoord te worden en mijn focus vast te houden?",
-            "categories": ["7"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe combineer ik delegeren met het bewaken van mijn eigen deadlines?",
-            "categories": ["7"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik blijf maar allerlei brandjes blussen en kom daardoor niet toe aan echte verbeteringen. Wat kan ik doen om wat meer rust te krijgen?",
-            "categories": ["7"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
-        ]
-      },
-      {
-        "id": "8",
-        "title": "Continue verbetering",
-        "createdAt": "2024-07-27T10:00:00Z",
-        "updatedAt": "2024-07-27T10:00:00Z",
-        "questions": [
-          {
-            "text": "Ik heb allerlei verbeteringen bedacht en gecommuniceerd naar mijn team en toch wordt het maar heel minimaal opgepakt. Ik moet er steeds achteraan jagen en herhalen dat het belangrijk is om op de nieuwe manier te werken, heel vermoeiend.",
-            "categories": ["8"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Hoe stimuleer ik mijn team om elke week verbeterideeën aan te dragen, in plaats van alleen in grote retrospectives?",
-            "categories": ["8"],
-            "priority": 0,
-            "displayOrder": 0,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik zou willen dat veranderingen wat sneller opgepakt worden. Hoe pak ik dat aan?",
-            "categories": ["8"],
-            "priority": 0,
-            "displayOrder": 2,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          },
-          {
-            "text": "Ik denk dat we er veel meer kunnen uithalen dan we nu doen. Wat kan ik doen om een vibe te creëren in mijn team om te werken aan prestatieverbetering en dit ook vast te houden?",
-            "categories": ["8"],
-            "priority": 0,
-            "displayOrder": 3,
-            "createdAt": "2024-07-27T10:00:00Z",
-            "updatedAt": "2024-07-27T10:00:00Z"
-          }
+          { "text": "Afvallen tijdens de overgang, hoe werkt dat?" },
+          { "text": "Invloed van hormonen op mijn gewicht?" },
+          { "text": "Waarom is afvallen moeilijker na de 40?" },
+          { "text": "Tips voor slecht slapen door hormonen?" },
+          { "text": "Omgaan met emotioneel eten tijdens overgang?" }
         ]
       }
     ]

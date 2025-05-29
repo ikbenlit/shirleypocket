@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shirley in je pocket</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --pink-strong: #E91E63;
+            --pink-hover: #C2185B;
+            --pink-light: #F8BBD9;
+            --pink-dark: #AD1457;
+            --black: #000000;
+            --dark-gray: #333333;
+            --medium-gray: #666666;
+            --gray-text: #707070;
+            --light-gray: #F5F5F5;
+            --very-light-gray: #FAFAFA;
+            --beige-light: #F7F3F0;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light-gray);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--black);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 100vh;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: var(--pink-strong);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header h1 {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--white);
+        }
+
+        .logo {
+            width: 32px;
+            height: 32px;
+            background-color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--pink-strong);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 24px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .welcome-banner {
+            background-color: var(--pink-strong);
+            color: var(--white);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.4;
+            font-size: 16px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--very-light-gray);
+            color: var(--black);
+            border-radius: 16px 16px 16px 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--pink-strong);
+            color: var(--white);
+            border-radius: 16px 16px 4px 16px;
+        }
+
+        .suggestion-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .suggestion-button {
+            background-color: var(--pink-light);
+            color: var(--dark-gray);
+            border: none;
+            border-radius: 16px;
+            padding: 10px 16px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+
+        .suggestion-button:hover {
+            background-color: var(--pink-strong);
+            color: var(--white);
+            transform: scale(1.02);
+        }
+
+        .chat-input-container {
+            padding: 16px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            gap: 12px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 16px 16px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 48px;
+            font-family: 'Roboto', sans-serif;
+            transition: border 0.2s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border: 2px solid var(--pink-strong);
+            box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.1);
+        }
+
+        .send-button {
+            background-color: var(--pink-strong);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .send-button:hover {
+            background-color: var(--pink-hover);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 12px;
+            background-color: var(--very-light-gray);
+            border-radius: 16px;
+            align-self: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--medium-gray);
+            border-radius: 50%;
+            animation: typingAnimation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .intro-text {
+            color: var(--dark-gray);
+            margin: 16px 0;
+            font-size: 16px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-4px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                border-radius: 0;
+                height: 100vh;
+                max-width: 100%;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="logo">S</div>
+            <h1>Shirley in je pocket</h1>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-banner">
+                Hupakee! Welkom terug, Marieke! Waar kan ik je vandaag mee helpen?
+            </div>
+            
+            <div class="intro-text">
+                Kies een onderwerp of stel je vraag hieronder
+            </div>
+            
+            <div class="suggestion-buttons">
+                <button class="suggestion-button" onclick="sendMessage('Eiwitadvies')">Eiwitadvies</button>
+                <button class="suggestion-button" onclick="sendMessage('Motivatie boost')">Motivatie boost</button>
+                <button class="suggestion-button" onclick="sendMessage('Programma vraag')">Programma vraag</button>
+            </div>
+        </div>
+        
+        <div class="quick-actions" id="quickActions">
+            <button class="suggestion-button" onclick="sendMessage('Geef me tips')">Geef me tips</button>
+            <button class="suggestion-button" onclick="sendMessage('Verwijs naar module')">Verwijs naar module</button>
+            <button class="suggestion-button" onclick="sendMessage('Motiveer me')">Motiveer me</button>
+        </div>
+        
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Typ je vraag hier..." autocomplete="off">
+            <button class="send-button" id="sendButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendButton = document.getElementById('sendButton');
+            const quickActions = document.getElementById('quickActions');
+            
+            // Sample responses for different queries
+            const responses = {
+                'Eiwitadvies': [
+                    "Goed dat je vraagt naar eiwitten! Die zijn cruciaal tijdens de overgang. Hier zijn mijn top 3 tips:",
+                    "1. Streef naar 25-30 gram eiwit per maaltijd",
+                    "2. Begin je dag met eiwitrijk ontbijt (Griekse yoghurt, eieren of kwark)",
+                    "3. Houd eiwitrijke snacks bij de hand (noten, hummus, cottage cheese)"
+                ],
+                'Motivatie boost': [
+                    "Hé kanjer! Even een motivatie-boost van Shirley:",
+                    "Weet je, de overgang is geen eindpunt maar een nieuw begin. Jouw lichaam verandert, maar jij bepaalt hoe je ermee omgaat!",
+                    "Elke kleine stap telt. Begin vandaag met één positieve keuze voor jezelf. Morgen weer één. Voor je het weet, heb je een nieuwe routine!"
+                ],
+                'Programma vraag': [
+                    "In mijn online academy vind je alles over voeding, beweging en mindset tijdens de overgang.",
+                    "Module 1 gaat over hormoonbalans en voeding",
+                    "Module 2 behandelt beweging voor meer energie",
+                    "Module 3 focust op stressmanagement en slaap",
+                    "Waar wil je meer over weten?"
+                ],
+                'Geef me tips': [
+                    "Hier zijn 3 praktische tips voor vandaag:",
+                    "1. Drink 2 liter water (voeg citroen of komkommer toe voor smaak)",
+                    "2. Neem 10 minuten 'me-time' om te ademen en resetten",
+                    "3. Voeg een portie groene groenten toe aan je lunch én diner"
+                ],
+                'Verwijs naar module': [
+                    "In module 2 van de academy vind je alles over beweging tijdens de overgang.",
+                    "Bekijk vooral de video 'Kracht opbouwen zonder gym' - perfect voor thuis!",
+                    "Ook de 'Energieboost workout' van 10 minuten is ideaal om je dag mee te beginnen."
+                ],
+                'Motiveer me': [
+                    "Hé topper! Weet je wat ik zo bewonder aan vrouwen in de overgang? Jullie kracht!",
+                    "Dit is het moment om écht voor jezelf te kiezen. Niet morgen, niet volgende week, maar NU.",
+                    "Jij verdient die energie, dat sterke lijf en die mentale rust. En ik weet dat jij het kunt!"
+                ]
+            };
+            
+            // Default responses for user input not matching predefined options
+            const defaultResponses = [
+                "Goede vraag! Laat me je helpen met praktische tips die direct werken.",
+                "Daar heb ik ervaring mee. Hier is mijn no-nonsense advies:",
+                "Hupakee, daar gaan we! Hier is wat je kunt doen:",
+                "Ik snap je vraag. Laten we dit samen aanpakken met deze stappen:"
+            ];
+            
+            // Quick action suggestions after bot responses
+            const quickActionSets = [
+                ["Meer eiwitbronnen", "Vegetarische opties", "Weekmenu voorbeeld"],
+                ["Dagelijkse routine", "Overwin dips", "Succes verhalen"],
+                ["Hormoonbalans", "Slaaptips", "Bewegingsadvies"],
+                ["Voedingstips", "Mindset oefeningen", "Energiemanagement"]
+            ];
+
+            function sendMessage(text) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user-message';
+                userMessage.textContent = text;
+                chatMessages.appendChild(userMessage);
+                
+                // Clear input if it was typed
+                chatInput.value = '';
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Process response after delay
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    
+                    // Get response based on message
+                    let responseTexts;
+                    if (responses[text]) {
+                        responseTexts = responses[text];
+                    } else {
+                        // Pick a random default intro
+                        const randomIntro = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+                        responseTexts = [
+                            randomIntro,
+                            "Tijdens de overgang is het belangrijk om naar je lichaam te luisteren en kleine, haalbare stappen te nemen.",
+                            "Focus op voeding, beweging én rust - ze zijn allemaal even belangrijk voor je hormoonbalans."
+                        ];
+                    }
+                    
+                    // Add bot messages with sequential delays
+                    let delay = 0;
+                    responseTexts.forEach((responseText, index) => {
+                        setTimeout(() => {
+                            const botMessage = document.createElement('div');
+                            botMessage.className = 'message bot-message';
+                            botMessage.textContent = responseText;
+                            chatMessages.appendChild(botMessage);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                            
+                            // Add new quick actions after the last message
+                            if (index === responseTexts.length - 1) {
+                                updateQuickActions();
+                            }
+                        }, delay);
+                        delay += 600; // Stagger the messages
+                    });
+                }, 1500);
+            }
+            
+            function showTypingIndicator() {
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.id = 'typingIndicator';
+                
+                for (let i = 0; i < 3; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'typing-dot';
+                    typingIndicator.appendChild(dot);
+                }
+                
+                chatMessages.appendChild(typingIndicator);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function removeTypingIndicator() {
+                const typingIndicator = document.getElementById('typingIndicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            function updateQuickActions() {
+                // Clear current quick actions
+                quickActions.innerHTML = '';
+                
+                // Select a random set of quick actions
+                const actionSet = quickActionSets[Math.floor(Math.random() * quickActionSets.length)];
+                
+                // Add new quick action buttons
+                actionSet.forEach(action => {
+                    const button = document.createElement('button');
+                    button.className = 'suggestion-button';
+                    button.textContent = action;
+                    button.onclick = () => sendMessage(action);
+                    quickActions.appendChild(button);
+                });
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', () => {
+                const text = chatInput.value.trim();
+                if (text) {
+                    sendMessage(text);
+                }
+            });
+            
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const text = chatInput.value.trim();
+                    if (text) {
+                        sendMessage(text);
+                    }
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94743b882518e568',t:'MTc0ODUwMzI2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

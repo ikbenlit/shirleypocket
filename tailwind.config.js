@@ -1,10 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 import forms from '@tailwindcss/forms'
 import defaultTheme from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
 
 export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   darkMode: 'class',
+  safelist: [
+    'dark', // Zorg ervoor dat 'dark' beschikbaar is, ook al gebruik je het misschien nog niet overal.
+    // Voeg hier andere klassen toe die je dynamisch genereert en niet wilt laten purgen
+  ],
   theme: {
     extend: {
       colors: {
@@ -35,10 +40,24 @@ export default {
         'status-error': '#dc3545',
         
         // Shirley Brand Colors
-        'brand-pink-strong': '#E91E63', // Primaire brandkleur, vervangt oude 'brand'
-        'brand-pink-hover': '#C2185B',
-        'brand-pink-light': '#F8BBD9', // Aangepast naar #F8BBD9 (consistent met HTML)
-        'brand-pink-dark': '#AD1457',
+        'brand-pink-strong': '#E91E63', // var(--pink-strong)
+        'brand-pink-hover': '#C2185B',  // var(--pink-hover)
+        'brand-pink-light': '#F8BBD9', // var(--pink-light)
+        'brand-pink-dark': '#AD1457',   // var(--pink-dark)
+        'brand-black': '#000000',       // var(--black)
+        'brand-dark-gray': '#333333',   // var(--dark-gray)
+        'brand-medium-gray': '#666666', // var(--medium-gray)
+        'brand-gray-text': '#707070',   // var(--gray-text)
+        'brand-light-gray': '#F5F5F5',  // var(--light-gray)
+        'brand-very-light-gray': '#FAFAFA', // var(--very-light-gray)
+        'brand-beige-light': '#F7F3F0', // var(--beige-light)
+        'brand-white': '#FFFFFF',       // var(--white)
+
+        blue: {
+          DEFAULT: '#3A7DFF',
+          light: '#CDE2FF',
+          dark: '#0052CC'
+        },
       },
       fontFamily: {
         'sans': ['Poppins', ...defaultTheme.fontFamily.sans],
@@ -53,6 +72,8 @@ export default {
         'source-sans-pro-regular': ['Source Sans Pro', ...defaultTheme.fontFamily.sans],
         'source-sans-pro-semibold': ['Source Sans Pro Semibold', 'Source Sans Pro', ...defaultTheme.fontFamily.sans],
         'source-sans-pro-bold': ['Source Sans Pro Bold', 'Source Sans Pro', ...defaultTheme.fontFamily.sans],
+        sans: ['Roboto', ...defaultTheme.fontFamily.sans], // Roboto als standaard sans-serif
+        'source-sans-pro': ['Source Sans Pro', 'sans-serif'] // Source Sans Pro toevoegen
       },
       borderRadius: {
         'card': '8px', // Shirley styleguide: 8px
@@ -60,7 +81,11 @@ export default {
         'button-round': '25px', // Shirley styleguide: quick reply buttons
         'chat-bubble-bot': '16px 16px 16px 4px',
         'chat-bubble-user': '16px 16px 4px 16px',
-        'widget': '12px'
+        'widget': '12px',
+        'brand-chat': '12px',
+        'brand-message-user': '16px 16px 4px 16px',
+        'brand-message-bot': '16px 16px 16px 4px',
+        'brand-button': '16px',
       },
       animation: {
         fadeIn: 'fadeIn 0.3s ease-in-out',
@@ -76,7 +101,12 @@ export default {
           '50%': { transform: 'translateY(-4px)' }
         }
       },
+      boxShadow: {
+        'brand-default': '0 4px 12px rgba(0,0,0,0.1)', // Voor chat container
+        'brand-message': '0 1px 2px rgba(0,0,0,0.1)', // Voor bot message
+        'brand-suggestion': '0 1px 3px rgba(0,0,0,0.1)', // Voor suggestion button
+      },
     },
   },
-  plugins: [forms],
+  plugins: [forms, typography],
 } 
