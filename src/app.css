@@ -62,7 +62,7 @@
 @layer base {
   html {
     /* Default: Lora Regular voor body, Poppins als sans fallback */
-    @apply bg-white text-neutral-dark-gray font-lora font-normal transition-colors duration-300;
+    @apply bg-white text-gray-text font-lora font-normal transition-colors duration-300;
   }
   
   .dark {
@@ -71,17 +71,17 @@
   
   h1 {
     /* Poppins Bold, 32-4xl (styleguide: 24-32px) */
-    @apply font-sans font-bold text-3xl md:text-4xl text-primary-dark-blue dark:text-highlight-light-aqua;
+    @apply font-sans font-bold text-3xl md:text-4xl text-blue-accent dark:text-blue-light;
   }
   
   h2 {
     /* Lora Bold, 2xl-3xl (styleguide: 20-24px) */
-    @apply font-lora font-bold text-2xl md:text-3xl text-primary-dark-blue dark:text-highlight-light-aqua;
+    @apply font-lora font-bold text-2xl md:text-3xl text-blue-accent dark:text-blue-light;
   }
   
   h3 {
     /* Poppins Medium, xl-2xl (styleguide: 18-20px) */
-    @apply font-sans font-medium text-xl md:text-2xl text-primary-dark-blue dark:text-highlight-light-aqua;
+    @apply font-sans font-medium text-xl md:text-2xl text-blue-accent dark:text-blue-light;
   }
   
   p {
@@ -98,12 +98,13 @@
 @layer components {
   /* Primaire knop: Oranje achtergrond, witte tekst */
   .btn-primary {
-    @apply inline-block bg-cta-orange text-white font-sans font-medium text-lg px-8 py-3 rounded-card shadow-md hover:bg-cta-orange-hover hover:shadow-lg transition-all duration-300 dark:bg-cta-orange dark:hover:bg-cta-orange-hover;
+    @apply bg-brand-pink-strong text-white font-semibold py-2 px-4 rounded-button-round hover:bg-brand-pink-hover transition-colors duration-300;
   }
 
   /* Secundaire knop: Wit met donkerblauwe rand */
   .btn-secondary {
-    @apply inline-block bg-white text-primary-dark-blue border border-primary-dark-blue font-sans font-medium text-lg px-8 py-3 rounded-card shadow-sm hover:bg-gray-100 hover:shadow-md transition-all duration-300 dark:bg-gray-800 dark:text-gray-100 dark:border-highlight-light-aqua dark:hover:bg-gray-700;
+    @apply bg-white text-gray-text font-lora font-normal transition-colors duration-300;
+    border: 1px solid #E91E63; /* Pink Strong */
   }
   
   .card {
@@ -113,7 +114,7 @@
   
   .quote {
     /* Lora Italic voor quotes */
-    @apply font-lora italic text-lg text-primary-dark-blue dark:text-highlight-light-aqua; /* Assuming quotes are slightly larger and blue */
+    @apply font-lora italic text-lg text-blue-accent dark:text-blue-light; /* Assuming quotes are slightly larger and blue */
   }
 
   /* Verwijder de .bg-primary overrides, pas kleuren direct toe in componenten */

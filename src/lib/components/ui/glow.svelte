@@ -1,12 +1,12 @@
 <!-- Glow.svelte -->
 <script lang="ts">
-  import { cn } from "$lib/utils.js"; // Added .js extension
+  import { cn } from "$lib/utils.js"; // Teruggeplaatst
 
   // Define allowed variants explicitly
   type GlowVariant = "default" | "below" | "above";
 
   export let variant: GlowVariant = "default";
-  export let className: string = "";
+  export let className: string = ""; // Nog steeds geaccepteerd, maar niet direct gebruikt in de test
 
   // Type the keys of variantClasses
   const variantClasses: { [key in GlowVariant]: string } = {
@@ -19,9 +19,11 @@
 <div
   class={cn(
     "absolute",
-    variantClasses[variant], // Now type-safe
+    variantClasses[variant],
     "h-[80vh] w-[100vw] lg:h-[100vh] lg:w-[80vw]",
-    "rounded-full bg-brand/30 opacity-30 blur-[100px]", // Consider using theme colors
+    "rounded-full bg-pink-light/30 opacity-30 blur-[100px]", // Gebruik Shirley's pink-light
     className
   )}
-></div> 
+>
+  <!-- Glow met variants -->
+</div> 

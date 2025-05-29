@@ -220,7 +220,7 @@
 </script>
 
 <!-- Main container with flex layout -->
-<div class="flex h-screen bg-secondary-light-blue-gray dark:bg-gray-900">
+<div class="flex h-screen bg-light-gray dark:bg-gray-900">
 
   <!-- Mobile Menu Trigger -->
   <MobileMenuTrigger />
@@ -296,15 +296,20 @@
   </Sidebar>
 
   <!-- Main chat area -->
-  <div class="flex-1 flex flex-col overflow-hidden p-2 sm:p-4">
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- NIEUWE HEADER TOEGEVOEGD -->
+    <div class="bg-brand-pink-strong text-white p-4 text-center shadow-md">
+      <h1 class="text-xl font-semibold">ShirleyBot</h1>
+    </div>
+
     <!-- Chat Container (met oorspronkelijke achtergrond/schaduw) -->
-    <div class="flex flex-1 mx-auto w-full max-w-full sm:max-w-[600px] flex-col rounded-xl bg-white dark:bg-slate-800 shadow-lg overflow-hidden"> 
+    <div class="flex flex-1 mx-auto w-full max-w-full sm:max-w-[600px] flex-col rounded-b-xl bg-white dark:bg-slate-800 shadow-lg overflow-hidden"> 
       <!-- Berichten Area (scrollable) -->
       <div bind:this={scrollContainer} class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
         
         <!-- Privacy melding banner -->
         <div class="flex justify-center mb-2 items-center">
-          <div class="rounded-md bg-status-positive dark:bg-emerald-600 px-3 py-1">
+          <div class="rounded-md bg-status-success dark:bg-emerald-600 px-3 py-1">
             <p class="font-poppins text-xs sm:text-sm font-medium text-white dark:text-white">Je gesprekken worden niet opgeslagen</p>
           </div>
         </div>
@@ -328,8 +333,8 @@
           {:else}
             <!-- Gebruiker Bericht -->
             <div class="flex justify-end">
-              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl border border-highlight-light-aqua bg-white dark:bg-sky-600 dark:border-sky-400 px-3 sm:px-4 py-2">
-                <p class="font-poppins text-xs sm:text-sm font-medium text-neutral-dark-gray dark:text-sky-50">{message.text}</p>
+              <div class="max-w-[85%] sm:max-w-[80%] rounded-xl border border-blue-light bg-white dark:bg-sky-600 dark:border-sky-400 px-3 sm:px-4 py-2">
+                <p class="font-poppins text-xs sm:text-sm font-medium text-gray-text dark:text-sky-50">{message.text}</p>
               </div>
             </div>
           {/if}
@@ -359,17 +364,17 @@
           on:keypress={handleKeyPress}
           placeholder="Beschrijf je situatie of vraag..."
           class="min-h-[40px] flex-1 rounded-xl 
-                 bg-white text-neutral-dark-gray placeholder-gray-500 border border-gray-300 
+                 bg-white text-gray-text placeholder-gray-500 border border-gray-300 
                  dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400 dark:border-gray-600 
                  p-2 sm:p-3 pr-8 sm:pr-10 text-sm sm:text-base font-poppins 
-                 focus:border-highlight-light-aqua focus:ring-2 focus:ring-highlight-light-aqua 
-                 dark:focus:border-highlight-light-aqua dark:focus:ring-highlight-light-aqua 
+                 focus:border-blue-light focus:ring-2 focus:ring-blue-light 
+                 dark:focus:border-blue-light dark:focus:ring-blue-light 
                  transition-colors duration-200"
           disabled={isTyping}
         />
         <button
           on:click={sendMessage}
-          class="ml-2 sm:ml-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-cta-orange text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2"
+          class="ml-2 sm:ml-3 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-brand-pink-strong text-white shadow-md hover:bg-brand-pink-hover transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-brand-pink-strong focus:ring-offset-2"
           aria-label="Verzend bericht"
           disabled={isTyping || userInput.trim() === ''}
         >
@@ -426,7 +431,7 @@
       <div class="mt-5 sm:mt-6 flex justify-end">
         <button
           on:click={() => showInfoModal = false}
-          class="rounded-xl bg-cta-orange px-3 sm:px-4 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-cta-orange-hover transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cta-orange focus:ring-offset-2"
+          class="rounded-xl bg-brand-pink-strong px-3 sm:px-4 py-2 font-poppins text-xs sm:text-sm font-medium text-white shadow-md hover:bg-brand-pink-hover transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-brand-pink-strong focus:ring-offset-2"
         >
           Sluiten
         </button>

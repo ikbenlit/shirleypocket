@@ -5,8 +5,8 @@
   // import { signInWithEmailAndPassword } from 'firebase/auth'; 
   import { setUser } from '$lib/stores/userStore.js'; // Importeer setUser (met .js extensie)
   import logoBlue from '$lib/images/EasyLeadership_button_white_edited.avif'; // Placeholder - check path
-  import Button from '$lib/components/Button.svelte'; // Assuming Button component exists
-  import heroImage from '$lib/images/easyleader-bot-chatinterface-mockup.webp'; // Placeholder for onboarding image
+  import ButtonElement from '$lib/components/ui/ButtonElement.svelte'; // Gewijzigd van Button.svelte
+  import heroImage from '$lib/images/shirley-bot-hero.png'; // Aangepast naar de nieuwe afbeelding
   // import AuroraBackground from '$lib/components/aurorabackground.svelte'; // Verwijder import AuroraBackground
   import Glow from '$lib/components/ui/glow.svelte'; // Importeer Glow component
 
@@ -60,13 +60,13 @@
         <div class="flex justify-center mb-6">
           <img class="h-12 w-auto" src={logoBlue} alt="Easyleadership Logo">
         </div>
-        <h2 class="text-center text-2xl font-bold text-primary-dark-blue">
+        <h2 class="text-center text-2xl font-bold text-blue-accent">
           Welkom terug
         </h2>
         
         <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
           <div>
-            <label for="email-address" class="block text-sm font-medium text-neutral-dark-gray pb-1">E-mailadres</label>
+            <label for="email-address" class="block text-sm font-medium text-gray-text pb-1">E-mailadres</label>
             <input 
               id="email-address" 
               name="email" 
@@ -74,12 +74,12 @@
               autocomplete="email" 
               required 
               bind:value={email}
-              class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-neutral-dark-gray focus:outline-none focus:ring-primary-dark-blue focus:border-primary-dark-blue focus:z-10 sm:text-sm" 
+              class="appearance-none rounded-input relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-gray-text focus:outline-none focus:ring-blue-accent focus:border-blue-accent focus:z-10 sm:text-sm" 
               placeholder="yvette@easyleadership.nl or colin@easyleadership.nl">
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-neutral-dark-gray pb-1">Wachtwoord</label>
+            <label for="password" class="block text-sm font-medium text-gray-text pb-1">Wachtwoord</label>
             <input 
               id="password" 
               name="password" 
@@ -87,26 +87,26 @@
               autocomplete="current-password" 
               required 
               bind:value={password}
-              class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-neutral-dark-gray focus:outline-none focus:ring-primary-dark-blue focus:border-primary-dark-blue focus:z-10 sm:text-sm" 
+              class="appearance-none rounded-input relative block w-full px-3 py-2 border border-neutral-light-gray placeholder-neutral-gray text-gray-text focus:outline-none focus:ring-blue-accent focus:border-blue-accent focus:z-10 sm:text-sm" 
               placeholder="Wachtwoord (easy123)">
           </div>
         
           <div class="flex items-center justify-end">
             <div class="text-sm">
-              <a href="/wachtwoord-vergeten" class="text-sm font-light text-primary-dark-blue hover:underline">
+              <a href="/wachtwoord-vergeten" class="text-sm font-light text-blue-accent hover:underline">
                 Wachtwoord vergeten?
               </a>
             </div>
           </div>
     
           <div>
-            <Button type="submit" class="w-full" disabled={isLoading}>
+            <ButtonElement type="submit" elementClass="w-full" disabled={isLoading}>
               {#if isLoading}
                 Bezig met inloggen...
               {:else}
                 Inloggen
               {/if}
-            </Button>
+            </ButtonElement>
           </div>
           
           {#if errorMessage}
@@ -116,7 +116,7 @@
           {/if}
 
           <p class="mt-4 text-center">
-            <a href="/" class="text-sm font-light text-primary-dark-blue hover:underline">
+            <a href="/" class="text-sm font-light text-blue-accent hover:underline">
               Terug naar home
             </a>
           </p>
@@ -125,7 +125,7 @@
     </div>
 
     <!-- Kolom 2: Informatie & Onboarding Sectie - Hersteld -->
-    <div class="hidden lg:block lg:col-span-2 relative bg-primary-dark-blue h-screen overflow-y-auto"> <!-- Herstel overflow-y-auto voor scrollen -->
+    <div class="hidden lg:block lg:col-span-2 relative bg-blue-accent h-screen overflow-y-auto"> <!-- Herstel overflow-y-auto voor scrollen -->
       <!-- Spotlight vanaf boven: default variant, override top/translate-y -->
       <Glow className="h-[60vh] w-[60vw] bg-white/30 opacity-75 blur-3xl top-0 translate-y-0" variant="default" /> 
        <!-- Background image/gradient can be applied here -->

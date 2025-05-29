@@ -26,7 +26,7 @@
 
 <button
   aria-label={$theme === 'dark' ? 'Schakel over naar licht thema' : 'Schakel over naar donker thema'}
-  class="relative inline-flex items-center justify-center w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-focus-blue"
+  class="relative inline-flex items-center justify-center w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-light"
   on:click={handleToggle}
   disabled={!mounted}
 >

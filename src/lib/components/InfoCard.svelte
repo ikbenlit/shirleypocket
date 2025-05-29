@@ -1,19 +1,24 @@
 <script lang="ts">
-	export let iconSrc: string;
-	export let iconAlt: string = ''; // Default lege alt tekst
-	export let iconBgClass: string = 'bg-gray-100'; // Default background
-	export let iconColorClass: string = 'text-gray-600'; // Default icon color
+	import Icon from '$lib/components/ui/Icon.svelte';
+
+	export let icon: string; // Lucide icon naam
+	export let iconSize: number = 24; // Standaard 24px, kan 32px zijn voor voordelen sectie
+	export let iconColorClass: string = 'text-pink-strong'; // Standaard Shirley's primaire roze
 	export let title: string;
 	export let text: string;
+	export let cardBgClass: string = 'bg-off-white'; // Standaard #FEFEFE
 </script>
 
-<div class="bg-white p-6 rounded-card shadow-md text-center border border-status-positive h-full flex flex-col">
-	<div class="w-16 h-16 {iconBgClass} rounded-full mx-auto mb-4 flex items-center justify-center flex-shrink-0">
-		<img src={iconSrc} alt={iconAlt} class="h-6 w-6 {iconColorClass}" />
-	</div>
+<div class="{cardBgClass} p-4 md:p-6 rounded-card shadow-md text-center h-full flex flex-col">
+	{#if icon}
+		<div class="mx-auto mb-4 flex items-center justify-center flex-shrink-0">
+			<!-- De iconBgClass van vroeger is nu onderdeel van de kaart zelf of niet meer nodig -->
+			<Icon name={icon} size={iconSize} className={iconColorClass} />
+		</div>
+	{/if}
 	<div class="flex-grow">
-		<h3 class="text-lg font-medium text-primary-dark-blue mb-2">{title}</h3>
-		<p class="font-light text-base text-neutral-dark-gray">
+		<h3 class="font-source-sans-pro-semibold text-xl text-black mb-2">{title}</h3>
+		<p class="font-roboto-regular text-base text-dark-gray">
 			{text}
 		</p>
 	</div>
