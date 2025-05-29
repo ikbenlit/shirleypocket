@@ -210,67 +210,66 @@
   }
 </script>
 
-<!-- Sidebar direct onder root, zodat overlay altijd aan de viewport zit -->
-<Sidebar on:resetChat={resetChat}>
-  <div class="p-4 flex-1 overflow-y-auto">
-    <!-- Logo container voor centreren -->
-    <div class="h-12 flex items-center" class:justify-center={!sidebarOpen}>
-      <img 
-        src="/icons/favicon.png" 
-        alt="Shirley in je pocket Logo" 
-        class:h-10={sidebarOpen}
-        class:w-auto={sidebarOpen}
-        class:h-8={!sidebarOpen}
-        class:w-8={!sidebarOpen}
-        class:mx-auto={sidebarOpen}
-        class="object-contain transition-all duration-300 ease-in-out"
-      /> 
-    </div>
-    <!-- Nieuwe Chat Link (bovenaan?) -->
-    <SidebarLink 
-      link={{
-        label: "Nieuwe Chat", 
-        href: "/chat", 
-        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"2\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 4v16m8-8H4\" /></svg>`
-      }}
-      className="mb-2"
-    />
-    <!-- Originele Links Hersteld -->
-    <SidebarLink 
-      link={{
-        label: "Shirley site",
-        href: "https://www.afvallenindeovergang.nl/",
-        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\" /></svg>`,
-        target: "_blank"
-      }}
-    />
-    <SidebarLink 
-      link={{
-        label: "Methode",
-        href: "https://www.afvallenindeovergang.nl/shape-methode",
-        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\" /></svg>`,
-        target: "_blank"
-      }}
-    />
-    <SidebarLink 
-      link={{
-        label: "Contact",
-        href: "https://www.afvallenindeovergang.nl/contact",
-        icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z\" /></svg>`,
-        target: "_blank"
-      }}
-    />
-    <!-- Einde Originele Links -->
-  </div>
-  <svelte:fragment slot="user">
-    {#if currentUser}
-      <UserMenu user={currentUser} />
-    {/if}
-  </svelte:fragment>
-</Sidebar>
-
 <!-- Hoofdcontainer: geen min-h-screen meer, alleen flex -->
 <div class="flex flex-col sm:flex-row justify-center items-start bg-brand-light-gray text-brand-black">
+  <Sidebar on:resetChat={resetChat}>
+    <div class="p-4 flex-1 overflow-y-auto bg-brand-beige-light">
+      <!-- Logo container voor centreren -->
+      <div class="h-12 flex items-center" class:justify-center={!sidebarOpen}>
+        <div 
+          class="logo w-8 h-8 bg-brand-white rounded-full flex items-center justify-center font-bold text-brand-pink-strong text-lg"
+          class:h-10={sidebarOpen}
+          class:w-auto={sidebarOpen}
+          class:h-8={!sidebarOpen}
+          class:w-8={!sidebarOpen}
+          class:mx-auto={sidebarOpen}
+        >
+          S
+        </div>
+      </div>
+      
+      <!-- Nieuwe Chat Link (bovenaan?) -->
+      <SidebarLink 
+        link={{
+          label: "Nieuwe Chat", 
+          href: "/chat", 
+          icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\" stroke-width=\"2\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 4v16m8-8H4\" /></svg>`
+        }}
+        className="mb-2"
+      />
+      <!-- Originele Links Hersteld -->
+      <SidebarLink 
+        link={{
+          label: "Shirley site",
+          href: "https://www.afvallenindeovergang.nl/",
+          icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6\" /></svg>`,
+          target: "_blank"
+        }}
+      />
+      <SidebarLink 
+        link={{
+          label: "Methode",
+          href: "https://www.afvallenindeovergang.nl/shape-methode",
+          icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2\" /></svg>`,
+          target: "_blank"
+        }}
+      />
+      <SidebarLink 
+        link={{
+          label: "Contact",
+          href: "https://www.afvallenindeovergang.nl/contact",
+          icon: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"h-5 w-5\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z\" /></svg>`,
+          target: "_blank"
+        }}
+      />
+      <!-- Einde Originele Links -->
+    </div>
+    <svelte:fragment slot="user">
+      {#if currentUser}
+        <UserMenu user={currentUser} />
+      {/if}
+    </svelte:fragment>
+  </Sidebar>
 
   <!-- Mobile Menu Trigger (blijft ongewijzigd voor nu) -->
   <MobileMenuTrigger />

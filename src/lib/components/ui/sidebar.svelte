@@ -57,7 +57,7 @@
   <!-- Desktop Sidebar (zichtbaar vanaf md, breedte afhankelijk van 'open') -->
   <div 
     class={cn(
-      "h-full bg-neutral-100 dark:bg-neutral-800 px-4 py-4 flex flex-col flex-shrink-0 transition-width duration-300 ease-in-out", 
+      "hidden md:flex h-full bg-brand-beige-light dark:bg-neutral-800 px-4 py-4 flex-col flex-shrink-0 transition-width duration-300 ease-in-out", 
       open ? 'md:w-64' : 'md:w-20' 
     )}
     role="navigation"
@@ -111,7 +111,7 @@
     <!-- Mobiele Sidebar Container -->
     <div 
       class={cn(
-        "fixed inset-y-0 left-0 w-64 bg-neutral-100 dark:bg-neutral-800 p-4 z-40 flex flex-col md:hidden",
+        "fixed inset-y-0 left-0 w-64 bg-brand-beige-light dark:bg-neutral-800 p-4 z-40 flex flex-col md:hidden",
         $$props.mobileClass // Behoud mogelijkheid voor extra classes
       )}
       transition:slide={{ duration: 300, axis: 'x', easing: quintOut }}
