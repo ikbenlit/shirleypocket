@@ -26,21 +26,29 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
         
         // Roep de OpenAI API aan met streaming ingeschakeld
         const response = await openai.chat.completions.create({
-            model: "gpt-4-turbo",
+            model: "gpt-4o-mini",
             messages: fullMessages,
             temperature: 0.7,
-            stream: true,
+            stream: true
         });
 
         // Creëer een ReadableStream om chunks door te geven
         const stream = new ReadableStream({
             async start(controller) {
                 const encoder = new TextEncoder();
+                let isFirstChunk = true;
                 try {
                     for await (const chunk of response) {
+                        if (isFirstChunk) {
+                            // Stuur het model als eerste stukje data
+                            if (chunk.model) {
+                                controller.enqueue(encoder.encode(JSON.stringify({ type: 'model', model: chunk.model }) + '\n'));
+                            }
+                            isFirstChunk = false;
+                        }
                         const text = chunk.choices[0]?.delta?.content || '';
                         if (text) {
-                            // Stuur de tekst chunk direct door
+                            // Stuur de tekst chunk door
                             controller.enqueue(encoder.encode(text));
                         }
                     }

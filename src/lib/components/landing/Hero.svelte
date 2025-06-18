@@ -54,7 +54,7 @@
                     <div class="border-t pt-4">
                         <div class="relative">
                             <input type="text" placeholder="Stel je vraag..." class="w-full border border-gray-300 rounded-full py-3 px-4 pr-12 focus:outline-none focus:ring-2 focus:ring-pink-strong focus:border-transparent">
-                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-pink-strong text-white rounded-full p-2 hover:bg-pink-hover transition-colors">
+                            <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-pink-strong text-white rounded-full p-2 hover:bg-pink-hover transition-colors" aria-label="Verstuur bericht">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                                 </svg>

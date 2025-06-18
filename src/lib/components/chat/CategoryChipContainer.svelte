@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { chatStore } from '$lib/stores/chatStore';
-  import type { ChatCategory, ChatQuestion } from '$lib/types/chat';
+  import { chatStore } from '$lib/stores/chatStore.js';
+  import type { ChatCategory, ChatQuestion } from '$lib/types/chat.js';
   // import type { Writable } from 'svelte/store'; // Niet nodig, ChatStoreValue is lokaal
   import CategoryChip from './CategoryChip.svelte';
   import QuestionChip from './QuestionChip.svelte';
   import { slide } from 'svelte/transition';
+  import Icon from '$lib/components/ui/Icon.svelte';
+  import { isDarkColor } from '$lib/utils.js';
 
   interface ChatStoreValue {
     allCategories: ChatCategory[];
@@ -58,6 +60,12 @@
     showAllCategories = !showAllCategories;
   }
 
+  function handleBackdropClick(event: MouseEvent): void {
+    if (event.currentTarget === event.target) {
+      showAllCategories = false;
+    }
+  }
+
 </script>
 
 {#if isLoading}
@@ -108,8 +116,16 @@
 
   <!-- MODAL: Categoriekiezer -->
   {#if showAllCategories}
-    <div class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40" on:click={() => showAllCategories = false}>
-      <div class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full relative" on:click|stopPropagation>
+    <div 
+      class="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-40" 
+      on:click={handleBackdropClick}
+      on:keydown={(e) => {if (e.key === 'Escape') showAllCategories = false}}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Kies een onderwerp"
+      tabindex="-1"
+    >
+      <div class="bg-white rounded-xl shadow-lg p-6 max-w-lg w-full relative">
         <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-600" aria-label="Sluiten" on:click={() => showAllCategories = false}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
@@ -119,7 +135,10 @@
             <button
               class="flex flex-col items-center justify-center rounded-lg p-3 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-300"
               style={`background-color: ${category.color};`}
-              on:click={() => { handleCategorySelect({ detail: { id: category.id, title: category.title } }); showAllCategories = false; }}
+              on:click={() => { 
+                chatStore.selectCategory(category.id);
+                showAllCategories = false; 
+              }}
               aria-label={category.title}
             >
               <Icon name={category.icon} size={28} className={isDarkColor(category.color) ? 'text-white' : 'text-gray-900'} />

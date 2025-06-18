@@ -118,12 +118,29 @@
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let currentBotText = '';
+    let isFirstChunk = true;
 
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
 
       const chunk = decoder.decode(value, { stream: true });
+      
+      if (isFirstChunk) {
+        try {
+          // Probeer het eerste chunk te parsen als JSON met model info
+          const modelInfo = JSON.parse(chunk);
+          if (modelInfo.type === 'model') {
+            console.log('OpenAI Model:', modelInfo.model);
+            isFirstChunk = false;
+            continue; // Sla deze chunk over voor de chatberichten
+          }
+        } catch (e) {
+          // Als het geen JSON is, behandel het als normale tekst
+        }
+        isFirstChunk = false;
+      }
+
       currentBotText += chunk;
 
       messages = messages.map(msg =>
@@ -403,40 +420,6 @@
     font-family: 'Source Sans Pro', sans-serif;
   }
 
-  .welcome-banner {
-    font-family: 'Source Sans Pro', sans-serif;
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .message {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .suggestion-button {
-    background-color: var(--pink-light, #F8BBD9); /* Gebruik var met fallback */
-    color: var(--dark-gray, #333333);
-    border: none;
-    border-radius: 16px; /* Tailwind: rounded-brand-button */
-    padding: 10px 16px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Tailwind: shadow-brand-suggestion */
-    transition: all 0.2s ease;
-    min-height: 44px;
-  }
-
-  .suggestion-button:hover {
-    background-color: var(--pink-strong, #E91E63);
-    color: var(--white, #FFFFFF);
-    transform: scale(1.02);
-  }
-
-  .intro-text {
-    color: var(--dark-gray, #333333);
-  }
-
   /* Typing indicator animaties */
   .typing-dot {
     animation: typingAnimation 1.4s infinite ease-in-out;
@@ -445,11 +428,6 @@
   .typing-dot:nth-child(1) { animation-delay: 0s; }
   .typing-dot:nth-child(2) { animation-delay: 0.2s; }
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 
   @keyframes typingAnimation {
     0%, 60%, 100% { transform: translateY(0); }
@@ -463,9 +441,6 @@
       height: 100vh; /* Volledige viewport hoogte */
       max-width: 100%;
       margin: 0;
-    }
-    .message {
-      max-width: 90%;
     }
     .chat-messages {
       padding: 16px; /* Consistent met HTML voorbeeld */

@@ -25,6 +25,9 @@
 
     const validUsers = {
       'demo@shirleybot.nl': 'welkom123', // Gebaseerd op HTML demo credentials
+      'imm.scholten.m3@gmail.com': 'Shape123', // Ilona Scholten
+      'adriennelijs@gmail.com': 'Shape123', // Adrienne Lijs
+      'barbarameijer1974@gmail.com': 'Shape123', // Barbara Meijer
     };
 
     // Check hardcoded credentials
@@ -140,11 +143,7 @@
           <a href="/" class="text-sm text-gray-500 hover:text-gray-800">Terug naar home</a>
         </div>
       </form>
-      <div class="mt-6 bg-pink-100 text-gray-800 p-4 rounded-xl shadow text-sm text-center">
-        <div class="font-semibold mb-1">Test inloggegevens:</div>
-        <div><span class="font-medium">E-mail:</span> demo@shirleybot.nl</div>
-        <div><span class="font-medium">Wachtwoord:</span> welkom123</div>
-      </div>
+
     </div>
   </div>
   

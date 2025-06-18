@@ -15,7 +15,6 @@
     
     // Shirley's karakteristieke uitroepen met emoji en styling
     text = text
-      .replace(/Hupakee!/gi, '<span class="inline-flex items-center bg-pink-200 text-pink-800 px-2 py-1 rounded-full font-bold text-sm">🚀 Hupakee!</span>')
       .replace(/Gewoon doen!/gi, '<span class="inline-flex items-center bg-green-200 text-green-800 px-2 py-1 rounded-full font-bold text-sm">✅ Gewoon doen!</span>')
       .replace(/Topper!/gi, '<span class="inline-flex items-center bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full font-bold text-sm">⭐ Topper!</span>')
       .replace(/Daar gaan we!/gi, '<span class="inline-flex items-center bg-blue-200 text-blue-800 px-2 py-1 rounded-full font-bold text-sm">🏃‍♀️ Daar gaan we!</span>')
@@ -38,13 +37,6 @@
         ${emojis[macroKey]} ${amount}g ${macroKey}
       </span>`;
     });
-
-    // Auto-emoji replacements voor veelgebruikte woorden
-    text = text
-      .replace(/\bcalorieën\b/gi, '🔥 calorieën')
-      .replace(/\bsporten\b/gi, '💪 sporten')
-      .replace(/\bslapen\b/gi, '😴 slapen')
-      .replace(/\bwegen\b/gi, '⚖️ wegen');
 
     // Week progress indicators
     text = text.replace(/week (\d+)/gi, (match: string, weekNum: string) => {
@@ -92,8 +84,15 @@
   renderer.list = function(token: Tokens.List) {
     const ordered = token.ordered ?? false;
     const itemsHtml = (token.items ?? [])
-      .map(item => `<li>${this.parser.parse(item.tokens)}</li>`)
+      .map(item => {
+        // Parse de inhoud van elk lijstitem door de Markdown-parser
+        let content = this.parser.parseInline(item.tokens);
+        // Handmatig **tekst** vervangen door <strong>tekst</strong> voor vetgedrukte tekst
+        content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        return `<li>${content}</li>`;
+      })
       .join('');
+    
     // Check of het een actie-lijst is (begint met actiewoorden)
     if (itemsHtml.includes('Eet ') || itemsHtml.includes('Pak ') || itemsHtml.includes('Ga ') || 
         itemsHtml.includes('Probeer ') || itemsHtml.includes('Maak ') || itemsHtml.includes('Doe ')) {
@@ -119,12 +118,6 @@
     </div>`;
   };
 
-  // Custom strong rendering voor betere bold-tekst styling
-  renderer.strong = function(token: Tokens.Strong) {
-    const text = this.parser.parseInline(token.tokens);
-    return `<strong class="inline-flex items-center font-semibold text-pink-600 bg-pink-50/50 px-1.5 py-0.5 rounded">${text}</strong>`;
-  };
-  
   // Configureer marked met custom renderer
   marked.setOptions({ 
     renderer,
@@ -163,7 +156,7 @@
     --tw-prose-body: #374151;
     --tw-prose-headings: #ec4899;
     --tw-prose-links: #ec4899;
-    --tw-prose-bold: #ec4899;
+    --tw-prose-bold: #374151; /* Veranderd van roze naar donkergrijs voor betere leesbaarheid */
     --tw-prose-quotes: #6b7280;
     --tw-prose-quote-borders: #ec4899;
   }
@@ -203,10 +196,13 @@
     margin-bottom: 0.25em;
   }
 
-  /* Styling voor strong/bold text */
-  :global(.prose strong) {
-    color: #ec4899;
-    font-weight: 600;
+  /* Maak bullets roze */
+  :global(.prose ul li::marker) {
+    color: #ec4899; /* Shirley roze kleur */
+  }
+
+  :global(.prose ol li::marker) {
+    color: #ec4899; /* Ook genummerde lijsten */
   }
 
   /* Responsive aanpassingen */
