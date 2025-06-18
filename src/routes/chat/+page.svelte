@@ -129,24 +129,43 @@
       if (isFirstChunk) {
         try {
           // Probeer het eerste chunk te parsen als JSON met model info
-          const modelInfo = JSON.parse(chunk);
-          if (modelInfo.type === 'model') {
-            console.log('OpenAI Model:', modelInfo.model);
-            isFirstChunk = false;
-            continue; // Sla deze chunk over voor de chatberichten
+          const lines = chunk.split('\n');
+          let textContent = '';
+          
+          for (const line of lines) {
+            if (line.trim()) {
+              try {
+                const modelInfo = JSON.parse(line);
+                if (modelInfo.type === 'model') {
+                  console.log('OpenAI Model:', modelInfo.model);
+                  continue; // Sla deze lijn over
+                }
+              } catch (e) {
+                // Als het geen JSON is, voeg het toe aan textContent
+                textContent += line;
+              }
+            }
+          }
+          
+          if (textContent) {
+            currentBotText += textContent;
           }
         } catch (e) {
           // Als het geen JSON is, behandel het als normale tekst
+          currentBotText += chunk;
         }
         isFirstChunk = false;
+      } else {
+        currentBotText += chunk;
       }
 
-      currentBotText += chunk;
-
-      messages = messages.map(msg =>
-        msg.id === botMessageId ? { ...msg, text: currentBotText, role: 'assistant' } : msg
-      );
-      scrollToBottom(); 
+      // Update het bot bericht alleen als er daadwerkelijk tekstinhoud is
+      if (currentBotText.trim()) {
+        messages = messages.map(msg =>
+          msg.id === botMessageId ? { ...msg, text: currentBotText, role: 'assistant' } : msg
+        );
+        scrollToBottom(); 
+      }
     }
   }
   
