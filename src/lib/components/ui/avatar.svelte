@@ -1,8 +1,8 @@
 <script lang="ts">
   // Verwijder foute import: import { getInitials } from '../../stores/userStore.ts';
-  import type { User } from '../../stores/userStore.js'; // Gebruik correcte .js extensie
+  import type { AuthUser } from '$lib/stores/authStore.js';
   
-  export let user: User;
+  export let user: AuthUser;
   export let size: 'sm' | 'md' | 'lg' = 'md';
   
   // Bereken de grootte van de avatar op basis van de size prop
@@ -12,15 +12,15 @@
     lg: 'w-12 h-12 text-base'
   }[size];
   
-  // Maak een deterministische kleur op basis van het e-mailadres (als ID niet beschikbaar is)
+  // Maak een deterministische kleur op basis van het e-mailadres
   $: avatarColor = getUserColor(user.email ?? 'default');
 
   // Genereer initialen direct hier
   $: initials = getAvatarInitials(user);
 
-  function getAvatarInitials(u: User): string {
-    if (u.name) {
-      return u.name
+  function getAvatarInitials(u: AuthUser): string {
+    if (u.displayName) {
+      return u.displayName
         .split(' ')
         .map(part => part[0])
         .join('')

@@ -1,0 +1,271 @@
+{
+  "version": "1.0.0",
+  "createdAt": "2025-01-04T12:00:00Z",
+  "updatedAt": "2025-01-04T12:00:00Z",
+  "modules": [
+    {
+      "id": "module-1-introductie",
+      "title": "Module 1: Introductie",
+      "url": "https://afvallenindeovergang.nl/lesson/les-1-introductie-3/",
+      "topics": [
+        "hoe start ik op",
+        "formule gekookte ongekookte aardappels rijst pasta",
+        "voeding bereid onbereid afwegen",
+        "80/20-regel",
+        "wat heb ik nodig voor het programma"
+      ],
+      "category": "programma-planning",
+      "weight": 10
+    },
+    {
+      "id": "module-2-vetverlies",
+      "title": "Module 2: Vetverlies",
+      "url": "https://afvallenindeovergang.nl/lesson/les-2-vetverlies-2/",
+      "topics": [
+        "hoeveel vet mag ik per week verliezen",
+        "hoe snel mag ik afvallen",
+        "wat gebeurt er als ik te snel afval",
+        "hoe verhoog ik mijn verbranding"
+      ],
+      "category": "weegschaal-voortgang",
+      "weight": 9
+    },
+    {
+      "id": "module-3-macros",
+      "title": "Module 3: De macro's",
+      "url": "https://afvallenindeovergang.nl/lesson/les-3-de-macros-2/",
+      "topics": [
+        "alles over koolhydraten vetten eiwitten",
+        "macros",
+        "koolhydraten",
+        "vetten",
+        "eiwitten"
+      ],
+      "category": "voeding-macros",
+      "weight": 10
+    },
+    {
+      "id": "module-4-calorieen",
+      "title": "Module 4: Hoeveel calorieën krijg je binnen?",
+      "url": "https://afvallenindeovergang.nl/lesson/les-4-hoeveel-calorieen-krijg-je-binnen-2/",
+      "topics": [
+        "ik zit zo vol",
+        "ik moet nu zoveel eten",
+        "voorheen at ik veel minder",
+        "ik houd me aan mijn budget en val niet af",
+        "calorieën"
+      ],
+      "category": "voeding-macros",
+      "weight": 9
+    },
+    {
+      "id": "module-5-gewicht-stoelgang",
+      "title": "Module 5: Schommelingen in gewicht en stoelgang",
+      "url": "https://afvallenindeovergang.nl/lesson/les-5-schommelingen-in-gewicht-en-stoelgang-2/",
+      "topics": [
+        "hoe kan het dat ik de ene dag zwaarder ben dan de andere",
+        "mijn stoelgang is niet goed",
+        "waardoor houd ik vocht vast",
+        "gewichtsschommelingen",
+        "gewicht schommelt",
+        "stoelgang"
+      ],
+      "category": "weegschaal-voortgang",
+      "weight": 8
+    },
+    {
+      "id": "module-6-uit-eten",
+      "title": "Module 6: Uit eten, feestjes en verjaardagen",
+      "url": "https://afvallenindeovergang.nl/lesson/les-6-uit-eten-feestjes-en-vakantie/",
+      "topics": [
+        "help ik heb een verjaardag vakantie etentje wat nu",
+        "uit eten",
+        "feestjes",
+        "verjaardagen",
+        "vakantie"
+      ],
+      "category": "praktische-tips",
+      "weight": 7
+    },
+    {
+      "id": "module-7-overgang",
+      "title": "Module 7: De overgang",
+      "url": "https://afvallenindeovergang.nl/lesson/les-7-de-overgang-2/",
+      "topics": [
+        "wat gebeurt er in de overgang",
+        "kom ik sowieso aan in de overgang",
+        "moet ik supplementen nemen en welke",
+        "hoe kan ik zelf overgangsklachten bestrijden",
+        "overgang",
+        "menopauze"
+      ],
+      "category": "overgang-hormonen",
+      "weight": 10
+    },
+    {
+      "id": "module-8-honger-80-20",
+      "title": "Module 8: Honger en de 80/20-regel",
+      "url": "https://afvallenindeovergang.nl/lesson/les-8-honger-en-de-80-20-regel/",
+      "topics": [
+        "hoe herken ik het verschil tussen hoofd- en buikhonger",
+        "hoe voorkom ik honger",
+        "wat is de 80/20-regel",
+        "honger",
+        "80/20-regel"
+      ],
+      "category": "mindset-motivatie",
+      "weight": 8
+    },
+    {
+      "id": "module-9-slaap-stress-alcohol",
+      "title": "Module 9: De invloed van slaap/stress/alcohol",
+      "url": "https://afvallenindeovergang.nl/lesson/les-9-alcohol-slaap-stress-2/",
+      "topics": [
+        "ik slaap zo slecht wat kan ik daaraan doen",
+        "wat zijn de gevolgen van alcohol",
+        "wat zijn de gevolgen van stress",
+        "slaap",
+        "stress",
+        "alcohol"
+      ],
+      "category": "overgang-hormonen",
+      "weight": 7
+    },
+    {
+      "id": "module-10-sport",
+      "title": "Module 10: Sport",
+      "url": "https://afvallenindeovergang.nl/lesson/les-10-sport-2/",
+      "topics": [
+        "welke sport is het beste",
+        "wat zijn de voordelen van krachttraining",
+        "is e-gym milon circle ook krachttraining",
+        "sport",
+        "krachttraining",
+        "beweging"
+      ],
+      "category": "beweging-activiteit",
+      "weight": 6
+    },
+    {
+      "id": "module-11-fabeltjeskrant",
+      "title": "Module 11: De Fabeltjeskrant",
+      "url": "https://afvallenindeovergang.nl/lesson/les-11-de-fabeltjeskrant/",
+      "topics": [
+        "word je dik van koolhydraten",
+        "krijg je een platte buik van buikspieroefeningen",
+        "helpt intermittent fasting",
+        "moet ik ontbijten",
+        "mag ik na 18 uur nog eten of na 20 uur",
+        "moet ik perse 3x per dag eten",
+        "bestaat er voeding dat extra vet verbrandt",
+        "kan ik aankomen als ik te weinig eet",
+        "wat vind je van detoxen en sapkuren",
+        "krijg ik meer resultaat als ik vaker train",
+        "helpen fatburners",
+        "helpt het om te trainen op nuchtere maag",
+        "fabeltjes",
+        "mythes"
+      ],
+      "category": "voeding-macros",
+      "weight": 5
+    },
+    {
+      "id": "module-12-streefgewicht",
+      "title": "Module 12: Ik heb m'n streefgewicht bereikt, hoe nu verder?",
+      "url": "https://afvallenindeovergang.nl/lesson/les-12-hoe-verder-als-je-je-streefgewicht-hebt-bereikt/",
+      "topics": [
+        "ik wil niet meer afvallen wat moet ik nu doen",
+        "streefgewicht bereikt",
+        "onderhoud",
+        "wat nu verder"
+      ],
+      "category": "weegschaal-voortgang",
+      "weight": 4
+    }
+  ],
+  "standalone": [
+    {
+      "id": "calorieenberekening",
+      "title": "Hoe bereken ik mijn calorieënbudget/behoefte?",
+      "url": "https://afvallenindeovergang.nl/lesson/calorieenberekening/",
+      "topics": [
+        "hoe bereken ik mijn calorieënbudget",
+        "caloriebehoefte",
+        "calorieënbudget",
+        "calculator"
+      ],
+      "category": "voeding-macros",
+      "weight": 9
+    },
+    {
+      "id": "voedingsmiddelen-macro-combi",
+      "title": "Voedingsmiddelen met specifieke macro combinaties",
+      "url": "https://afvallenindeovergang.nl/lesson/help-hoe-kom-ik-aan-mijn-2/",
+      "topics": [
+        "ik zoek voedingsmiddelen met alleen maar vetten en eiwitten",
+        "voedingsmiddelen macro combinatie",
+        "macro combinaties"
+      ],
+      "category": "voeding-macros",
+      "weight": 6
+    },
+    {
+      "id": "progressie-meten",
+      "title": "Hoe meet ik mijn progressie?",
+      "url": "https://afvallenindeovergang.nl/lesson/hoe-meet-je-je-progressie/",
+      "topics": [
+        "hoe meet ik mijn progressie",
+        "progressie meten",
+        "voortgang bijhouden"
+      ],
+      "category": "weegschaal-voortgang",
+      "weight": 7
+    },
+    {
+      "id": "podcast",
+      "title": "Podcast van Shirley",
+      "url": "https://afvallenindeovergang.nl/lesson/podcasts/",
+      "topics": [
+        "wat is de link naar de podcast van shirley",
+        "podcast",
+        "shirley podcast"
+      ],
+      "category": "programma-planning",
+      "weight": 3
+    }
+  ],
+  "faq": [
+    {
+      "id": "faq-algemeen",
+      "title": "Veelgestelde vragen",
+      "url": "https://afvallenindeovergang.nl/lesson/veelgestelde-vragen/",
+      "topics": [
+        "welke voedingapp is het beste",
+        "ik ben afgevallen moet ik nu mijn budget aanpassen",
+        "ik kom steeds over mijn koolhydratenbudget heen is dat erg",
+        "ik kom niet aan mijn eiwittenbudget",
+        "is zo'n slimme weegschaal betrouwbaar",
+        "hoe kom ik aan mijn vetten",
+        "mag ik de extra calorieën opeten die er in de app bijkomen door sporten",
+        "is eiwitpoeder of eiwitlimonade een goede optie",
+        "moet ik al mijn calorieën opeten",
+        "de voedingsapp geeft andere budgetten dan de calculator welke moet ik aanhouden",
+        "mijn voedingsapp geeft een advies voor de verdeling van mijn calorieën over de verschillende maaltijden",
+        "valt e-gym of milon circle ook onder krachttraining",
+        "bereid of onbereid wegen",
+        "ik mag maar heel weinig calorieën klopt dat wel",
+        "worden de zoomsessies opgenomen",
+        "is de fb-groep de community",
+        "is het erg als je teveel eiwitten binnenkrijgt",
+        "hoe kan je je vetpercentage meten en hoe weet je of je vet verliest",
+        "het lukt me niet om aan de juiste macroverdeling te komen",
+        "waar vind ik het e-book over de eiwitten",
+        "hoe doe ik dat met éénpansgerechten waar ik maar een deel van eet",
+        "veelgestelde vragen",
+        "faq"
+      ],
+      "category": "programma-planning",
+      "weight": 8
+    }
+  ]
+}

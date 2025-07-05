@@ -1,11 +1,12 @@
 <script lang="ts">
   import { onMount, tick } from 'svelte';
+  import ProtectedRoute from '$lib/components/Auth/ProtectedRoute.svelte';
   import Sidebar from '$lib/components/ui/sidebar.svelte';
   import SidebarLink from '$lib/components/ui/sidebarlink.svelte';
   import UserMenu from '$lib/components/ui/user-menu.svelte';
   import MobileMenuTrigger from '$lib/components/ui/mobile-menu-trigger.svelte';
   import { sidebarStore } from '$lib/stores/sidebarStore.js';
-  import { userStore, type User } from '$lib/stores/userStore.js';
+  import { authUser } from '$lib/stores/authStore.js';
   import { browser } from '$app/environment';
   import { chatStore, selectedQuestionText } from '$lib/stores/chatStore.js';
   import CategoryChipContainer from '$lib/components/chat/CategoryChipContainer.svelte';
@@ -30,10 +31,7 @@
   });
   
   // Haal de user state op voor de UserMenu component
-  let currentUser: User | null = null;
-  userStore.subscribe(value => {
-    currentUser = value;
-  });
+  let currentUser = $authUser;
   
   // Interface voor berichten
   interface Message {
@@ -208,7 +206,11 @@
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: messagesForAPI.slice(0, -1) }) 
+        body: JSON.stringify({ 
+          messages: messagesForAPI.slice(0, -1),
+          currentCategory: null,  // TODO: implement category detection
+          userPreferences: null   // TODO: implement user preferences
+        }) 
       });
 
       if (!response.ok) {
@@ -246,6 +248,7 @@
   }
 </script>
 
+<ProtectedRoute>
 <!-- Hoofdcontainer: geen min-h-screen meer, alleen flex -->
 <div class="flex flex-col sm:flex-row justify-center items-start bg-brand-light-gray text-brand-black">
   <Sidebar on:resetChat={resetChat}>
@@ -422,6 +425,7 @@
     </div>
   </div>
 {/if}
+</ProtectedRoute>
 
 <style>
   /* Bounce animatie voor typing indicator */

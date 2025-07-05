@@ -1,10 +1,9 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  // Verwijder Firebase imports:
-  // import { auth } from '$lib/firebase/client'; 
-  // import { signInWithEmailAndPassword } from 'firebase/auth'; 
-  import { setUser } from '$lib/stores/userStore.js'; // Importeer setUser (met .js extensie)
+  import { authActions, authUser } from '$lib/stores/authStore.js';
+  import { onMount } from 'svelte';
   import AvatarBubble from '$lib/components/ui/AvatarBubble.svelte';
+  import ParticleBackground from '$lib/components/ui/ParticleBackground.svelte';
   // logoBlue en heroImage worden niet meer direct gebruikt in deze layout.
   // import heroImage from '$lib/images/shirley-bot-hero.png'; 
   // Glow component wordt vervangen door inline stijl of custom CSS class
@@ -16,35 +15,35 @@
   let errorMessage = ''; // Voor foutmeldingen
   let rememberMe = false; // Toegevoegd voor de checkbox
 
+  // Redirect if already logged in
+  onMount(() => {
+    const unsubscribe = authUser.subscribe(user => {
+      if (user) {
+        goto('/chat');
+      }
+    });
+    return unsubscribe;
+  });
+
   async function handleLogin() {
     isLoading = true;
-    errorMessage = ''; // Reset error message
+    errorMessage = '';
 
-    // Simuleer een kleine vertraging voor UX
-    await new Promise(resolve => setTimeout(resolve, 500)); 
-
-    const validUsers = {
-      'demo@shirleybot.nl': 'welkom123', // Gebaseerd op HTML demo credentials
-      'imm.scholten.m3@gmail.com': 'Shape123', // Ilona Scholten
-      'adriennelijs@gmail.com': 'Shape123', // Adrienne Lijs
-      'barbarameijer1974@gmail.com': 'Shape123', // Barbara Meijer
-    };
-
-    // Check hardcoded credentials
-    if (email in validUsers && validUsers[email as keyof typeof validUsers] === password) {
-      console.log('Succesvol ingelogd!');
-      // Update de user store met het e-mailadres
-      setUser(email);
-      // Redirect naar de chatbot pagina voor POC
-      goto('/chat'); 
-    } else {
-      console.error('Fout bij inloggen: Ongeldige gegevens');
-      errorMessage = 'Inloggen mislukt. Controleer je e-mailadres en wachtwoord.';
-      isLoading = false; // Stop loading state bij fout
+    try {
+      await authActions.signIn(email, password);
+      // authUser store will update automatically via onAuthStateChanged
+      // Redirect happens in onMount when user state changes
+    } catch (error: any) {
+      console.error('Login error:', error);
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        errorMessage = 'Ongeldige inloggegevens.';
+      } else if (error.code === 'auth/too-many-requests') {
+        errorMessage = 'Te veel pogingen. Probeer later opnieuw.';
+      } else {
+        errorMessage = 'Er is iets misgegaan. Probeer opnieuw.';
+      }
+      isLoading = false;
     }
-
-    // isLoading wordt nu alleen false gezet bij een fout, 
-    // omdat bij succes de pagina navigeert.
   }
 </script>
 
@@ -148,43 +147,11 @@
   </div>
   
   <!-- Rechterkant - Feature Showcase (md:w-3/5) -->
-  <div class="w-full md:w-3/5 text-white p-8 md:p-12 flex items-center relative overflow-hidden order-1 md:order-2" style="background: linear-gradient(135deg, #E91E63 0%, #D81B60 100%);">
+  <div class="w-full md:w-3/5 p-8 md:p-12 flex items-center relative overflow-hidden order-1 md:order-2" style="background: linear-gradient(180deg, #337ab7 0%, #f7f3f0 100%);">
     <!-- Glow Effect -->
     <div class="absolute top-[-100px] right-[-100px] w-[300px] h-[300px] rounded-full hidden md:block -z-1" style="background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);"></div>
 
-    <!-- Floating Hearts Container -->
-    <div class="absolute inset-0 w-full h-full overflow-hidden z-0">
-      <!-- Heart 1 -->
-      <div class="heart absolute bottom-[-50px] text-pink-300" style="left: 10%; animation-duration: 12s; animation-delay: 0s;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <!-- Heart 2 -->
-      <div class="heart absolute bottom-[-50px] text-pink-200" style="left: 20%; animation-duration: 10s; animation-delay: 2s; opacity: 0.8;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <!-- Heart 3 -->
-      <div class="heart absolute bottom-[-50px] text-rose-300" style="left: 70%; animation-duration: 15s; animation-delay: 1s;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <!-- Heart 4 -->
-      <div class="heart absolute bottom-[-50px] text-pink-300" style="left: 85%; animation-duration: 9s; animation-delay: 3s; opacity: 0.7;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </div>
-       <!-- Heart 5 -->
-      <div class="heart absolute bottom-[-50px] text-rose-200" style="left: 45%; animation-duration: 13s; animation-delay: 0.5s;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-        </svg>
-      </div>
-    </div>
+    <ParticleBackground count={200} color="rgba(255, 255, 255, 0.7)" />
     
     <div class="relative z-10 max-w-xl mx-auto md:mx-auto flex flex-col items-center justify-center h-full"> <!-- md:mx-auto toegevoegd en flex container voor centreren content -->
       <!-- Smartphone Mockup -->
@@ -250,33 +217,33 @@
         </div>
       </div>
       
-      <h2 class="text-3xl font-bold mb-4 text-center md:text-left mt-6 md:mt-0">Jouw persoonlijke coach, 24/7 beschikbaar</h2>
-      <p class="text-pink-100 mb-8 text-center md:text-left">ShirleyBot helpt je om je gezondheids- en fitnessdoelen te bereiken met persoonlijke begeleiding wanneer jij dat nodig hebt.</p>
+      <h2 class="text-3xl font-bold mb-4 text-center md:text-left mt-6 md:mt-0 text-slate-800">Jouw persoonlijke coach, 24/7 beschikbaar</h2>
+      <p class="text-slate-600 mb-8 text-center md:text-left">ShirleyBot helpt je om je gezondheids- en fitnessdoelen te bereiken met persoonlijke begeleiding wanneer jij dat nodig hebt.</p>
       
       <div class="space-y-4 mb-8 w-full max-w-md">
         <div class="flex items-center p-3.5 rounded-2xl bg-white/20 backdrop-blur-md shadow-xl shadow-black/10 border border-white/20">
           <div class="bg-white rounded-full w-7 h-7 flex items-center justify-center mr-3.5 flex-shrink-0 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#E91E63]" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#337ab7]" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
           </div>
-          <p class="text-white text-sm">Persoonlijk advies op basis van jouw doelen</p>
+          <p class="text-slate-700 text-sm">Persoonlijk advies op basis van jouw doelen</p>
         </div>
         <div class="flex items-center p-3.5 rounded-2xl bg-white/20 backdrop-blur-md shadow-xl shadow-black/10 border border-white/20">
           <div class="bg-white rounded-full w-7 h-7 flex items-center justify-center mr-3.5 flex-shrink-0 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#E91E63]" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#337ab7]" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
           </div>
-          <p class="text-white text-sm">Voortgang bijhouden en inzicht in je resultaten</p>
+          <p class="text-slate-700 text-sm">Voortgang bijhouden en inzicht in je resultaten</p>
         </div>
         <div class="flex items-center p-3.5 rounded-2xl bg-white/20 backdrop-blur-md shadow-xl shadow-black/10 border border-white/20">
           <div class="bg-white rounded-full w-7 h-7 flex items-center justify-center mr-3.5 flex-shrink-0 shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#E91E63]" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#337ab7]" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
           </div>
-          <p class="text-white text-sm">Dagelijkse motivatie en ondersteuning</p>
+          <p class="text-slate-700 text-sm">Dagelijkse motivatie en ondersteuning</p>
         </div>
       </div>
       
@@ -317,17 +284,17 @@
     animation: pulse-slowest 12s infinite ease-in-out;
   }
 
-  /* Floating hearts animation */
-  .heart {
-    animation-name: floatHeart;
+  /* Floating sparkles animation */
+  .sparkle {
+    animation-name: floatSparkle;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     opacity: 0;
   }
 
-  @keyframes floatHeart {
+  @keyframes floatSparkle {
     0% {
-      transform: translateY(0vh) scale(0.7);
+      transform: translateY(0vh) scale(0.7) rotate(0deg);
       opacity: 0.6;
     }
     20% {
@@ -337,7 +304,7 @@
       opacity: 0.9;
     }
     100% {
-      transform: translateY(-100vh) scale(1.1);
+      transform: translateY(-100vh) scale(1.1) rotate(360deg);
       opacity: 0;
     }
   }

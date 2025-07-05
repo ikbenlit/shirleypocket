@@ -3,12 +3,11 @@
   import { fade, slide } from 'svelte/transition';
   import { goto } from '$app/navigation';
   import Avatar from './avatar.svelte';
-  import type { User } from '../../stores/userStore.js';
-  import { clearUser } from '../../stores/userStore.js';
+  import { authActions, type AuthUser } from '$lib/stores/authStore.js';
   import { theme, toggleTheme } from '../../stores/themeStore.js';
   import { sidebarStore } from '$lib/stores/sidebarStore.js';
   
-  export let user: User;
+  export let user: AuthUser;
   
   let isMenuOpen = false;
   let menuRef: HTMLDivElement;
@@ -36,8 +35,12 @@
   });
   
   async function handleLogout() {
-    clearUser();
-    await goto('/login');
+    try {
+      await authActions.signOut();
+      await goto('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   }
 </script>
 
@@ -54,8 +57,8 @@
     <!-- Verberg tekst als sidebar ingeklapt -->
     {#if sidebarOpen}
       <div class="flex-1 text-left overflow-hidden transition-opacity duration-200 opacity-100">
-        <div class="font-medium truncate">{user.name ?? user.email}</div>
-        {#if user.name}
+        <div class="font-medium truncate">{user.displayName ?? user.email}</div>
+        {#if user.displayName}
         <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">{user.email}</div>
         {/if}
       </div>
@@ -87,8 +90,8 @@
     >
       <!-- Gebruikersinfo bovenaan -->
       <div class="p-4 border-b border-neutral-200 dark:border-neutral-700">
-        <div class="font-medium">{user.name ?? user.email}</div>
-        {#if user.name}
+        <div class="font-medium">{user.displayName ?? user.email}</div>
+        {#if user.displayName}
         <div class="text-sm text-neutral-500 dark:text-neutral-400">{user.email}</div>
         {/if}
       </div>
