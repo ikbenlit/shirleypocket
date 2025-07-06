@@ -560,4 +560,55 @@ content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 5. **Documentatie en Communicatie**
    - Het bijhouden van een gedetailleerd session log helpt bij het vastleggen van problemen en oplossingen, wat waardevol is voor toekomstige referentie en voor het delen van kennis binnen het team.
 
+---
+
+## 2025-01-05: Prompt Engineering & Optimalisatie
+
+### Doel
+De `chat_baseprompt.md` optimaliseren om de betrouwbaarheid en nauwkeurigheid van de Shirley-bot te verhogen en specifieke faalscenario's op te lossen.
+
+### Probleem Identificatie
+Tijdens analyse en testen werden twee kritieke problemen in het gedrag van de chatbot geïdentificeerd:
+
+1.  **Meta-vragen falen**: De bot kon geen antwoord geven op vragen over de modules zelf (bv. "wat staat er in module 3?"), omdat het zoeksysteem (`moduleDetector`) puur op inhoudelijke `topics` zoekt.
+2.  **Links worden geweigerd**: De bot weigerde systematisch om directe links naar de Academy modules te geven. Het "hallucineerde" een reden hiervoor, namelijk dat het "binnen de S.H.A.P.E.-filosofie moest blijven", wat een incorrecte interpretatie was van de instructies.
+
+### Root Cause Analysis
+
+-   **Probleem 1**: Het LLM (de Formuleerder) had geen context over de *inhoud* van de modules die de Zoekmachine aanleverde. Het wist alleen "Module 3 is relevant", niet *waar module 3 over ging*.
+-   **Probleem 2**: De regel "Blijf 100% binnen de S.H.A.P.E.-methode" was te **abstract**. De AI interpreteerde `https://` links als "buiten" het systeem en gaf prioriteit aan de abstracte regel boven de concrete opdracht om een link te delen.
+
+### Uitgevoerde Optimalisaties
+
+#### 1. Stap 1: Context Toevoegen met Inhoudsopgave ✅
+- **Bestand**: `src/lib/server/prompts/chat_baseprompt.md`
+- **Actie**: Een `Inhoudsopgave Academy Modules` sectie toegevoegd aan de prompt.
+- **Resultaat**: Het LLM heeft nu een beknopte, mens-leesbare samenvatting van elke module, waardoor het contextuele antwoorden kan geven en vragen over de inhoud van modules kan beantwoorden.
+
+#### 2. Stap 2: Herstructurering voor Duidelijkheid ✅
+- **Bestand**: `src/lib/server/prompts/chat_baseprompt.md`
+- **Actie**: De prompt geherstructureerd met duidelijke secties (`---` lijnen en headers).
+- **Sub-acties**:
+    - **Kritieke Regels geprioriteerd**: De `NOOIT doen` regels zijn naar boven verplaatst voor maximale impact.
+    - **Werkwijze gedefinieerd**: Een expliciete `Hoe je Antwoordt` sectie is toegevoegd om de AI zijn rol in het systeem uit te leggen.
+- **Resultaat**: Verbeterde hiërarchie en structuur, wat leidt tot een consistentere interpretatie door de LLM.
+
+#### 3. Stap 3: Abstracte Regel Concreet Gemaakt (Cruciale Fix) ✅
+- **Bestand**: `src/lib/server/prompts/chat_baseprompt.md`
+- **Actie**: De vage en problematische regel over het "blijven binnen de S.H.A.P.E.-methode" is herschreven.
+- **Nieuwe Regel**: De nieuwe instructie maakt expliciet en dwingend duidelijk dat de **informatie in de prompt (inclusief de Kennisbank met links) de enige en verplichte bron** is.
+- **Resultaat**: De tegenstrijdigheid is weggenomen. De AI begrijpt nu dat het geven van de links een **verplicht onderdeel** van de taak is en niet in strijd is met de regels.
+
+### Status Update
+**Prompt Optimalisatie: VOLTOOID** ✅
+- [x] Probleem van meta-vragen opgelost.
+- [x] Probleem van link-weigering opgelost.
+- [x] Algemene betrouwbaarheid van de prompt verhoogd.
+
+### Lessons Learned
+1.  **Abstracte regels zijn riskant**: Instructies voor een LLM moeten zo concreet en ondubbelzinnig mogelijk zijn. Verwijs naar data die het model kan "zien" (de prompt zelf) in plaats van naar abstracte concepten.
+2.  **Structuur is cruciaal**: De hiërarchie en volgorde van instructies in een prompt beïnvloeden het gedrag van de LLM. Plaats de belangrijkste "guardrails" bovenaan.
+3.  **Definieer de taak expliciet**: Het helpt enorm om het model uit te leggen wat zijn rol is binnen het gehele systeem (bv. "je taak is het combineren van A en B").
+4.  **Iteratief verfijnen**: Het analyseren van een specifieke fout in de output en het gericht aanpassen van de prompt is een zeer effectieve methode voor optimalisatie.
+
 
