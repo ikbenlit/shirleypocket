@@ -611,4 +611,133 @@ Tijdens analyse en testen werden twee kritieke problemen in het gedrag van de ch
 3.  **Definieer de taak expliciet**: Het helpt enorm om het model uit te leggen wat zijn rol is binnen het gehele systeem (bv. "je taak is het combineren van A en B").
 4.  **Iteratief verfijnen**: Het analyseren van een specifieke fout in de output en het gericht aanpassen van de prompt is een zeer effectieve methode voor optimalisatie.
 
+# Session Log - URL Hallucinatie Fix
+
+**Datum:** 7 januari 2025  
+**Probleem:** Chatbot verzint soms URLs (bijv. `@https://www.shirleyinjeschuilplaats.nl/academy/module4`) in plaats van de correcte URLs te gebruiken uit de baseprompt.
+
+## Probleem Analyse
+
+### Symptomen
+- Bij vage vragen zoals "geef me de link" verzint de chatbot een URL
+- Bij specifieke vragen zoals "geef me de letterlijke link van module 4" werkt het wel correct
+- De correcte URLs staan wel in `chat_baseprompt.md` onder `### Academy Module Links`
+
+### Diagnose
+Het probleem zit in het feit dat de chatbot bij vage vragen:
+1. Geen relevante module kan identificeren via `ModuleDetector`
+2. Terugvalt op de `baseSystemPrompt` zonder extra context
+3. De lange baseprompt negeert en zelf een URL verzint (hallucinatie)
+
+## Uitgevoerde Oplossingen
+
+### Stap 1: PromptEnhancer Versterking
+**Bestand:** `src/lib/services/promptEnhancer.ts`
+**Wijziging:** Toegevoegd strenge URL-instructie aan alle templates
+
+```typescript
+const urlInstruction = `BELANGRIJK: Gebruik UITSLUITEND de URL die hierboven wordt gegeven. Verzin NOOIT een URL. Als een URL niet beschikbaar is, zeg dan dat je de link niet kunt vinden.`;
+```
+
+**Resultaat:** Wanneer een module wordt gevonden, krijgt de chatbot een expliciete instructie bij de specifieke module-context.
+
+### Stap 2: Linting Fixes
+**Bestand:** `src/lib/services/promptEnhancer.ts`
+**Probleem:** Import path miste `.js` extensie
+**Fix:** Toegevoegd `.js` extensie aan import statement
+
+### Stap 3: Fallback voor Vage Vragen
+**Bestand:** `src/routes/api/chat/+server.ts`
+**Wijziging:** Toegevoegd `else`-blok voor situaties waar geen module wordt gevonden
+
+```typescript
+} else {
+    // Geen relevante modules gevonden. Voeg een expliciete, dwingende fallback-instructie toe.
+    enhancedSystemPrompt = `${baseSystemPrompt}\n\nBELANGRIJK: Voor deze vraag is geen specifieke module gevonden. Je taak is nu anders. Als de gebruiker om 'de link' of 'een URL' vraagt ZONDER een duidelijk onderwerp of modulenaam te noemen, is het je ABSOLUTE PLICHT om een wedervraag te stellen. Zeg dan: "Natuurlijk! Welke link bedoel je precies? Over welk onderwerp of welke module gaat het?". Pluk NOOIT zomaar een willekeurige link uit de lijst in de Kennisbank. Je MOET om verduidelijking vragen.`;
+}
+```
+
+### Stap 4: TypeScript Fixes
+**Bestand:** `src/routes/api/chat/+server.ts`
+**Problemen:** 
+- Import statements misten `.js` extensies
+- Type inference problemen met `relevantModules`
+
+**Fixes:**
+- Toegevoegd `.js` extensies aan alle import statements
+- Toegevoegd `Array.isArray()` check voor type safety
+- Expliciet `any` type toegevoegd waar nodig
+
+## Technische Details
+
+### Workflow Overzicht
+1. **Module Gevonden:** `ModuleDetector` → `PromptEnhancer` → Specifieke URL-instructie
+2. **Geen Module:** Direct naar fallback-instructie in `+server.ts`
+
+### Bestandsstructuur
+```
+src/
+├── lib/
+│   ├── services/
+│   │   ├── moduleDetector.ts (ongewijzigd)
+│   │   └── promptEnhancer.ts (✅ aangepast)
+│   └── server/
+│       └── prompts/
+│           └── chat_baseprompt.md (ongewijzigd)
+└── routes/
+    └── api/
+        └── chat/
+            └── +server.ts (✅ aangepast)
+```
+
+## Test Scenario's
+
+### Te Testen
+1. **Duidelijke vraag:** `wat is de link voor module 7?`
+   - **Verwacht:** Correcte URL uit `modules.json`
+   
+2. **Vage vraag:** `geef me de link`
+   - **Verwacht:** Wedervraag om verduidelijking
+   
+3. **Onbestaande module:** `link naar shirley schuilplaats`
+   - **Verwacht:** Melding dat link niet gevonden kan worden
+
+## Status
+
+### ✅ Voltooid
+- [x] PromptEnhancer versterkt met strenge URL-instructies
+- [x] Fallback-logica toegevoegd voor vage vragen
+- [x] TypeScript errors opgelost
+- [x] Linting errors opgelost
+
+### 🔄 Te Testen
+- [ ] Test met vage vraag: "geef me de link"
+- [ ] Test met specifieke vraag: "link module 4"
+- [ ] Test met onbestaande module
+
+### 📋 Nog Te Doen
+- [ ] Vercel environment variables controleren (VITE_FIREBASE_API_KEY)
+- [ ] Production deployment testen
+
+## Deployment Notes
+
+### Development
+- Server draait op: `http://localhost:5174/`
+- Command: `npm run dev`
+
+### Production (Vercel)
+- Environment variables moeten handmatig worden ingesteld in Vercel dashboard
+- Let op: `.env` bestand wordt niet automatisch gebruikt door Vercel
+
+## Lessons Learned
+
+1. **Dynamic Context > Static Instructions:** Het injecteren van specifieke instructies op het moment van de vraag is effectiever dan lange statische prompts
+2. **Type Safety:** TypeScript waarschuwingen serieus nemen voorkomt runtime errors
+3. **Fallback Strategy:** Altijd een expliciet pad hebben voor edge cases (vage vragen)
+4. **Testing is Key:** Verschillende vraagtypen testen om edge cases te vinden
+
+---
+
+**Next Session:** Testen van de implementatie en eventuele fine-tuning op basis van resultaten.
+
 
