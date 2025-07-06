@@ -1,4 +1,4 @@
-import type { ModuleInfo, ModuleReference, ModuleContext, ContextualModuleResult } from '../types/chat';
+import type { ModuleInfo, ModuleReference, ModuleContext, ContextualModuleResult } from '../types/chat.js';
 
 /**
  * Service for enhancing prompts with dynamic module context
@@ -10,18 +10,21 @@ export class PromptEnhancer {
   private templates: Record<string, string>;
 
   constructor() {
+    // Strenge instructie om URL hallucinatie te voorkomen
+    const urlInstruction = `BELANGRIJK: Gebruik UITSLUITEND de URL die hierboven wordt gegeven. Verzin NOOIT een URL. Als een URL niet beschikbaar is, zeg dan dat je de link niet kunt vinden.`;
+
     this.moduleReferenceTemplate = `
 **Relevante Modules:**
 {{moduleList}}
 
-Gebruik deze modules als referentie voor je antwoord. Verwijs naar specifieke modules wanneer relevant.`;
+${urlInstruction}`;
     
     this.templates = {
       detailed: `
 **Relevante Modules:**
 {{moduleList}}
 
-Gebruik deze modules als referentie voor je antwoord. Verwijs naar specifieke modules wanneer relevant.`,
+${urlInstruction}`,
       
       quick: `
 **Relevante Info:** {{moduleList}}`,
@@ -35,13 +38,15 @@ Gebruik deze modules als referentie voor je antwoord. Verwijs naar specifieke mo
 **Gebaseerd op je vraag, deze modules kunnen helpen:**
 {{moduleList}}
 
-{{contextNote}}`,
+{{contextNote}}
+${urlInstruction}`,
       
       category: `
 **{{categoryName}} Modules:**
 {{moduleList}}
 
-Deze modules zijn specifiek relevant voor {{categoryName}}.`
+Deze modules zijn specifiek relevant voor {{categoryName}}.
+${urlInstruction}`
     };
   }
 

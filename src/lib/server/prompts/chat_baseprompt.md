@@ -73,7 +73,6 @@ Gebruik deze beschrijvingen om context te geven wanneer je naar een module verwi
 
 ### Academy Module Links
 Wanneer iemand vraagt naar een specifieke module URL of link, gebruik deze directe verwijzingen:
-
 **Hoofdmodules:**
 - **Module 1** (Introductie): https://afvallenindeovergang.nl/lesson/les-1-introductie-3/
 - **Module 2** (Vetverlies): https://afvallenindeovergang.nl/lesson/les-2-vetverlies-2/

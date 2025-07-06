@@ -5,12 +5,12 @@ import { ReadableStream } from 'node:stream/web';
 import type { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
 import { OPENAI_API_KEY } from '$env/static/private';
 import baseSystemPromptContent from '$lib/server/prompts/chat_baseprompt.md?raw';
-import { ModuleDetector } from '$lib/services/moduleDetector';
-import { PromptEnhancer } from '$lib/services/promptEnhancer';
-import { ContextManager } from '$lib/utils/contextManager';
-import { ModuleCache } from '$lib/utils/moduleCache';
-import { PerformanceMonitor } from '$lib/utils/performanceMonitor';
-import { CircuitBreaker } from '$lib/utils/circuitBreaker';
+import { ModuleDetector } from '$lib/services/moduleDetector.js';
+import { PromptEnhancer } from '$lib/services/promptEnhancer.js';
+import { ContextManager } from '$lib/utils/contextManager.js';
+import { ModuleCache } from '$lib/utils/moduleCache.js';
+import { PerformanceMonitor } from '$lib/utils/performanceMonitor.js';
+import { CircuitBreaker } from '$lib/utils/circuitBreaker.js';
 
 // Initialiseer OpenAI client
 const openai = new OpenAI({
@@ -112,7 +112,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
                     try {
                         // Infer primary category for template
                         const primaryCategory = conversationContext.currentCategory || 
-                            contextManager.inferPrimaryCategory(relevantModules.map(r => r.module));
+                            contextManager.inferPrimaryCategory(relevantModules.map((r: any) => r.module));
                         
                         enhancedSystemPrompt = promptEnhancer.injectModuleContext(
                             baseSystemPrompt,
@@ -134,6 +134,9 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
                         performanceMonitor.endTiming(enhancementTimingId, false);
                         throw enhancementError;
                     }
+                } else {
+                    // Geen relevante modules gevonden. Voeg een expliciete, dwingende fallback-instructie toe.
+                    enhancedSystemPrompt = `${baseSystemPrompt}\n\nBELANGRIJK: Voor deze vraag is geen specifieke module gevonden. Je taak is nu anders. Als de gebruiker om 'de link' of 'een URL' vraagt ZONDER een duidelijk onderwerp of modulenaam te noemen, is het je ABSOLUTE PLICHT om een wedervraag te stellen. Zeg dan: "Natuurlijk! Welke link bedoel je precies? Over welk onderwerp of welke module gaat het?". Pluk NOOIT zomaar een willekeurige link uit de lijst in de Kennisbank. Je MOET om verduidelijking vragen.`;
                 }
                 
             } catch (error) {
@@ -149,7 +152,7 @@ export const POST: RequestHandler = async ({ request }: RequestEvent) => {
                         new Promise((_, reject) => setTimeout(() => reject(new Error('Fallback timeout')), 50))
                     ]);
                     
-                    if (relevantModules && relevantModules.length > 0) {
+                    if (Array.isArray(relevantModules) && relevantModules.length > 0) {
                         enhancedSystemPrompt = promptEnhancer.injectModuleContext(
                             baseSystemPrompt,
                             relevantModules,
